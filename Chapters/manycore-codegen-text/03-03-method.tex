@@ -1,0 +1,248 @@
+% !TEX root = paper.tex
+\input{text/manycore-codegen-fragments/method-figures}
+
+\subsection{Performance Optimizations} \label{sec:method}
+
+In this subsection, we explore optimizations to improve graph application performance on the manycore system described in Section \ref{pap:generals:sec:architecture}.
+First, we propose a blocked access method for graph data to better exploit memory-level parallelism (MLP) in software.
+Next, we discuss three different work partitioning schemes.
+%Next, we discuss an implementation of edge-aware vertex partitioning. 
+We follow this with an exploration of graph traversal directions.
+%Lastly, we introduce a GraphIt backend for a manycore architecture which can automate the process of applying the schedules discussed in this section. 
+
+\subsubsection{Blocked Access Method}\label{sec:method:sub:blocked}
+%\combinedBlockingFigure
+%Figure \ref{pap:generals:sec:method:sub:blocked:fig:blocking}(a) shows the data layout of BFS on the manycore.
+In the naive execution model, cores request single words of application data at the time of use.
+The LLC responds to these requests, fetching data from HBM main memory when there is a cache miss.
+We discover from profiling that applications spend most cycles waiting on serialized read requests from LLC and DRAM.
+Many of these loads occur in iterations of the outer loop between which there are no data dependencies.
+%This motivates an optimization in which software reschedules these long-latency memory requests to happen in parallel.
+%\nonblockedMethodFigure
+
+\blockedMethodFigure
+
+Software can reschedule these long-latency requests to execute in parallel by formatting work items into blocks.
+Cores iterate over their assigned blocks, prefetching the entire block at once.
+The block data is stored in the core's scratchpad memory, re-purposing it as a software managed L1 cache.
+Figure \ref{pap:generals:sec:method:sub:blocked:fig:blocked} illustrates the blocked memory access technique. 
+Work items are stored in HBM in contiguous cache-aligned blocks.
+The LLC fetches a block from DRAM after receiving an initial load request from software.
+Cores issue these memory requests with an explicit call to \lstinline[language=C++, basicstyle=\small\ttfamily]{memcpy} to exploit pipelined non-blocking loads and hide memory latency.
+After fetching the blocked data, cores complete the loaded work before continuing to the next block.
+Cores must flush modified blocks back to main memory before fetching the next block.
+
+This blocked access method gives software fine grain control over what data is read at the block and word granularity allowing the application to only prefetch data it is likely to use. 
+%For graph applications, this provides benefits when performing random read-modify-writes by increasing the effective memory bandwidth. 
+This improves effective cache bandwidth by eliminating false sharing between work items and improves core memory access latency by improving locality for a work item.
+%This allows graph applications to take advantage of the spatial locality in the CSR data structure while avoiding over-fetch from performing random updates. 
+%For graph applications, this removes over-fetching from random read-modify-writes even as software benefits
+%\blockedMethodFigure
+
+% Non-stalling memory operations improves this microarchitecture.
+% The \lstinline[language=C++, basicstyle=\small\ttfamily]{memcpy} invoked by software for performing blocked accesses is finely tuned to issue many of these non-stalling loads at once.
+% This provides the software with an easy way to exploit the system's MLP.
+% Overlapping the time waiting for memory requests to make their way through the network and memory system improve single core performance.
+
+%This blocked memory access optimization has two benefits over a system with hardware managed L1 caches.
+%First, it removes the need for hardware to maintain cache coherence, which is hard to scale to a large number of cores \cite{agarwal1988cachecoherence}.
+%Second, it gives software finely grained control over what data is read at the block and word granularity.
+%As a result, this means applications only need to pay for prefetching data that it is likely to use.
+%For graph applications, this blocked memory access method provides benefits when performing random read-modify-writes, as prefetched data in this case is unlikely to be used.
+
+\subsubsection{Work Partitioning} \label{sec:method:sub:edge-aware-partitioning}
+
+
+We implement and explore the two load balancing methods: vertex-based and edge-aware vertex-based partitioning. We also propose our own manycore specific work partitioning method: alignment-based partitioning. 
+
+\paragraph{Vertex-Based} In vertex-based partitioning, all cores receive an equal number of vertices to traverse. 
+In real world graphs, the number of edges per vertex can vary drastically, and due to this, the vertex-based approach can lead to workload imbalance. 
+
+\paragraph{Alignment-Based} 
+In alignment-based partitioning, cores work instead on smaller work blocks of vertices that better align with cache lines in the LLC and make better use of the entire memory system by increasing effective bandwidth.
+In this method, the vertices in the graph are split into $V/b$ work blocks where $b$ is the number of vertices contained in each work block and $V$ is the total number of vertices in the graph. We select $b$ to be a multiple of the cache line size. By doing this and by reducing the size of the active set of vertices that each core is working on, we are able to increase the cache hit rate and reduce cache line contention.
+
+%This partitioning scheme reduces the size of the active set of vertices that each core is working on at any time.
+
+\paragraph{Edge-Aware Vertex-Based}
+\edgeAwareMethodFigure
+Edge-aware vertex partitioning scheme considers the number of edges being assigned to each core when partitioning the vertices.
+Figure~\ref{fig:edgeaware} demonstrates how edge-aware partitioning differs from vertex-based.
+
+In Figure~\ref{fig:edgeaware}, Partition 1 shows a vertex-based partitioning and Partition 2 represents an edge-aware partitioning of the graph.
+In both cases, the number of vertices assigned to each core is 5, but in the vertex-based partitioning scheme the first core is assigned 8 edges and the second core is assigned 21 edges.
+This could lead to a large workload imbalance.
+In the edge-aware partition, the first core is assigned 14 edges and the second core is assigned 15.
+By considering the number of edges being assigned to each core, edge-aware partitioning is able to create a more balanced workload across cores.
+
+
+In order to accomplish edge-aware vertex-based partitioning, a maximum number of edges that can be assigned to a core is set before execution. 
+Edge-aware partitioning effectively does a binary search for partitions of vertices that do not exceed this maximum number of edges. 
+Initially, all vertices are considered in one large partition.
+%In the first iteration, the core attempts to assign all of the vertices in the graph to itself. 
+If this partition of vertices exceeds the number of edges that can be assigned to a core, it is split in half, and each of those partitions are examined as possible candidates.
+This process continues recursively until all vertices have been assigned to a core.
+
+In our implementation, a single core is tasked with performing the recursive assignment of work while the remaining cores wait to receive their work assignment. 
+While there is overhead introduced by this partitioning scheme, we expect that a more balanced split of work will improve load balance and memory system performance on graph programs with unbalanced input graphs.
+%We refer to this value as the grain size.
+%In our implementation, the grain size is set to $(E / N) * 1.5$ where $E$ is the total number of edges in the graph and $N$ is the number of cores in the manycore. 
+%We found that a buffer value of $1.5$ was necessary to ensure that all of the vertices were assigned across the cores for all sizes of $E$ and $N$ that we examined.
+
+%\edgeAwareMethodAlgorithm
+
+
+%Figure \ref{alg:edge-aware} shows the pseudocode for this assignment routine.
+%In the first iteration, the core attempts to assign all of the vertices in the graph to itself.
+%If the number of edges is greater than the grain size, the recursive call is made.
+%In the recursive call, the number of vertices in the range is split in half and the core checks if either the first half of the vertices or the second half of the vertices can be assigned to any core. 
+%If either of them contain too many edges, the recursive call is made again.
+
+
+\subsubsection{Graph Traversal Directions}
+
+\pushVPullMethodFigure
+
+In traditional Breadth-First Search, the graph is traversed in a top-down manner by examining the outgoing edges of vertices in the frontier.
+For each vertex in the frontier, its edges are traversed and previously unvisited destination vertices are added to the next frontier.
+As the size of the frontier grows, the number of edges that need to be traversed also increases.
+
+Beamer et al.~\cite{beamer-bfs-direction} introduced a new method of traversal that reverses the direction in which edges are examined, and showed that this bottom up \pull approach can greatly reduce the number of edges traversed and improve performance. 
+In this case, the edges of every vertex in the graph are examined, looking for vertices that are in the current frontier.
+There are algorithmic optimizations that can be made in the \pull~direction to reduce the number of vertices and edges that are examined though. 
+In BFS for instance, if a node has already been visited in a previous iteration, its edges do not need to be examined in any subsequent iteration.
+
+Figure~\ref{fig:pushpull} shows both the \push~and \pull~directions for one iteration of BFS on a small graph.
+In this example, we start the iteration with vertex 0 in the frontier. 
+In the \push~case, the outgoing edges of vertex 0 are examined first.
+Because vertices 1 and 2 have not been visited before, they are added to the next frontier.
+In the \pull~case, all vertices that have not yet been visited are examined.
+In this case, the incoming edges of all vertices except vertex 0 are traversed.
+If an edge originates at a vertex that is in the current frontier, the destination vertex is added to the next frontier.
+In Figure~\ref{fig:pushpull}, vertices 1 and 2 have edges that originate at vertex 0, so they are added to the next frontier. 
+
+Beamer et al.~\cite{beamer-bfs-direction} find that while the \pull~direction increases performance on dense frontiers, traversing the graph in the traditional top down \push direction is still the better option on sparse frontiers and propose a \hybrid~traversal method.
+The \hybrid~approach examines the size of the frontier for each iteration in order to determine whether to execute in the \push~or \pull~direction for that iteration.
+Our code generator supports generating code in the \pull, \push, and \hybrid~directions.
+%In the \push~direction, the graph is traversed first by the vertices in the current frontier.
+
+
+\subsection{Manycore Code Generation}\label{sec:method:sub:baseline}
+
+Reasoning about these performance optimizations and manycore-specific considerations is a challenging task.
+To address this, we developed a code generation backend targeting a manycore architecture.
+This code generator alleviates the need for the programmer to have extensive knowledge of the underlying architecture.
+%To alleviate the need for the programmer to have knowledge of the underlying manycore architecture, we develop a code generation backend to GraphIt targeting a manycore architecture.
+
+We add support for our backend and the manycore specific optimizations discussed in Section~\ref{sec:method} with minimal changes to the GraphIt frontend scheduling language.
+First, we added the option \lstinline[language=graphit]{generateManycoreCode()} which signals to the GraphIt compiler it should generate code for the manycore architecture described in Section~\ref{pap:generals:sec:architecture}.
+We also added support for our blocked access method and alignment-based partitioning scheme in the scheduling language. 
+
+In order to generate code that runs on the manycore, we must generate code for both the host CPU and the manycore device.
+%An early consideration when designing the backend was how to split the code between host and device. 
+We chose to have the host code handle setup and coordination and to have the device code handle the core graph work.
+This is a natural split as it allows the manycore to handle the parallel portions of execution and lets the CPU handle the serial portions of work that require an operating system.
+
+\subsubsection{Host Code} 
+
+The host code that we generate handles most of the setup and coordination of the graph program. 
+We leverage a set of runtime libraries that we wrote to simplify and generalize the code generation. 
+These runtime libraries provide wrappers over our host driver API and handle loading of program data into manycore memory, initializing the manycore and initiating kernel execution on the manycore. 
+These runtime libraries provide a level of abstraction which allows for seamless portability of our backend. 
+In order to target a different manycore architecture, we would only need to modify these wrapper functions and would not need to modify our code generator.
+\newline
+\lstset{language=C++,
+captionpos=b,
+xleftmargin=.05\textwidth,
+frame=single,
+numbers=left,
+framerule=0pt,
+aboveskip=1pt,
+belowskip=1pt,
+framesep=1pt,
+basicstyle=\footnotesize\ttfamily,
+keywordstyle={[1]\color{darkred}},
+keywordstyle={[2]\color{blue}},
+keywordstyle={[3]\color{black}\bfseries},
+keywordstyle={[4]\color{darkred}\bfseries},
+emphstyle=\slshape,
+commentstyle=\color{darkgray},
+stringstyle=\color{darkgreen}
+}
+\begin{lstlisting}[language=C++, breaklines=true, 
+                   caption=Generated manycore host code for the Breadth-First Search (BFS) program shown in Listing~\ref{pap:generals2020:sec:background:lst:graphit}.,
+                   label=pap:generals:sec:method:lst:host]
+Graph edges = loadEdgesFromFile(file_path) ;
+Vector<int> frontier = new Vector<int>(
+        edges.num_nodes(), 0);
+Device::Ptr device = Device::GetInstance();
+addVertexOnDevice(frontier, root );
+while (getVertexSetSizeDevice(frontier) != 0){
+      device->enqueueJob("bfs_pull_call",
+          {edges.getInIndicesAddr() , 
+           edges.getInNeighborsAddr(), 
+           frontier.getAddr()}); 
+      device->runJobs();
+}
+\end{lstlisting}
+Listing~\ref{pap:generals:sec:method:lst:host} shows a subset of the host code generated for the BFS program shown in Listing~\ref{pap:generals2020:sec:background:lst:graphit} and highlights some of our host side runtime libraries for coordinating placement of data and scheduling of work.
+
+The function \lstinline[language=C++, basicstyle=\small\ttfamily]{loadEdgesFromFile} on line~1 loads a graph from an edgelist, formats the graph into the CSR storage format, and loads it into HBM. 
+We also provide functions such as \lstinline[language=C++, basicstyle=\small\ttfamily]{addVertexOnDevice} shown on line~4, which handles the insertion of values into vectors that are stored in HBM. 
+Finally, on lines 7 and 11 we have functions for scheduling kernel execution on the manycore: \lstinline[language=C++, basicstyle=\small\ttfamily]{enqueueJob()} and \lstinline[language=C++, basicstyle=\small\ttfamily]{runJobs()}.
+The enqueue job function takes the name of a kernel along with a list of parameters for that kernel and schedules it for execution.
+Lines~8-10 show the functions we provide to find the address of data structures stored in HBM. 
+For vector types, we provide the \lstinline[language=C++, basicstyle=\small\ttfamily]{getAddr()} method.
+For graphs, we provide \lstinline[language=C++, basicstyle=\small\ttfamily]{getInIndicesAddr()} and \lstinline[language=C++, basicstyle=\small\ttfamily]{getInNeighborsAddr()} to get the addresses of the index and neighbor arrays respectively.
+The \lstinline{runJobs()} function tells the manycore to execute all jobs that have been scheduled through calls to \lstinline[language=C++, basicstyle=\small\ttfamily]{enqueueJob()}.
+
+\subsubsection{Device Code}
+
+All \lstinline[language=graphit]{vertexset} and  \lstinline[language=graphit]{edgeset} operators are generated as device code. Most importantly, this includes apply and filter operations along with the edgeset apply modified operation. 
+By default, all of these operators are generated as parallel kernels meant to be executed across the entire manycore. 
+To distribute work among cores, we implement a \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range(V, start, end)} library function that takes as input the total number of vertices, a pointer to a start value, and a pointer to an end value.
+The function evenly splits the vertices across the cores and sets the start and end values as a contiguous subset of vertices for each core to work on. 
+Our backend replaces the call to \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range} with \lstinline[language=C++, basicstyle=\small\ttfamily]{edge_aware_local_range} to do the recursive edge-aware work assignment described in Section \ref{sec:method:sub:edge-aware-partitioning}.
+\newline
+\begin{lstlisting}[language=C++, breaklines=true, 
+                   caption=Generated manycore device code for the Breadth-First Search (BFS) program shown in Listing~\ref{pap:generals2020:sec:background:lst:graphit}.,
+                   label=pap:generals:sec:method:lst:device]
+template <typename TO_FUNC, typename APPLY_FUNC> int bfs_pull(int *in_indices , int *in_neighbors, int *from_vertexset, TO_FUNC to_func, APPLY_FUNC apply_func) { 
+    int start, end;
+    local_range(V, &start, &end);
+    for ( int d = start; d < end; d++) {
+        if (to_func(d)){ 
+            for(int s = in_indices[d]; s < in_indices[d+1]; s++) {
+                if(from_vertexset[s] == 1) {
+                    if(apply_func( in_neighbors[s], d )){ 
+                        next[d] = 1; 
+                    }
+                }
+            } //end of loop on in neighbors
+        } //end of to filtering
+    } //end of outer for loop
+    barrier.sync();
+    return 0;
+}
+\end{lstlisting}
+
+Listing~\ref{pap:generals:sec:method:lst:device} shows the main kernel code generated for the inner loop of BFS. 
+In this code, we can see the use of the \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range} function on line~3 and the use of a barrier before each core exits the kernel on line~15. 
+Lines~4-14 iterate through all of the vertices in the graph, traverse edges that have not yet been visited, and build the next frontier.
+The parallelism is achieved by each core executing their own contiguous range of vertices obtained from \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range} at the same time. Once a core is finished with its computation, it waits at the barrier for all other cores to finish before returning the results of the iteration. 
+
+\paragraph{Atomics:}
+While atomics can mostly be avoided when traversing in the \pull direction, they are still necessary in some cases and are always necessary during \push traversal.
+We leverage lock data structures to implement the necessary atomic operations used in our device code.
+We initialize one lock per cache line in the LLCs.
+Our profiling showed that this number of locks was sufficient to reduce contention in lock acquisition.
+Locks are assigned using a simple hash function on the address of the element for which an atomic operation has been called.
+
+
+%Figure~\ref{pap:generals:sec:method:sub:blocked:fig:non-blocked} shows how our backend makes use of the memory system on the manycore.
+%Cores issue memory requests for single elements of the graph arrays.
+%If these elements do not currently reside in cache, a request is issued to the HBM. 
+%A cache line worth of data is returned from HBM and the single requested element is forwarded back to the core that issued the request.
+%Unsurprisingly, our initial tests showed that our graph programs are bound by memory access latency. 
+%The blocking optimization proposed in Section \ref{sec:method:sub:blocked} can be enabled by adding \lstinline[language=graphit]{setApply("s1", "enable_blocking")} to a GraphIt schedule like the one shown on line~21 of Listing~\ref{pap:generals:sec:background:lst:graphit}.
+

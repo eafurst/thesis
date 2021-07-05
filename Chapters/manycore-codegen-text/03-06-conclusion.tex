@@ -1,0 +1,12 @@
+\subsection{Conclusions}\label{sec:concl}
+
+In this section, we presented our work developing a code generator for graph processing frameworks targeting a representative manycore architecture. 
+We formalized a general execution model and presented a backend that supports code generation for this model on a manycore architecture that utilizes High Bandwidth Memory.
+We proposed two manycore specific optimizations to improve performance across graph programs, and showed how existing graph processing optimizations can be ported to a manycore. 
+A performance study found that our optimized manycore code achieves 467 million traversed edges per second (MTEPS) exceeding conventional architectures in a fraction of the die area.
+
+%\todo{more conclusion here? paragraph on the impact/future implications?}
+
+% Code generation offers us the ability to abstract away the complexity of writing performant manycore code from the specification of the graph application. 
+% The \graphit DSL further allows us to more easily explore ways to improve performance across benchmarks and input graphs by separating the algorithm description from the scheduling of work.
+

@@ -1,0 +1,208 @@
+% packages
+\usepackage[utf8]{inputenc}
+\usepackage{libertine}
+\usepackage{libertinust1math}
+\usepackage[T1]{fontenc}
+\preto\fullcite{\AtNextCite{\defcounter{maxnames}{99}}}
+
+\setlength{\textfloatsep}{5pt}
+
+\date{May 4, 2020}
+
+% todo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\todo}[1]{{\color{red}TODO:#1}}
+\newcommand{\tocite}[1]{{\color{blue}\textbf{[[#1]]}}}
+
+
+% other ones
+\newcommand*{\tabhead}[1]{\multicolumn{1}{c}{\bfseries #1}}
+
+\newcommand{\graphit}{GraphIt\xspace}
+\newcommand{\kron}{Kronecker\xspace}
+\newcommand{\push}{\textsc{push}\xspace}
+\newcommand{\pull}{\textsc{pull}\xspace}
+\newcommand{\hybrid}{\textsc{hybrid}\xspace}
+
+\hyphenation{many-core co-simulation}
+
+\newcommand{\redout}[1]{\textcolor{red}{ #1}}
+\newcommand{\blueout}[1]{\textcolor{blue}{ #1}}
+\newcommand{\bluecomment}[1]{\textcolor{blue}{ \{$\leftarrow$ #1\}}}
+
+% text expansion macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\etal}{et al.}
+
+% C++
+\newcommand\CC{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\relsize{-3}{\textbf{++}}}\xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% NSP packages
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% fonts & text %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{inconsolata}              % inconsolata for fixed-width
+\usepackage{textcomp}              % symbols
+
+% figures %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}              % includegraphics
+
+% tables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{booktabs}              % pretty table spacing
+
+% spacing %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{relsize}               % \relsize{-1} for macros
+\usepackage[export]{adjustbox}
+
+% colors %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \usepackage[svgnames,table]{xcolor}      % colors, with svg names available
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0}
+
+
+% math %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amsfonts}              % provides \mathbb and other stuff
+\usepackage{amssymb}               % lots of symbols
+
+% listings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}              % code listings
+\lstset{language=Python,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  escapeinside={(*@}{@*)},
+  commentstyle=\color{greencomments},
+  keywordstyle=\color{bluekeywords},
+  stringstyle=\color{redstrings},
+  basicstyle=\ttfamily
+}
+
+\lstdefinelanguage{graphit}{%
+%% List of keywords
+keywords={[1]},%for,do,while,if,else,break,continue,return
+keywords={[2]func,end,element,const,var,%
+vertexset,edgeset,vector,%
+void,char,short,long,int,float,double,boolean,size_t},
+keywords={[3]from, to, apply, modified},
+keywords={[4],schedule, s1 %
+},
+%% List of abbreviations
+literate={[OPT[}{{\OPTL}}1 {]OPT]}{{\OPTR}}1,
+%% List of strings
+string=[b]”,
+%% List of comment strings
+comment=[l]//,
+morecomment=[s]{/*}{*/},
+%% Special character for LaTeX
+mathescape=true,
+%% Definition du style
+flexiblecolumns=true,
+tabsize=2,
+captionpos=b,
+xleftmargin=.05\textwidth,
+frame=single,
+framerule=0pt,
+aboveskip=1pt,
+belowskip=1pt,
+framesep=1pt,
+basicstyle=\footnotesize\ttfamily,
+keywordstyle={[1]\color{darkred}},
+keywordstyle={[2]\color{blue}},
+keywordstyle={[3]\color{black}\bfseries},
+keywordstyle={[4]\color{darkred}\bfseries},
+numbers=left,
+emphstyle=\slshape,
+commentstyle=\color{darkgray},
+stringstyle=\color{darkgreen}
+}
+
+\lstdefinelanguage{cpp}{
+%% List of keywords
+keywords={[1]for,do,while,new,if,else,break,continue,return},
+keywords={[2]void,char,short,long,int,float,double,boolean,size_t},
+literate={[OPT[}{{\OPTL}}1 {]OPT]}{{\OPTR}}1,
+%% List of strings
+string=[b]”,
+%% List of comment strings
+comment=[l]//,
+morecomment=[s]{/*}{*/},
+%% Special character for LaTeX
+mathescape=true,
+%% Definition du style
+flexiblecolumns=true,
+tabsize=2,
+captionpos=b,
+xleftmargin=.05\textwidth,
+frame=single,
+framerule=0pt,
+aboveskip=1pt,
+belowskip=1pt,
+framesep=1pt,
+basicstyle=\footnotesize\ttfamily,
+keywordstyle={[1]\color{darkred}},
+keywordstyle={[2]\color{blue}},
+keywordstyle={[3]\color{black}\bfseries},
+keywordstyle={[4]\color{darkred}\bfseries},
+emphstyle=\slshape,
+commentstyle=\color{darkgray},
+stringstyle=\color{darkgreen}
+}
+
+% *** SUBFIGURE PACKAGES ***
+
+
+%%%%%%%%%%%
+% HFBS macros / packages
+%%%%%%%%%%%%%%%%%%%%%%%%
+\def\lf{\left\lfloor}
+\def\rf{\right\rfloor}
+\def\lc{\left\lceil}
+\def\rc{\right\rceil}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{mathtools}
+
+\usepackage{multirow}
+\usepackage{hyphenat}
+
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+% math %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amsfonts}              % provides \mathbb and other stuff
+\usepackage{amssymb}               % lots of symbols
+\usepackage{tabularx}
+\usepackage{comment}
+
+
+% graphics %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\graphicspath{{./fig/},{./plots/},{./gfx/},{./hfbs-figs/},{./nsp-figs/},{./vignette-figs/}}
+\DeclareGraphicsExtensions{.pdf,.jpeg,.jpg,.png}
+
+\usepackage{algpseudocode,algorithm,algorithmicx}
+\makeatletter
+\def\algbackskip{\hskip\dimexpr-\algorithmicindent+\labelsep}
+\def\LState{\State \algbackskip}%
+\makeatother
+
+\usepackage{array}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\usepackage[normalem]{ulem}
+
+% colors %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{colortbl}
+
+
+\lstdefinestyle{VRQL}{
+    language=C++,
+    basicstyle=\scriptsize\ttfamily,
+    mathescape=true,
+    xleftmargin=0.25cm,
+    columns=fullflexible,
+    morekeywords={Union,Decode,Scan,Select,Map,Partition,Encode,Subquery,Interpolate,Translate,Rotate,Discretize,Store,Update,Create,CreateIndex,DropIndex}
+ }

@@ -1,0 +1,20 @@
+\subsection{Discussion}\label{sec:discussion}
+\input{text/manycore-codegen-fragments/eval-figures}
+
+\overviewResultsTable
+
+Table~\ref{pap:generals:sec:eval:tab:overview} shows the highest achieved MTEPS for each input graph and benchmark along with the optimization that was used in the generated code.
+Alignment-based partitioning provides optimal performance across the most input graphs and benchmarks, and the next best performing optimization is blocking.
+This is not surprising, as all of our benchmarks are limited by DRAM, and blocking and alignment-based partitioning are optimizations that makes better use of the memory system.
+By adding blocking and alignment-based partitioning, we are able to coalesce read accesses to vertex data.
+In addition, with blocking, we are able to make use of explicitly managed, low-latency scratchpad memory in our blocked access method. 
+The blocked access method and alignment-based partitioning improve the memory system performance of our benchmarks by targeting a key performance limiter of graph algorithms.
+
+We do not include a direct comparison of our results against other systems; however, Table~\ref{sec:related:tab:mteps} shows performance for some of the frameworks mentioned in Section~\ref{gen:sec:background}. This table is included to help contextualize the results reported above.
+% We only include results from the papers that report performance in MTEPS. We include this table to help contextualize our results.
+It is also important to note that we only simulate a small portion of the total manycore architecture. 
+The full manycore architecture would have eight HBM channels instead of the two that are simulated along with many more cores.
+As a result, the full architecture would have much higher memory bandwidth and more compute resources. 
+Because all of our benchmarks are limited by DRAM, we anticipate that we would achieve better performance on the full system due to an increase in memory bandwidth and decrease in memory contention.
+
+\relatedMTEPSTable
