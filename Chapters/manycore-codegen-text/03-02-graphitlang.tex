@@ -1,5 +1,5 @@
-\input{text/manycore-codegen-fragments/graphit-lang-figures}
-\subsection{GraphIt: A Graph Processing Domain-Specific Language}\label{pap:generals2020:sec:graphit}
+\input{Chapters/manycore-codegen-fragments/graphit-lang-figures}
+\section{GraphIt: A Graph Processing Domain-Specific Language}\label{pap:generals2020:sec:graphit}
 
 GraphIt is a domain-specific language for graph processing applications~\citep{zhang2018graphit}.
 Like Halide~\citep{ragan2013halide}, GraphIt separates the description of the algorithm from the scheduling of the computation. A separate algorithm language and scheduling language are used to specify graph programs in GraphIt. This separation of description and schedule allows users to express computation more flexibly.
@@ -31,7 +31,7 @@ schedule:
   program->configApplyDirection("s1", "DensePull")->generateManycoreCode();
 \end{lstlisting}
 
-\subsubsection{Graph Representation}
+\subsection{Graph Representation}
 Graphs are represented by \lstinline[language=graphit]{edgeset} and \lstinline[language=graphit]{vertexset} structures.
 The edges between nodes are stored as an \lstinline[language=graphit]{edgeset}, and any vertex specific data is stored as a \lstinline[language=graphit]{vertexset}.
 Line~1 and Line~2 of Listing~\ref{pap:generals2020:sec:background:lst:graphit} demonstrate the declaration of the \lstinline[language=graphit]{edgeset} variable \lstinline[language=graphit]{edges} and  \lstinline[language=graphit]{vertexset} variable \lstinline[language=graphit]{frontier}. 
@@ -51,7 +51,7 @@ The generated code operates on these arrays to perform computation.
 \graphformatfig
 
 
-\subsubsection{Algorithm Representation}
+\subsection{Algorithm Representation}
 An algorithm in GraphIt is written as operations on \lstinline[language=graphit]{edgeset} and \lstinline[language=graphit]{vertexset} datatypes. 
 Graphit provides several operators that perform computation on these types, but the most common are the \lstinline[language=graphit]{filter} operator and \lstinline[language=graphit]{apply} operator.
 The \lstinline[language=graphit]{filter} operator takes a function and a set, applies the function to each element in the set, and returns a set of elements where the function returned true.
@@ -68,7 +68,7 @@ This operator computes the edge traversal of BFS and returns a vertexset contain
 This \lstinline[language=graphit]{vertexset} becomes the new frontier for the next iteration of the while-loop.
 %\todo[inline]{Check all line-number references}
 
-\subsubsection{Schedule Representation}
+\subsection{Schedule Representation}
 GraphIt provides a wide range of scheduling options, i.e., by specifying traversal direction, by specifying the level of parallelism, or by using load balancing techniques for parallel operators.
 Labels are used to indicate which operators in the algorithm description the scheduling optimizations should be applied to.
 The separation of the algorithm description and schedule allows developers to iterate through different scheduling optimizations and is a key part of GraphIt.
@@ -78,7 +78,7 @@ The schedule description always follows the algorithm description in GraphIt.
 The schedule for BFSs starts with the \lstinline[language=graphit]{schedule} declaration on Line~20 of Listing~\ref{pap:generals2020:sec:background:lst:graphit}. Line~21 specifies that the schedule for label \lstinline[language=graphit]{#s1#} should be "Dense Pull". This schedule is described in Section~\ref{sec:method}
 Finally, the schedule specifies that the code generator should generate code for the target device. 
 
-\subsubsection{Code Generation}
+\subsection{Code Generation}
 GraphIt's code generator takes an algorithm and schedule and generates device-specific code.
 Graphit first parses the algorithm and schedule using the frontend to produce the Intermediate Representation. 
 Next, the compiler performs dependency analysis and enforces restrictions on read-write accesses and reduction operators. 

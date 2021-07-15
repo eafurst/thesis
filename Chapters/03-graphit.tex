@@ -1,0 +1,36 @@
+\chapter{Generating Code for Graph Programs on a Manycore Architecture}\label{gen:sec:graphitbackend}
+\markboth{Generating Code for Manycore Graph Programs}{Generating Code for Manycore Graph Programs}
+
+\introOverviewFigure
+
+%\todo{intro paragraph to discuss the problem with graph processing again?/contextualize after background and related work?}
+To harness the benefits of manycore architectures and reduce programming complexity, we propose a code generation backend for GraphIt, a flexible domain-specific language (DSL) for graph computations~\cite{zhang2018graphit}. 
+This backend generates code targetting the representative manycore architecture described in \ref{gen:sec:background}.
+We use this new backend to explore several optimizations on three well-known graph benchmarks.
+Our evaluation shows that our GraphIt backend achieves a maximum of 467.1 million traversed edges per second (MTEPS) and on average achieves 252.7 MTEPS across all input graphs and benchmarks studied. 
+We find that our optimizations achieve a maximum speedup of 2.1$\times$ and an average speedup of 1.16$\times$ over naive manycore implementations.
+An overview of our approach is shown in Figure~\ref{pap:generals:sec:intro:fig:overview}.
+
+This section makes the following contributions:
+\begin{itemize}
+    \item A backend for the GraphIt domain-specific language~\cite{zhang2018graphit} that targets a prototypical manycore architecture.
+    \item A performance study of different graph processing optimizations on manycore architectures which shows a maximum speedup of 2.1$\times$.
+    \item An evaluation of our GraphIt backend that shows that it achieves a maximum of 467.1 MTEPS.
+\end{itemize}
+
+The rest of this section is organized as follows:
+% We introduce manycore architectures and describe our target architecture in Section~\ref{pap:oopsla2020:sec:architecture}.
+% We provide background on the GraphIt DSL in
+% Section~\ref{pap:oopsla2020:sec:graphit}. 
+In Subsections~\ref{sec:method} and ~\ref{sec:method:sub:baseline}, I describe how we compile GraphIt programs to the manycore architecture and demonstrate the scheduling optimizations that we explore.
+I present and discuss the performance results of our compiled graph workloads in Subsection~\ref{sec:eval} and Subsection~\ref{sec:discussion}.
+%We cover related work in Section~\ref{sec:related}.
+I end with conclusions in Subsection~\ref{sec:concl}.
+
+%subsections:
+%\input{text/manycore-codegen-text/03-01-manycorearch}
+%\input{text/manycore-codegen-text/03-02-graphitlang}
+\input{Chapters/manycore-codegen-text/03-03-method}
+%\input{Chapters/manycore-codegen-text/03-04-evaluation}
+\input{Chapters/manycore-codegen-text/03-05-discussion}
+\input{Chapters/manycore-codegen-text/03-06-conclusion}

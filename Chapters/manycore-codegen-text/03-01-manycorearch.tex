@@ -1,5 +1,5 @@
-\input{text/manycore-codegen-fragments/arch-figures}
-\subsection{Manycore Architectures} \label{pap:generals:sec:architecture}
+\input{Chapters/manycore-codegen-fragments/arch-figures}
+\section{Manycore Architectures} \label{pap:generals:sec:architecture}
 Manycore architectures provide thread-level parallelism and flexibility with hundreds to thousands of general-purpose cores~\cite{ramey2011tilera, davidson2018celerity, gwennap2011adapteva, agathos2015parallela, taylor2004raw}.
 Cores are arranged in two-dimensional arrays and interconnected with mesh-style networks for communication.
 This network of cores is surrounded by multiple channels of memory to provide sufficient bandwidth and parallelism to sustain computation.
@@ -28,7 +28,7 @@ Memory (HBM) channels.
 
 \manycoreArchFigure
 
-\subsubsection{Network-On-Chip}
+\subsection{Network-On-Chip}
 Communication is provided by a 2D-Mesh Network-on-Chip (NoC) that
 interconnects Last Level Caches and general-purpose cores. The
 NoC supports point-to-point communication between endpoints using
@@ -36,7 +36,7 @@ shared memory. All addressable endpoints within the network are
 assigned a unique global address range. This provides a PGAS-like
 (Partitioned Global Address Space) memory model for execution.
 
-\subsubsection{Memory System}
+\subsection{Memory System}
 The manycore's memory system is designed to provide the high-bandwidth memory-level parallelism required by manycore
 architectures. The memory system has four hierarchy levels:
 High-Bandwidth Memory (HBM), Last Level Cache (LLC), core-remote
@@ -99,7 +99,7 @@ the memory space of a LLC expose bank-level parallelism to software.
 %The subcaches connect to the on-chip network at the top and bottom of each column in the mesh and sit between the compute cores and main system memory as shown in Figure \ref{pap:generals:sec:architecture:fig:hbarch}.
 
 
-\subsubsection{Computational Cores}
+\subsection{Computational Cores}
 The computational cores in
 the manycore are
 throughput-optimized, general purpose processors that communicate  over the NoC.
@@ -130,7 +130,7 @@ Manycore architectures with HBM are challenging to generate code for because of 
 %The challenge for manycore architectures, and major contribution of this paper, is to generate code that 
 %exploits the right types of parallelism to maximize performance for an application.
 
-\subsubsection{Execution Model}
+\subsection{Execution Model}
 The manycore architecture operates under a Single Program Multiple
 Data (SPMD) execution model where each core executes the same program
 independently from all other cores. Multiple cores are aggregated into
