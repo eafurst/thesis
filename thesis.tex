@@ -1,10 +1,11 @@
 \RequirePackage{silence} % :-\
     \WarningFilter{scrreprt}{Usage of package `titlesec'}
     \WarningFilter{titlesec}{Non standard sectioning command detected}
-\documentclass[ twoside=off,openright,titlepage,numbers=noenddot,%1headlines,
-                headinclude,footinclude,cleardoublepage=empty,abstract=off,
-                BCOR=0mm,paper=a4,fontsize=11pt
-                ]{scrreprt}
+    \documentclass[ twoside,openright,titlepage,numbers=noenddot,headinclude,
+    footinclude=true,cleardoublepage=empty,abstractoff,%
+    BCOR=5mm,paper=letter,fontsize=11pt,letterpaper,%
+    american,%
+    ]{scrreprt}
 
 %********************************************************************
 % Note: Make all your adjustments in here
@@ -16,7 +17,7 @@
 % Bibliographies
 %*******************************************************
 \addbibresource{thesis.bib}
-\usepackage[left=1.5in,right=1.5in,top=1.5in,bottom=1.5in]{geometry}
+%\usepackage[left=1.5in,right=1.5in,top=1.5in,bottom=1.5in]{geometry} %use this for centered columns/also disable twoside
 
 %********************************************************************
 % Hyphenation
