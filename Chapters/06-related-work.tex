@@ -3,7 +3,7 @@
 
 % !TEX root = paper.tex
 
-In this thesis proposal, I talk about generating optimal code for graph algorithms on a manycore architecture with HBM. 
+In this thesis, I talk about generating optimal code for graph algorithms on a manycore architecture with HBM. 
 I explore both general graph processing and manycore specific performance optimizations and show how to generate performant code for a manycore architecture leveraging these optimizations. 
 There has been a large amount of work done in the space of optimizing parallel graph algorithms on various architectures.
 Graph processing has traditionally been done on CPU and GPU machines, and increasingly on FPGAs and custom architectures. 
@@ -11,14 +11,14 @@ First, I discuss work that focuses on understanding graph performance.
 Then, I talk about graph processing on CPUs, GPUs, FPGAs, and custom architectures.
 Finally, I introduce previous manycore architectures and discuss prior work on graph processing on manycore architectures.
 
-\subsection{Understanding Graph Performance} Several pieces of work have focused on understanding the bottlenecks of graph processing~\citep{beamer2015locality, basak2019analysis}. It is clear that memory is the main bottleneck for graph algorithms. Most graph programs struggle to achieve high memory bandwidth due to insufficient instruction window sizes and memory load dependencies inherent in graph accesses. Further, many graph applications actually experience both low memory bandwidth and low compute due to memory latency~\cite{beamer2015locality}.
+\section{Understanding Graph Performance} Several pieces of work have focused on understanding the bottlenecks of graph processing~\citep{beamer2015locality, basak2019analysis}. It is clear that memory is the main bottleneck for graph algorithms. Most graph programs struggle to achieve high memory bandwidth due to insufficient instruction window sizes and memory load dependencies inherent in graph accesses. Further, many graph applications actually experience both low memory bandwidth and low compute due to memory latency~\cite{beamer2015locality}.
 We find that memory accesses are the main bottleneck in our system and propose a blocking method and an alignment-based partitiong method to coalesce accesses.
 
 Graph processing work is often split between making algorithmic improvements and making systems improvements. 
 Beamer et al. propose a new way to evaluate improvements in graph processing that allows for evaluation of both algorithmic and system improvements in one metric~\citep{beamer2015gail}.
 We leverage their traversed edges per second (TEPS) metric in our evaluation.
 
-\subsection{Graph Processing on CPUs} 
+\section{Graph Processing on CPUs} 
 Multicore CPUs are an example of Multiple Instruction Multiple Data (MIMD) execution.
 CPUs have powerful arithmetic cores for high-performance scientific computations and handle complex control-flow. 
 They have large, multi-level memory systems that can load large graph data structures into memory. 
@@ -30,7 +30,7 @@ Many frameworks have been proposed for multicore CPU systems including Ligra~\ci
 These frameworks use different approaches to address the limitations of graph processing on CPUs including priority scheduling of work and various load balancing techniques.
 However, I do not spend very much time on these optimizations because I focus on a manycore with much simpler cores and a smaller memory hierarchy.
 
-\subsection{Graph Processing on GPUs} GPUs have shown great promise in exploiting the inherent parallelism in graph applications \cite{liu2016ibfs, mclaughlin2014bcongpus}.
+\section{Graph Processing on GPUs} GPUs have shown great promise in exploiting the inherent parallelism in graph applications \cite{liu2016ibfs, mclaughlin2014bcongpus}.
 GPUs operate within the Single Instruction Multiple Threads (SIMT) execution model.
 When a memory access stall occurs the executing warp is replaced by another warp from the thread pool to achieve Instruction Level Parallelism (ILP).
 Memory-level parallelism (MLP) is also achieved through coalescing memory accesses of threads in a warp to contiguous addresses in memory in order to form a single high-bandwidth memory transaction.
@@ -49,12 +49,12 @@ However, it does not allow users to experiment with different scheduling options
 In this work I focus on targeting a broader class of manycore processors.
 While there are some interesting software base optimizations in this area of work, I do not spend too much time on them due to the SPMD model of our manycore architecture as opposed to the SIMT model of GPUs. 
 
-\subsection{Graph Processing on FPGAs} FPGAs present an interesting platform for graph processing frameworks. Engelhardt et al.~\cite{engelhardt2016gravf} and Dai et al.~\cite{dai2016fpgp} both propose vertex-centric frameworks on single and multi FPGA systems.
+\section{Graph Processing on FPGAs} FPGAs present an interesting platform for graph processing frameworks. Engelhardt et al.~\cite{engelhardt2016gravf} and Dai et al.~\cite{dai2016fpgp} both propose vertex-centric frameworks on single and multi FPGA systems.
 Meanwhile, Zhou et al~\cite{zhou2016high} use large external memory and an edge-centric model in their FPGA framework. Dai et al.~\cite{dai2017foregraph} propose another multi-FPGA system that partitions edge and vertex data among the FPGAs in the system.
 There has also been work on FPGA implementations of individual graph benchmarks~\cite{zhou2015optimizing, zhou2015accelerating}.
 Because my work is focused on general purpose manycore architectures, I do not address these FPGA specific optimizations.
 
-\subsection{Graph Processing Architectures} There has been significant work designing custom hardware for graph processing.
+\section{Graph Processing Architectures} There has been significant work designing custom hardware for graph processing.
 Ozdal et al.~\cite{ozdal2016energy} propose an asynchronous, vertex-centric hardware for graph processing. 
 Their asynchronous model does not execute graph algorithms using iterations with strict boundaries like traditional graph processing. 
 The goal of their work was to maintain a larger active set of vertices and edges in order to increase memory level parallelism. 
@@ -66,7 +66,7 @@ Zhuo et al.~\cite{zhuo2019graphq} and Ahn et al.~\cite{ahn2016scalable} present 
 Both of these works focus on reducing irregular movement of data by reordering vertex computations and through movement of computation.
 These works tend to focus on graph optimizations that are not solvable in software, while my work focuses on optimizations that can be implemented on general purpose manycore architectures.
 
-\subsubsection{Hardware Modifications} There is also work being done on modifying small parts of exisiting hardware systems to improve graph processing performance. 
+\subsection{Hardware Modifications} There is also work being done on modifying small parts of exisiting hardware systems to improve graph processing performance. 
 Segura et al.~\cite{segura2019scu} propose adding a stream compaction unit to existing GPUs to handle memory compaction and coalescing.
 Their stream compaction unit uses bitmasks in order to construct a subset of the edgelist for processing on the GPU in order to reduce duplication of work. 
 This, along with coalescing and organizing the data to improve cache efficiency, helps to improve performance on the GPU.
@@ -76,13 +76,13 @@ Another memory focused solution is proposed by~Mukkara et al.~\cite{mukkara2018e
 In their work, they design a locality aware hardware scheduler for scheduling graph traversal.
 Again, I do not focus on these types of optimizations in my work because my focus is on obtaining performance on a general purpose manycore.
 
-\subsection{Graph Processing on Manycore Architectures}
-\subsubsection{Manycore Architectures} Over the years, many diverse manycore architectures have been proposed. Unlike these past manycore architectures, the manycore architecture we target maximizes compute density and utilizes HBM for increased memory bandwidth. Raw~\cite{taylor2004raw} was an early manycore design that focused on exploitation of ILP via various forms of message-passing. 
+\section{Graph Processing on Manycore Architectures}
+\subsection{Manycore Architectures} Over the years, many diverse manycore architectures have been proposed. Unlike these past manycore architectures, the manycore architecture we target maximizes compute density and utilizes HBM for increased memory bandwidth. Raw~\cite{taylor2004raw} was an early manycore design that focused on exploitation of ILP via various forms of message-passing. 
 After Raw, the Tilera architecture was proposed~\cite{ramey2011tilera}.
 The Tilera chip had comparatively large cores that were each individually capable of running the Linux OS, and implemented directory-based cache coherent shared memory. 
 Adapteva~\cite{gwennap2011adapteva} and \cite{agathos2015parallela} was a manycore design that focused on compute density but lacked a parallel DRAM memory system suitable for graphs. Unlike GPUs and Xeon PHI, the target manycore architecture is a pure SPMD machine, without the complexity and thread divergence challenges of SIMT/SIMD units.
 
-\subsubsection{Manycore Graph Processing Frameworks} There has been previous work on optimizing graph algorithms on manycore architectures.
+\subsection{Manycore Graph Processing Frameworks} There has been previous work on optimizing graph algorithms on manycore architectures.
 Deveci et al~\cite{deveci2016kokkos} and Slota et al.~\cite{slota2015high} adopt an edge-centric approach for their implementation of the graph coloring algorithm and evaluate it on both a GPU and Xeon Phi. 
 While they both leverage the Kokkos library~\cite{deveci2016kokkos} for platform portability, these works focus on highly optimizing a small handful of graph algorithms.
 Chavarria et al.~\cite{chavarria2014scaling} focus on optimizing the performance of community detection on the Tilera processor.
