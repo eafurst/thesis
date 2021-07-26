@@ -14,7 +14,7 @@ Further, optimizations used in serial applications or implementations with limit
 This has resulted in a wide design space for algorithmic and architectural optimizations to increase the performance of these parallel graph processing systems at scale.
 
 
-\subsection{Challenges for Parallel Graph Processing}
+\section{Challenges for Parallel Graph Processing}
 
 Graph processing is notoriously difficult to optimize. 
 Performance depends on optimizing locality within sparse data structures, random-access performance, minimizing high-cost communication, and load balancing between parallel threads~\cite{lumsdaine2007challenges, beamer2015locality}. 
@@ -37,9 +37,12 @@ Past manycore architectures~\cite{ramey2011tilera, agathos2015parallela, gwennap
 In my thesis, I will show how this manycore architecture can be leveraged to provide high performance on a variety of graph processing applications.
 
 
-\subsection{Thesis Proposal}
+\section{Thesis Overview}
 My thesis proposes a code generator for graph programs targeting a representative manycore architecture. 
 Within this code generator, I propose and implement manycore specific optimizations to improve the graph processing performance. 
+\todo{finish rewriting this section}
+\section{Organization}
+\todo{give a roadmap of each chapter and its contributions/contents}
 %While graph processing frameworks and optimizations on parallel systems is an active area of research (\Cref{gen:sec:relatedwork}), my proposal to target a novel manycore and my subsequently proposed optimizations for this architecture expand the space and provide a new class of techniques for graph applications on this emerging architecture. 
 
 %In this thesis, I focus on two different aspects of this problem: ease of programming and manycore specific optimizations. I use information gained through experimentation with the manycore architecture to optimize graph applications (\Cref{sec:method}) and build these optimizations into a code generation engine (\Cref{sec:method:sub:baseline}).
