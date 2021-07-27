@@ -85,24 +85,26 @@
 \newcommand{\overviewResultsTable}{
 \begin{table}[]
 \centering
-\begin{tabular}{c|c|c|c}
+\begin{tabular}{lrcl}
 %\hline
-\textbf{Benchmark} & \textbf{Graph} & \textbf{MTEPS} & \textbf{Optimization} \\ \hline
- \multirow{5}{*}{BFS}& kron18 & 457.09 & Cache-Aligned \pull \\ \cline{2-4}
- & kron20 & 296.32 & Cache-Aligned \pull \\ \cline{2-4}
- & kron22 & 241.95 & Cache-Aligned \pull \\ \cline{2-4}
- & pokec & 148.02 &  Cache-Aligned \pull\\ \cline{2-4}
+\toprule
+\textbf{Benchmark} & \textbf{Graph} & \textbf{MTEPS} & \textbf{Optimization} \\ \midrule
+ \multirow{5}{*}{BFS}& kron18 & 457.09 & Cache-Aligned \pull \\ %\cline{2-4}
+ & kron20 & 296.32 & Cache-Aligned \pull \\ %cline{2-4}
+ & kron22 & 241.95 & Cache-Aligned \pull \\ %\cline{2-4}
+ & pokec & 148.02 &  Cache-Aligned \pull\\ %\cline{2-4}
  & lj & 304.36 & Cache-Aligned \pull \\ \hline
- \multirow{5}{*}{PR}& kron18 & 412.34 & Blocked \pull \\ \cline{2-4}
- & kron20 & 261.35 & Cache-Aligned \pull \\ \cline{2-4}
- & kron22 & 224.88 & Blocked \pull \\ \cline{2-4}
- & pokec & 272.57 & Blocked \pull \\ \cline{2-4}
+ \multirow{5}{*}{PR}& kron18 & 412.34 & Blocked \pull \\ %\cline{2-4}
+ & kron20 & 261.35 & Cache-Aligned \pull \\ %\cline{2-4}
+ & kron22 & 224.88 & Blocked \pull \\ %\cline{2-4}
+ & pokec & 272.57 & Blocked \pull \\ %\cline{2-4}
  & lj & 413.06 & Blocked \pull \\ \hline
- \multirow{5}{*}{SSSP}& kron18 & 467.08 & Cache-Aligned \pull \\ \cline{2-4}
- & kron20 & 364.36& Baseline \push \\ \cline{2-4}
- & kron22 & 404.27 & Baseline \push \\ \cline{2-4}
- & pokec & 149.17 & Cache-Aligned \pull \\ \cline{2-4}
+ \multirow{5}{*}{SSSP}& kron18 & 467.08 & Cache-Aligned \pull \\ %\cline{2-4}
+ & kron20 & 364.36& Baseline \push \\ %\cline{2-4}
+ & kron22 & 404.27 & Baseline \push \\ %\cline{2-4}
+ & pokec & 149.17 & Cache-Aligned \pull \\ %\cline{2-4}
  & lj & 268.87 & Cache-Aligned \pull \\ %\hline
+ \bottomrule
 \end{tabular}
 \caption{Table containing best MTEPS results across all benchmarks and input graphs. The optimizations used to achieve these results are also listed above.}
 \label{pap:generals:sec:eval:tab:overview}
@@ -112,16 +114,18 @@
 \newcommand{\relatedMTEPSTable}{
 \begin{table}[]
 \centering
-\begin{tabular}{c|c|c|c|c}
+\begin{tabular}{cllll}
 %\hline
- \textbf{Source} & \textbf{Platform} & \textbf{Benchmark} & \textbf{Graph}  & \textbf{MTEPS} \\ \hline
- \cite{slota2015high}& Xeon Phi MIC & CC & LJ (22) & 240 \\ \hline
- \cite{slota2015high}& Xeon Phi MIC & CC & Flickr (19) & 140\\ \hline
+\toprule
+ \textbf{Source} & \textbf{Platform} & \textbf{Benchmark} & \textbf{Graph}  & \textbf{MTEPS} \\ \midrule
+ \cite{slota2015high}& Xeon Phi MIC & CC & LJ (22) & 240 \\ %\hline
+ \cite{slota2015high}& Xeon Phi MIC & CC & Flickr (19) & 140\\ %\hline
  %Galois \cite{aasawat2018well}& Ivy Bridge & PR & LJ (22) & 207.67 \\ \hline
- \cite{khorasani2014cusha} & GTX780 & BFS & LJ (22) & 272.4 \\ \hline
- \cite{zhong2013medusa}& C2050 & BFS & KKT (21) & 351.5 \\ \hline
- \cite{yang2019graphblast}& k40c & SSSP & LJ (22) & 334.2 \\ \hline
+ \cite{khorasani2014cusha} & GTX780 & BFS & LJ (22) & 272.4 \\ %\hline
+ \cite{zhong2013medusa}& C2050 & BFS & KKT (21) & 351.5 \\ %\hline
+ \cite{yang2019graphblast}& k40c & SSSP & LJ (22) & 334.2 \\ %\hline
  \cite{wang2016gunrock} & k40c & SSSP & LJ (22) & 217.9 \\
+ \bottomrule
 
 \end{tabular}
 \caption{Performance results in MTEPS from other graph processing frameworks. The benchmark CC is strongly connected components.}

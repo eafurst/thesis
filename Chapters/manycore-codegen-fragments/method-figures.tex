@@ -1,7 +1,7 @@
 \newcommand{\nonblockedMethodFigure}{
 \begin{figure}[h]
     \centering
-    \includegraphics[scale=0.5]{graphit-figures/non-blocked.pdf}
+    \includegraphics[scale=0.7]{graphit-figures/non-blocked.pdf}
     \caption{Data layout of BFS on the manycore. Data resides in HBM main memory and is cached in LLC. Each core is assigned work items sized without alignment consideration. Cores request single words of data on demand when needed. }
     \label{pap:generals:sec:method:sub:blocked:fig:non-blocked}
 \end{figure}
@@ -10,7 +10,7 @@
 \newcommand{\blockedMethodFigure}{
 \begin{figure}[t]
     \centering
-    \includegraphics[scale=0.5]{graphit-figures/blocked.pdf}
+    \includegraphics[scale=0.7]{graphit-figures/blocked.pdf}
     \caption{Data layout of BFS with blocked accesses. Cores are assigned cache aligned work items. Cores prefetch entire line-sized blocks of data to hide request latency.}
     \label{pap:generals:sec:method:sub:blocked:fig:blocked}
 \end{figure}
@@ -19,9 +19,9 @@
 \newcommand{\combinedBlockingFigure}{
 \begin{figure*}[t!]
     \centering
-    \subfloat[Non-Blocked Accesses]{\includegraphics[scale=0.5]{graphit-figures/non-blocked.pdf}}
+    \subfloat[Non-Blocked Accesses]{\includegraphics[scale=0.7]{graphit-figures/non-blocked.pdf}}
     \qquad
-    \subfloat[Blocked Accesses]{\includegraphics[scale=0.5]{graphit-figures/blocked.pdf}}
+    \subfloat[Blocked Accesses]{\includegraphics[scale=0.7]{graphit-figures/blocked.pdf}}
     \caption{Data layout of BFS on the manycore. Data resides in HBM main memory and is cached in LLC. In the baseline implementation, each cores are assigned work items sized without alignment consideration and request single words of data on demand when needed. With the blocked access optimization, cores are assigned cache aligned work items and prefetch entire line-sized blocks of data to hide request latency.}
     \label{pap:generals:sec:method:sub:blocked:fig:blocking}
 \end{figure*}
@@ -30,7 +30,7 @@
 \newcommand{\edgeAwareMethodFigure}{
 \begin{figure}
     \centering
-    \includegraphics[scale=0.5]{graphit-figures/edge-aware.pdf}
+    \includegraphics[scale=0.7]{graphit-figures/edge-aware.pdf}
     \caption{Depiction of vertex-based and edge-aware vertex-based partitioning. Partition 1 shows an example vertex-based partitioning between two cores, and Partition 2 shows an example edge-aware partitioning that provides a better workload balance between the two cores.}
     \label{fig:edgeaware}
 \end{figure}
@@ -56,7 +56,7 @@
 \newcommand{\pushVPullMethodFigure}{
 \begin{figure}
     \centering
-    \includegraphics[scale=0.5]{graphit-figures/push_v_pull_fig.pdf}
+    \includegraphics[scale=0.7]{graphit-figures/push_v_pull_fig.pdf}
     \caption{Representation of one iteration of BFS in both the \textsc{Push} and \textsc{Pull} directions. Nodes highlighted in yellow are visited during the iteration. Edges in red are edges that are traversed during execution.}
     \label{fig:pushpull}
 \end{figure}
