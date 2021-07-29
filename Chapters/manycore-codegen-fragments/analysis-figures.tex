@@ -1,0 +1,70 @@
+\newcommand{\tabHBParams}{
+%\newcolumntype{D}{>{\raggedleft\arraybackslash}m{0.65in}}
+%\newcolumntype{E}{>{\raggedright\arraybackslash}m{2.75in}}
+\newcolumntype{D}{>{\raggedleft\arraybackslash}m{0.6175in}}
+\newcolumntype{E}{>{\raggedright\arraybackslash}m{2.7175in}}
+\begin{table}[h]
+  \centering
+  %\vspace{-0.1in}
+  \resizebox{0.7\linewidth}{!}{
+  \begin{footnotesize}
+    \begin{tabular}{DE}
+      \toprule
+      {\bf Cores} & 128 cores in a 16x8 grid \\
+      & RISC-V 32-bit IMAF ISA @ 1 GHz\\
+      & 4KB Instruction Cache \\
+      & 4KB Data Scratchpad \\ %%[.5ex]
+      \midrule
+      {\bf Cache} & 128KB Total Capacity \\
+      & 32 Independent Cache Banks \\
+      & 8-way Set Associative\\ [.2ex]
+      \midrule
+      {\bf NoC} & Bidirectional 2D Mesh NoC (32-bit data, 64-bit address) \\ [.2ex]
+      \midrule
+      {\bf Memory} & 2 HBM2 memory channels \\
+      & 32 GB/s per channel \\
+      & 512 MB per channel \\
+      \bottomrule
+    \end{tabular}
+  \end{footnotesize}
+  }
+  \vspace{-0.02in}
+  \caption{Configuration of the HammerBlade manycore used in this evaluation.}
+  \label{tab:hbParams}
+  \vspace{-0.04in}
+\end{table}
+}
+
+\newcommand{\hbBlockingEvalTab}{
+\begin{table}[h]
+\centering
+\begin{footnotesize}
+\begin{tabular}{l|c c c}
+%\hline
+Graph & DRAM Stalls & Bandwidth &  Speedup \\ \hline
+LJ & 0.78 & 3.03 & 1.19    \\
+HW &  0.79 & 2.17 & 1.53   \\
+PC & 0.83 & 3.02 & 1.49     \\
+\end{tabular}
+\end{footnotesize}
+  \caption{Impact of the blocked access optimization on SSSP. Reduction in DRAM stalls, improvement in memory bandwidth utilization, and overall speedup. } %over the unoptimized version of \sssp. }%Results are shown for the three graphs for which the blocked access method was the optimal schedule.}
+\label{tab:hb_blocking}
+\end{table}
+}
+
+\newcommand{\edgeAwareHist}{
+\begin{figure}[h]
+    \centering
+    \subfloat[BFS 18]{\includegraphics[width=0.3\textwidth]{graphit-figures/bfs-pull-18-edge-aware.png}}
+    \subfloat[BFS 19]{\includegraphics[width=0.3\textwidth]{graphit-figures/bfs-pull-19-edge-aware.png}}
+    \subfloat[BFS 20]{\includegraphics[width=0.3\textwidth]{graphit-figures/bfs-pull-20-edge-aware.png}} \\
+    \subfloat[SSSP 18]{\includegraphics[width=0.3\textwidth]{graphit-figures/sssp-pull-18-edge-aware.png}}
+    \subfloat[SSSP 19]{\includegraphics[width=0.3\textwidth]{graphit-figures/sssp-pull-19-edge-aware.png}}
+    \subfloat[SSSP 20]{\includegraphics[width=0.3\textwidth]{graphit-figures/sssp-pull-20-edge-aware.png}} \\
+    \subfloat[PR 18]{\includegraphics[width=0.3\textwidth]{graphit-figures/pr-pull-18-edge-aware.png}}
+    \subfloat[PR 19]{\includegraphics[width=0.3\textwidth]{graphit-figures/pr-pull-19-edge-aware.png}}
+    \subfloat[PR 20]{\includegraphics[width=0.3\textwidth]{graphit-figures/pr-pull-20-edge-aware.png}}
+    \caption{Probability distribution of cycle counts for each core for vertex-based and edge-aware partitioning.}
+    \label{fig:load_balance:cycledist}
+\end{figure}
+}

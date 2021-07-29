@@ -39,10 +39,10 @@ As the scale of graph data continues to grow, new techniques and architectures a
 Manycore architectures are flexible compute substrates that provide parallelism through hundreds to thousands of general purpose cores.
 Past work has demonstrated their robust compute performance on regular compute intensive tasks such as machine-learning and scientific computing.
 
-In this work, I explore the ability of manycore architectures to efficiently compute on graph data structures.
-In order to study the performance of graph algorithms on a manycore, I propose a code generation backend for the GraphIt domain-specific language targetting a representative manycore architecture.
-I explore the performance of several existing optimizations and present new manycore specific optimizations.
-I show how these optimizations improve manycore performance through increased locality, improved load balancing, and leveraging of graph structure.
+This thesis explores the ability of manycore architectures to efficiently compute on graph data structures.
+In order to study the performance of graph algorithms on a manycore, we design a code generation backend for the GraphIt domain-specific language targetting a representative manycore architecture.
+We explore the performance of several existing optimizations and present new manycore specific optimizations.
+We further show how these optimizations improve manycore performance through increased locality, improved load balancing, and leveraging of graph structure.
 %Several graph processing optimizations involve threshold values or other tunable parameters.
 %As future work, I propose a study of these optimizations to examine whether these parameters are dependent on architecture and graph structure in order to find optimal values for the manycore.
 %I also propose an implementation of multi-source breadth first search that is optimized for a manycore architecture.
