@@ -4,5 +4,36 @@
 \todo{planar vs. scale-free, properties of each}
 \section{Graphs used in this Thesis}\label{thesis:background:graphs}
 \todo{table of all graphs + their properties, explain in text about the choices}
+
+\begin{table*}
+\centering
+\begin{tabular}{lllll}
+\toprule
+\textbf{Name} & \textbf{Scale} & \textbf{Vertices} & \textbf{Edges} & \textbf{Properties} \\ \midrule
+\kron & 18 & 262,144 & 4,194,304 & Synthetic, scale-free\\
+\kron & 20 & 1,048,576 & 16,777,216 & Synthetic, scale-free\\
+\kron & 22 & 4,194,304 & 67,108,864 & \\
+Pokec & 20.5 & 1,632,803 & 30,622,564 & \\
+LiveJournal (lj) & 22 & 3,997,962 & 34,681,189 & \\
+Hollywood (hw) & & & & \\
+RoadCA & & & & \\
+RoadCentral & & & & \\
+RoadUSA & & & & \\
+\bottomrule
+\end{tabular}
+\caption{List of graphs used in this thesis and their properties.\todo{more on caption, cite each graph, fill in}}
+\end{table*}
+
 \section{Algorithms used in this Thesis}\label{thesis:background:algorithms}
 \todo{explain bfs, sssp (delta + bellmanford), pr, cc, bc, etc. in detail}
+In this thesis we explore a variety of graph processing algorithms.
+
+\paragraph{Breadth First Search (BFS)} is a building block of many graph algorithms.
+
+\paragraph{PageRank (PR)} calculates the importance of each vertex in a graph. 
+
+\paragraph*{Single Source Shortest Path (SSSP)} We examine two variants of the SSSP algorithms, Bellman-Ford and Delta-stepping.
+
+\paragraph{Connected Components (CC)}
+
+\paragraph{Betweenness Centrality (BC)} 
