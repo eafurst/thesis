@@ -39,22 +39,24 @@ In my thesis, I will show how this manycore architecture can be leveraged to pro
 
 \section{Thesis Overview}
 This thesis presents a code generator for graph programs targeting a representative manycore architecture. 
-Within this code generator, I implement and evaluate manycore specific optimizations to improve the graph processing performance. 
-\todo{finish rewriting this section}
+Within this code generator, I implement and evaluate manycore specific optimizations to improve graph processing performance. 
+While graph processing frameworks and optimizations on parallel systems is an active area of research, this work targets a novel manycore architecture.
+Further, the optimizations for this architecture expand the space and provide a new class of techniques for graph applications on this emerging architecture. 
+
+In this thesis, I focus on two different aspects of the problem of efficiently utilizing the manycore for graph processing: ease of programming and manycore specific optimizations. 
+Reasoning about the implementation of a graph application and the details of the underlying architecture can be difficult especially as techniques for obtaining performance on architectures become increasingly complex. 
+I address this by building a code generator that allows the user to reason about the graph application and optimizations at a high level without requiring knowledge of the underlying manycore architecture.
+I use observations about the manycore architecture to implement existing graph processing optimizations and introduce several manycore specific optimizations that build off of the observation that most graph applications are memory bound. 
+%I propose further study of performance on the manycore in order to optimize a variety of techniques and applications (\ref{gen:sec:proposed}).
+
+
+%I use information gained through experimentation with the manycore architecture to optimize graph applications (\ref{sec:method}) and build these optimizations into a code generation engine (\ref{sec:method:sub:baseline}).
 \section{Organization}
 \todo{give a roadmap of each chapter and its contributions/contents}
 
 I begin this thesis by providing background information on graph processing and introduce the algorithms and graphs that are used for evaluation.
 I also give an overview of the \graphit DSL and the representative manycore architecture that I target in Section~\ref{gen:sec:background}.
-%While graph processing frameworks and optimizations on parallel systems is an active area of research (\Cref{gen:sec:relatedwork}), my proposal to target a novel manycore and my subsequently proposed optimizations for this architecture expand the space and provide a new class of techniques for graph applications on this emerging architecture. 
-
-%In this thesis, I focus on two different aspects of this problem: ease of programming and manycore specific optimizations. I use information gained through experimentation with the manycore architecture to optimize graph applications (\Cref{sec:method}) and build these optimizations into a code generation engine (\Cref{sec:method:sub:baseline}).
-
-%\begin{itemize}
-%\item \textbf{Ease of Programming} Reasoning about the implementation of a graph application and the details of the underlying architecture can be difficult especially as techniques for obtaining performance on architectures become increasingly complex. I address this by proposing a code generator that allows the user to reason about the graph application and optimizations at a high level without requiring knowledge of the underlying manycore architecture (\Cref{sec:method:sub:baseline}).
-%\item \textbf{Manycore Specific Optimizations} I use observations about the manycore architecture to implement existing graph processing optimizations and propose several manycore specific optimizations that build off of the observation that most graph applications are memory bound (\Cref{sec:method}). I propose further study of performance on the manycore in order to optimize a variety of techniques and applications (\cref{gen:sec:proposed}).
-%\end{itemize}
-
+%
 Finally, I contextualize my work within the space of graph processing frameworks and optimizations in Section~\ref{gen:sec:relatedwork}.
 %Then, I provide background information on the \graphit DSL and the representative manycore architecture that I target in Section~\ref{gen:sec:background}.
 %In Section~\ref{gen:sec:graphitbackend}, I present my work implementing a code generation backend for the \graphit DSL. 
