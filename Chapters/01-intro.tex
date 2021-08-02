@@ -52,12 +52,23 @@ I use observations about the manycore architecture to implement existing graph p
 
 %I use information gained through experimentation with the manycore architecture to optimize graph applications (\ref{sec:method}) and build these optimizations into a code generation engine (\ref{sec:method:sub:baseline}).
 \section{Organization}
-\todo{give a roadmap of each chapter and its contributions/contents}
+%\todo{give a roadmap of each chapter and its contributions/contents}
 
 I begin this thesis by providing background information on graph processing and introduce the algorithms and graphs that are used for evaluation.
-I also give an overview of the \graphit DSL and the representative manycore architecture that I target in Section~\ref{gen:sec:background}.
+I also give an overview of the \graphit DSL and the representative manycore architecture that I target in Chapter~\ref{gen:sec:background}.
+
+In Chapter~\ref{gen:sec:optimizations}, I present the set of optimizations that we implement and explore in this thesis.
+This includes several existing graph processing optimizations as well as the manycore-specific optimizations introduced in this thesis.
+These optimizations target things such as load balancing, graph traversal, and the manycore memory system. 
+
+I then introduce the code generation framework that I implemented as a backend to the \graphit DSL in Chapter~\ref{gen:sec:graphitbackend}.
+This chapter describes how optimizations are applied to programs and what the resulting generated manycore code includes.
+
+Next, Chapter~\ref{sec:eval} presents an evaluation of the code generation framework and the set of optimizations introduced in Chapters~\ref{gen:sec:optimizations} and~\ref{gen:sec:graphitbackend}.
+We evaluate the performance of each optimization on a variety of input graphs and algorithms.
 %
-Finally, I contextualize my work within the space of graph processing frameworks and optimizations in Section~\ref{gen:sec:relatedwork}.
+Before concluding, I contextualize my work within the space of graph processing frameworks and optimizations in Chapter~\ref{gen:sec:relatedwork}.
+I then conclude and provide some insights into areas of future work in Chapter~\ref{gen:sec:conclusion}.
 %Then, I provide background information on the \graphit DSL and the representative manycore architecture that I target in Section~\ref{gen:sec:background}.
 %In Section~\ref{gen:sec:graphitbackend}, I present my work implementing a code generation backend for the \graphit DSL. 
 %I further propose manycore specific optimizations in Section~\ref{gen:sec:graphitbackend} and discuss the implementation of several other graph processing optimizations. 
