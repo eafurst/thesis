@@ -1,13 +1,21 @@
 \input{Chapters/manycore-codegen-fragments/graphit-lang-figures}
-\section{GraphIt: A Graph Processing Domain-Specific Language}\label{pap:generals2020:sec:graphit}
+\section{\graphit: A Graph Processing Domain-Specific Language}\label{pap:generals2020:sec:graphit}
+\ugfoverview
+\graphit is a domain-specific language for graph processing applications~\citep{zhang2018graphit}.
+Like Halide~\citep{ragan2013halide}, GraphIt separates the description of the algorithm from the scheduling of the computation. 
+A separate algorithm language and scheduling language are used to specify graph programs in GraphIt. 
+This separation of description and schedule allows users to express computation more flexibly.
 
-GraphIt is a domain-specific language for graph processing applications~\citep{zhang2018graphit}.
-Like Halide~\citep{ragan2013halide}, GraphIt separates the description of the algorithm from the scheduling of the computation. A separate algorithm language and scheduling language are used to specify graph programs in GraphIt. This separation of description and schedule allows users to express computation more flexibly.
-Listing~\ref{pap:generals2020:sec:background:lst:graphit} shows an example GraphIt program implementing Breadth-First Search (BFS).
+The \ugc provides functionality for adding new backends by further decoupling the hardware-independent transformations from the hardware-dependent compiler passes~\cite{brahmakshatriya2021taming}.
+The design of \ugc makes it easy to write and compose optimizations that make use of each backend architecture's unique features.
+Figure~\ref{fig:ugf} demonstrates the overall compilation flow with various analyses and lowering passes to generate GraphIR, GraphIt's graph specific intermediate representation.
+\graphisa is lowered into code for different architectures using an architecture-specific Graph Virtual Machine (\graphvm), which performs the hardware-specific transformations and code generation.
+
+Listing~\ref{pap:generals2020:sec:background:lst:graphit} shows an example GraphIt program implementing Breadth-First Search (BFS) along with a \hb-specific schedule.
 \hfill
 \break 
 \begin{lstlisting}[language=graphit, 
-                   caption=GraphIt code for Breadth-First Search (BFS),
+                   caption=GraphIt code for Breadth-First Search (BFS) with a HammerBlade manycore schedule.,
                    label=pap:generals2020:sec:background:lst:graphit]
 const edges : edgeset{Edge}(Vertex,Vertex);
 var frontier : vertexset{Vertex} = new vertexset{Vertex}(0);
@@ -29,7 +37,9 @@ func main()
 end
 
 schedule:
-  program->configApplyDirection("s1", "DensePull")->generateManycoreCode();
+  SimpleHBSchedule sched1;
+    sched1.configDirection(PULL);
+  program->applyHBSchedule("s1", sched1);
 \end{lstlisting}
 
 \subsection{Graph Representation}
@@ -70,16 +80,26 @@ This \lstinline[language=graphit]{vertexset} becomes the new frontier for the ne
 %\todo[inline]{Check all line-number references}
 
 \subsection{Schedule Representation}
-GraphIt provides a wide range of scheduling options, i.e., by specifying traversal direction, by specifying the level of parallelism, or by using load balancing techniques for parallel operators.
+One of the key benefits of \graphit is that it decouples the algorithm description from the schedule which allows developers to iterate through different scheduling optimizations. 
+To support a diverse set of \graphvms each with their own set of optimizations, a new scheduling language is written for each hardware target. 
+\GG provides an abstract interface that provides virtual functions for all of the information that the hardware-independent compiler needs.
+New scheduling object classes are implemented for each \graphvm by inheriting from this abstract interface. 
+These new classes have members and functions to configure various scheduling options specific to optimizations supported for their \graphvms. 
+These classes implement the virtual functions from the abstract interface to provide the hardware-independent part of \GG with the information that it needs.
+
+A wide range of scheduling options can be implemented in each \graphvm, i.e., by specifying traversal direction, by specifying the level of parallelism, or by using load balancing techniques for parallel operators.
 Labels are used to indicate which operators in the algorithm description the scheduling optimizations should be applied to.
-The separation of the algorithm description and schedule allows developers to iterate through different scheduling optimizations and is a key part of GraphIt.
-The schedule finishes by generating code for the target device.
+Further, the architecture-specific schedule tells the compiler to generate code for the target device.
 The schedule description always follows the algorithm description in GraphIt.
 
-The schedule for BFSs starts with the \lstinline[language=graphit]{schedule} declaration on Line~20 of Listing~\ref{pap:generals2020:sec:background:lst:graphit}. Line~21 specifies that the schedule for label \lstinline[language=graphit]{#s1#} should be "Dense Pull". This schedule is described in Section~\ref{sec:method}
-Finally, the schedule specifies that the code generator should generate code for the target device. 
+The schedule for BFS starts with the \lstinline[language=graphit]{schedule} declaration on Line~20 of Listing~\ref{pap:generals2020:sec:background:lst:graphit}. 
+Line~21 instantiates a \hb scheduling object indicating that the code generator should generate code for the target manycore. 
+Line~22 specifies that the traversal schedule for label \lstinline[language=graphit]{#s1#} should be "Dense Pull". 
+This optimizations that the \hb \graphvm and scheduling language support are described in Chapter~\ref{gen:sec:optimizations}. 
+%Finally, the schedule specifies that the code generator should generate code for the target device. 
 
 \subsection{Code Generation}
+\todo{describe the notion of a graph VM here}
 GraphIt's code generator takes an algorithm and schedule and generates device-specific code.
 Graphit first parses the algorithm and schedule using the frontend to produce the Intermediate Representation. 
 Next, the compiler performs dependency analysis and enforces restrictions on read-write accesses and reduction operators. 
