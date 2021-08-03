@@ -84,38 +84,39 @@
 %I am not sure if this is the best way to present an overview of results or if we need it. 
 
 \newcommand{\overviewResultsTable}{
-
-    \begin{table*}[h]
+    \begin{sidewaystable}
     \centering
-    \begin{tabular}{l|l|c|c|c|c|l}
+    \begin{tabular}{llccccl}
     %\hline
-        \textbf{Benchmark} & \textbf{Graph} & \textbf{Traversed Edges} & \textbf{Time (ms)} & \textbf{MTEPS} & \textbf{Speedup} & \textbf{Schedule}  \\ \hline \hline
-        \multirow{ 6}{*}{BFS} & kron18 & 364,687 & 3.02 & 120.61 & 3.01 &\push \\ \cline{2-7}
-        & kron20 & 3,075,348 &19.82 & 155.13 & 1.60 & \push \\ \cline{2-7}
-        & kron22 & 130,762,502 & 136.73 & 956.38 & 1.38 & \hybrid \\ \cline{2-7}
-        & pokec & 28,787,299 & 32.60 & 916.15 & 3.74 & \hybrid, alignment-based partitioning on \pull \\ \cline{2-7}
-        & LJ  & 31,773,988 &  80.68  & 393.83 &  1.93 & \pull, alignment-based partitioning \\ \cline{2-7}
+        \toprule
+        \textbf{Benchmark} & \textbf{Graph} & \textbf{Traversed Edges} & \textbf{Time (ms)} & \textbf{MTEPS} & \textbf{Speedup} & \textbf{Schedule}  \\ \midrule
+        \multirow{ 6}{*}{BFS} & kron18 & 364,687 & 3.02 & 120.61 & 3.01 &\push \\ %\cline{2-7}
+        & kron20 & 3,075,348 &19.82 & 155.13 & 1.60 & \push \\ %\cline{2-7}
+        & kron22 & 130,762,502 & 136.73 & 956.38 & 1.38 & \hybrid \\ %\cline{2-7}
+        & pokec & 28,787,299 & 32.60 & 916.15 & 3.74 & \hybrid, alignment-based partitioning on \pull \\ %\cline{2-7}
+        & LJ  & 31,773,988 &  80.68  & 393.83 &  1.93 & \pull, alignment-based partitioning \\ %\cline{2-7}
         & road\_central  & 470 &  0.13  & 3.39 &  2342.51 & \push, bucketed sparse frontier\\ \hline
-        \multirow{ 6}{*}{SSSP} &kron18  & 769,042 &  1.77  & 434.36 &  15.68 & \push \\ \cline{2-7}
-        & kron20  & 12,300,469 &  19.96  & 616.26&  8.7 & \push\\ \cline{2-7}
-        & kron22  & 86,836,312 &  155.19  & 559.51 &  5.89 & \push \\ \cline{2-7}
-        & pokec  & 10,018,259 &  236.91  & 42.29 &  2.62 & \push, bucketed sparse frontier \\ \cline{2-7}
-        & LJ  & 128,114,036 & 515.65  & 248.45 & 3.44 & \push, \\ \cline{2-7}
+        \multirow{ 6}{*}{SSSP} &kron18  & 769,042 &  1.77  & 434.36 &  15.68 & \push \\ %\cline{2-7}
+        & kron20  & 12,300,469 &  19.96  & 616.26&  8.7 & \push\\ %\cline{2-7}
+        & kron22  & 86,836,312 &  155.19  & 559.51 &  5.89 & \push \\ %\cline{2-7}
+        & pokec  & 10,018,259 &  236.91  & 42.29 &  2.62 & \push, bucketed sparse frontier \\ %\cline{2-7}
+        & LJ  & 128,114,036 & 515.65  & 248.45 & 3.44 & \push, \\ %\cline{2-7}
         & road\_central  & 850 &  0.15  & 5.35 &  2043.07 & \push, bucketed sparse frontier\\ \hline
-        \multirow{ 6}{*}{PR} & kron18  & 3,805,022 &  9.23  & 412.34 &  1.12 & \pull, blocked access method\\ \cline{2-7}
-        & kron20  & 15,700,369 &  60.07  & 261.35 &  1.16 & \pull, alignment-based partitioning\\ \cline{2-7}
-        & kron22  & 64,155,711 &  285.29  & 224.88 &  1.11 & \pull, blocked access method\\ \cline{2-7}
-        & pokec  & 30,622,564 &  112.34  & 272.58 &  1.51 & \pull, blocked access method\\ \cline{2-7}
-        & LJ  & 34,681,189 &  83.96  & 413.06 &  1.90 & \pull, blocked access method\\ \cline{2-7}
-        & road\_central  & 33,866,826 &  91.57  & 369.84 & 1.19 & \pull, blocked access method \\ \hline
+        \multirow{ 6}{*}{PR} & kron18  & 3,805,022 &  9.23  & 412.34 &  1.12 & \pull, blocked access method\\ %\cline{2-7}
+        & kron20  & 15,700,369 &  60.07  & 261.35 &  1.16 & \pull, alignment-based partitioning\\ %\cline{2-7}
+        & kron22  & 64,155,711 &  285.29  & 224.88 &  1.11 & \pull, blocked access method\\ %\cline{2-7}
+        & pokec  & 30,622,564 &  112.34  & 272.58 &  1.51 & \pull, blocked access method\\ %\cline{2-7}
+        & LJ  & 34,681,189 &  83.96  & 413.06 &  1.90 & \pull, blocked access method\\ %\cline{2-7}
+        & road\_central  & 33,866,826 &  91.57  & 369.84 & 1.19 & \pull, blocked access method \\ %\hline
+        \bottomrule
     \end{tabular}
     \caption{Table containing best execution time results across all benchmarks and input graphs. The total number of traversed edges, achieved MTEPS, speedup over the baseline implementations, and the optimizations used to achieve these results are also listed above. Note that algorithmic changes can affect the total number of traversed edges. As a result, a benchmark may report speedup over the baseline but report lower overall MTEPS. This is especially noticeable on the road\_central graph as discussed in Section~\ref{sec:discussion}}
     \label{sec:eval:tab:summary}
-    \end{table*}
+    \end{sidewaystable}
 }
 
 \newcommand{\relatedMTEPSTable}{
-\begin{table}[]
+\begin{table}
 \centering
 \begin{tabular}{cllll}
 %\hline
@@ -133,21 +134,26 @@
 \end{tabular}
 \caption{Performance results in MTEPS from other graph processing frameworks. The benchmark CC is strongly connected components.}
 \label{sec:related:tab:mteps}
-\vspace{-1mm} 
 \end{table}
+
 }
+
+
 \newcommand{\graphInfoTable}{
 \begin{table}[]
 \centering
-\begin{tabular}{c|c|c|c}
+\begin{tabular}{cccc}
 %\hline
- \textbf{Name} & \textbf{Scale} & \textbf{\# Vertices} & \textbf{\# Edges} \\ \hline %\hline
- kron18 & 18 & 262,144 & 4,194,304 \\ \hline
- kron20 & 20 & 1,048,576 & 16,777,216 \\ \hline
- kron22 & 22 & 4,194,304 & 67,108,864 \\ \hline
- pokec & 20.5 & 1,632,803 & 30,622,564 \\ \hline
+\toprule
+ \textbf{Name} & \textbf{Scale} & \textbf{\# Vertices} & \textbf{\# Edges} \\ \midrule %\hline
+ kron18 & 18 & 262,144 & 4,194,304 \\ %\hline
+ kron20 & 20 & 1,048,576 & 16,777,216 \\ %\hline
+ kron22 & 22 & 4,194,304 & 67,108,864 \\ %\hline
+ pokec & 20.5 & 1,632,803 & 30,622,564 \\ %\hline
  livejournal (lj) & 22 & 3,997,962 & 34,681,189 \\ %\hline
+ \bottomruleå
 \end{tabular}
+
 
 \caption{The vertex and edge information for each of the graphs used in our evaluation. We use synthetic \kron graphs used in the Graph500 benchmark and two real world graphs.}
 \label{sec:eval:tab:graphs}
