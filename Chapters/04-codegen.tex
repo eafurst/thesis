@@ -6,6 +6,7 @@
 
 %\todo{intro paragraph to discuss the problem with graph processing again?/contextualize after background and related work?}
 To harness the benefits of manycore architectures and reduce programming complexity, we propose a code generation backend for GraphIt, a flexible domain-specific language (DSL) for graph computations~\cite{zhang2018graphit}. 
+We implement our backend as a \graphvm using \ugc.
 This backend generates code targetting the representative manycore architecture described in \ref{gen:sec:background}.
 We use this new backend to implement and explore the performance of the optimizations discussed in Chapter~\ref{gen:sec:optimizations}.
 %Our evaluation shows that our GraphIt backend achieves a maximum of 467.1 million traversed edges per second (MTEPS) and on average achieves 252.7 MTEPS across all input graphs and benchmarks studied. 
@@ -19,9 +20,10 @@ To address this, we developed a code generation backend targeting a manycore arc
 This code generator alleviates the need for the programmer to have extensive knowledge of the underlying architecture.
 %To alleviate the need for the programmer to have knowledge of the underlying manycore architecture, we develop a code generation backend to GraphIt targeting a manycore architecture.
 
-We add support for our backend and the manycore specific optimizations discussed in Section~\ref{sec:method} with minimal changes to the GraphIt frontend scheduling language.
-First, we added the option \lstinline[language=graphit]{generateManycoreCode()} which signals to the GraphIt compiler it should generate code for the manycore architecture described in Section~\ref{pap:generals:sec:architecture}.
-We also added support for our blocked access method and alignment-based partitioning scheme in the scheduling language. 
+We add support for our backend and the manycore specific optimizations discussed in Chapter~\ref{gen:sec:optimizations} by implementing a \hb scheduling language using the abstract language provided by \GG.
+%First, we added the option \lstinline[language=graphit]{generateManycoreCode()} which signals to the GraphIt compiler it should generate code for the manycore architecture described in Section~\ref{pap:generals:sec:architecture}.
+This scheduling language signals to the \graphit compiler that it should generate code for the \hb manycore architecture.
+We also add support for each of the optimizations described in Chapter~\ref{gen:sec:optimizations} including our blocked access method and alignment-based partitioning scheme.
 
 In order to generate code that runs on the manycore, we must generate code for both the host CPU and the manycore device.
 %An early consideration when designing the backend was how to split the code between host and device. 
@@ -124,3 +126,7 @@ Our profiling showed that this number of locks was sufficient to reduce contenti
 Locks are assigned using a simple hash function on the address of the element for which an atomic operation has been called.
 
 \section{Chapter Summary}
+In this chapter we introduced our \hb code generation backend.
+Our code generator allows a user to easily reason about a variety of graph processing and manycore-specific optimizations.
+We described how we generate code for both the host processor and manycore device. 
+We choose to have the host processor handle coordination and initialization while the device computes the graph traversals and updates.

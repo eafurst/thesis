@@ -124,7 +124,7 @@ When we examined our simulation results, we saw that the \pull~direction issued 
 %The Xeon is a server class CPU with a latency-optimized memory system and relatively high area and power budgets.
 %The manycore uses only a tiny fraction of the die area of a Xeon and is designed to achieve best performance per Watt.
  
-\subsection{Blocking}
+\subsection{Blocked Access Method}
 %\blockSSSPFigure
 \begin{figure}[t]
     \centering
@@ -228,6 +228,24 @@ This scheduling optimization relies heavily on the structure of the input graph 
 Overall, while we see performance improvements with edge-aware vertex-based partitioning on some benchmarks, we find that alignment-based partitioning provides the most performance improvement in all cases. 
 Despite its workload balancing benefits, edge-aware partitioning does not account for the manycore specific properties of the memory system.
 Because the memory is the main bottleneck of graph algorithms, the alignment-based scheme which explicitly takes into consideration the properties of the manycore's memory system is ideal. 
+
+\subsection{Bucketed Sparse Frontier}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.7]{graphit-figures/sparse.pdf}
+    \caption{Bucketed sparse frontier speedup results for each benchmark. Speedup is calculated over the baseline \push direction implementation.} %For each graph and benchmark, work group sizes of 16, 32, 64, 128, and 256 vertices were tested and the best performing work group size is reported here.
+    \label{pap:cgo2020:sec:eval:fig:sparse}
+\end{figure}
+
+Figure~\ref{pap:cgo2020:sec:eval:fig:sparse} shows the performance of the bucketed sparse frontier optimization relative to the baseline vertex-based partitioning for all benchmarks in the \push direction.
+We only evaluate this optimization on BFS and SSSP because PR is not a frontier based algorithm.
+We find the largest improvement on the road\_central graph with a speedup of 361.23$\times$ for BFS and 319.45$\times$ for SSSP.
+This is expected as it has the smallest frontiers and vertices in the graph have very low degree, and thus benefits the most from removing unnecessary reads to the frontier.
+
+We observed a large slow down in almost every other case.
+This was due to an increase in cache line contention that decreased the LLC hit rate. 
+Cores ended up issuing more read requests concurrently with this scheme than they did using a dense frontier which degraded performance.
  
 \subsection{Performance Analysis}
 
