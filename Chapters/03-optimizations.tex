@@ -4,8 +4,9 @@
 \input{Chapters/manycore-codegen-fragments/method-figures}
 
 In this chapter, we explore optimizations to improve graph application performance on the manycore system described in Section \ref{pap:generals:sec:architecture}.
-First, we propose a blocked access method for graph data to better exploit memory-level parallelism (MLP) in software.
-Next, we discuss three different work partitioning schemes.
+First, we discuss a blocked access method for graph data to better exploit memory-level parallelism (MLP) in software.
+Next, we present three different work partitioning schemes.
+We then introduce a new frontier storage format that targets very sparse frontiers. 
 %Next, we discuss an implementation of edge-aware vertex partitioning. 
 We follow this with an exploration of graph traversal directions.
 %Lastly, we introduce a GraphIt backend for a manycore architecture which can automate the process of applying the schedules discussed in this section. 
@@ -99,6 +100,17 @@ While there is overhead introduced by this partitioning scheme, we expect that a
 %If either of them contain too many edges, the recursive call is made again.
 
 
+\section{Bucketed Sparse Frontier}
+A common optimization when traversing in the \push direction is to use a sparse frontier of length $m$ where $m$ is the number of active vertices and each element corresponds to an active vertex.
+In contrast, a dense frontier is often used in the \pull direction where the frontier is stored as a boolean list of length $|V|$ and a value of \lstinline{true} indicates an active vertex.
+
+In order to maintain some locality and to easily partition work across cores, our code generator defaults to a dense frontier in both directions.
+However, this can lead to unnecessary cycles spent checking every vertex to see if it is in the frontier.
+To address this, we propose a bucketed sparse frontier storage format. 
+In this format, the frontier is still of length $|V$ and is split into $n$ buckets where $n$ is the total number of cores.
+Each bucket stores a list of the active vertices in that range followed by $-1$s to indicate the end of active vertices in that bucket.
+This allows us to use our vertex-based partitioning scheme while reducing the number of reads to the frontier.
+
 \section{Graph Traversal Directions}
 
 \pushVPullMethodFigure
@@ -126,6 +138,15 @@ The \hybrid~approach examines the size of the frontier for each iteration in ord
 Our code generator supports generating code in the \pull, \push, and \hybrid~directions.
 %In the \push~direction, the graph is traversed first by the vertices in the current frontier.
 
-\subsection{Traversal Parameter Tuning}
+%\subsection{Traversal Parameter Tuning}
 
 \section{Chapter Summary}
+
+In this chapter, we described graph processing optimizations that seek to improve performance on the \hb manycore through data layout, memory access patterns, and graph traversal direction.
+First, we introduced the blocked access method for graph data that utilizes scratchpad memory and better exploits memory-level parallelism (MLP) in software.
+Next, we discuss three different work partitioning schemes: vertex-based, edge-aware vertex-based, and alignment-based.
+Vertex-based and edge-aware vertex-based are existing optimizations that we adapted for the \hb architecture, and alignment-based partitioning is a scheme that we developed to better exploit MLP.
+We then introduced the bucketed sparse frontier that reorganizes frontier data to improve performance on very sparse frontiers.
+Finally, we discussed graph traversal directions and two different hybrid traversal algorithms.
+%Next, we discuss an implementation of edge-aware vertex partitioning. 
+%We follow this with an exploration of graph traversal directions.

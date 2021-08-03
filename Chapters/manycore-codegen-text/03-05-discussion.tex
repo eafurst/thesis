@@ -3,14 +3,14 @@
 
 \overviewResultsTable
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.8]{graphit-figures/heatmap.pdf}
-    \caption{Speedups for all benchmarks and input graphs attained from applying the blocked-access method or alignment-based partitioning optimization. Here we examine BFS, PR, CC, BC, and the delta-stepping variant of SSSP.}
-    \label{pap:generals:sec:eval:fig:heatmap}
-\end{figure}
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[scale=0.8]{graphit-figures/heatmap.pdf}
+%     \caption{Speedups for all benchmarks and input graphs attained from applying the blocked-access method or alignment-based partitioning optimization. Here we examine BFS, PR, CC, BC, and the delta-stepping variant of SSSP.}
+%     \label{pap:generals:sec:eval:fig:heatmap}
+% \end{figure}
 
-Table~\ref{pap:generals:sec:eval:tab:overview} shows the highest achieved MTEPS for each input graph and benchmark along with the optimization that was used in the generated code.
+Table~\ref{sec:eval:tab:summary} shows the highest achieved MTEPS for each input graph and benchmark along with the optimization that was used in the generated code.
 Alignment-based partitioning provides optimal performance across the most input graphs and benchmarks, and the next best performing optimization is blocking.
 This is not surprising, as all of our benchmarks are limited by DRAM, and blocking and alignment-based partitioning are optimizations that makes better use of the memory system.
 By adding blocking and alignment-based partitioning, we are able to coalesce read accesses to vertex data.
