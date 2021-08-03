@@ -9,6 +9,7 @@ This separation of description and schedule allows users to express computation 
 The \ugc provides functionality for adding new backends by further decoupling the hardware-independent transformations from the hardware-dependent compiler passes~\cite{brahmakshatriya2021taming}.
 The design of \ugc makes it easy to write and compose optimizations that make use of each backend architecture's unique features.
 Figure~\ref{fig:ugf} demonstrates the overall compilation flow with various analyses and lowering passes to generate GraphIR, GraphIt's graph specific intermediate representation.
+\graphisa is an in\hyp{}memory representation of a program that allows optimizations through IR-to-IR transformations before final code generation.
 \graphisa is lowered into code for different architectures using an architecture-specific Graph Virtual Machine (\graphvm), which performs the hardware-specific transformations and code generation.
 
 Listing~\ref{pap:generals2020:sec:background:lst:graphit} shows an example GraphIt program implementing Breadth-First Search (BFS) along with a \hb-specific schedule.
@@ -99,9 +100,14 @@ This optimizations that the \hb \graphvm and scheduling language support are des
 %Finally, the schedule specifies that the code generator should generate code for the target device. 
 
 \subsection{Code Generation}
-\todo{describe the notion of a graph VM here}
-GraphIt's code generator takes an algorithm and schedule and generates device-specific code.
-Graphit first parses the algorithm and schedule using the frontend to produce the Intermediate Representation. 
-Next, the compiler performs dependency analysis and enforces restrictions on read-write accesses and reduction operators. 
-Once the compiler verifies the validity of the algorithm and schedule, the backend generates code for the target device and host (if necessary).
+\ugc takes an algorithm and schedule and generates device-specific code.
+The compiler first parses the algorithm and schedule using the frontend to produce the \graphisa. 
+\GG adapts the domain\hyp{}specific transformations from the \graphit DSL compiler, such as dependence analysis to insert atomics in the user\hyp{}defined functions (UDFs), liveness analysis to find frontier memory reuse opportunities, and other transformations to UDFs for
+traversal direction, parallelism, and data structure choices.
+These passes also add metadata to the \graphisa for the \graphvms to use during code generation.
+After these hardware-independent transformations are completed, the program is passed to the \graphvm for hardware-dependent analysis and code generation.
+Once the hardware-dependent passes have finished, the \graphvm produces code for the target device and host (if necessary).
+Chapter~\ref{gen:sec:graphitbackend} describes how our \hb \graphvm was implemented.
+%Next, the compiler performs dependency analysis and enforces restrictions on read-write accesses and reduction operators. 
+%Once the compiler verifies the validity of the algorithm and schedule, the backend generates code for the target device and host (if necessary).
 %Section~\ref{sec:method} describes how our back end generates manycore code.

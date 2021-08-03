@@ -1,5 +1,7 @@
 \input{Chapters/manycore-codegen-fragments/arch-figures}
 \section{Manycore Architectures} \label{pap:generals:sec:architecture}
+\manycoreArchFigure
+
 Manycore architectures provide thread-level parallelism and flexibility with hundreds to thousands of general-purpose cores~\cite{ramey2011tilera, davidson2018celerity, gwennap2011adapteva, agathos2015parallela, taylor2004raw}.
 Cores are arranged in two-dimensional arrays and interconnected with mesh-style networks for communication.
 This network of cores is surrounded by multiple channels of memory to provide sufficient bandwidth and parallelism to sustain computation.
@@ -26,7 +28,7 @@ Memory (HBM) channels.
 %workloads that can exploit the unprecedented memory-level parallelism
 %provided by the independent cores, caches, and HBM channels.
 
-\manycoreArchFigure
+
 
 \subsection{Network-On-Chip}
 Communication is provided by a 2D-Mesh Network-on-Chip (NoC) that
