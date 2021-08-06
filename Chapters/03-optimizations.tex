@@ -138,6 +138,12 @@ The \hybrid~approach examines the size of the frontier for each iteration in ord
 Our code generator supports generating code in the \pull, \push, and \hybrid~directions.
 %In the \push~direction, the graph is traversed first by the vertices in the current frontier.
 
+The original hybrid traversal method proposed by Beamer et al. involves two different thresholds. One for initially switching from \push to \pull and one to switch back to \push again towards the end of execution.
+Each of these thresholds have a parameter that can be tuned to best fit the target architecture. 
+
+The ligra system~\cite{shun2013ligra} introduced a simplified heuristic to switch between the \push and \pull directions. 
+Ligra also added functionality to switch between dense and sparse frontier representations given the traversal direction.
+
 %\subsection{Traversal Parameter Tuning}
 
 \section{Chapter Summary}
