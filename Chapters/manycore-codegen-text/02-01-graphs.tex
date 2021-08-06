@@ -3,25 +3,28 @@
 \section{Graph Topology}\label{thesis:background:topology}
 \todo{planar vs. scale-free, properties of each}
 \section{Graphs used in this Thesis}\label{thesis:background:graphs}
-\todo{table of all graphs + their properties, explain in text about the choices}
+In this work, we use a diverse set of graphs for evaluation.
+These graphs and their properties are listed in Table~\ref{tab:graphprop}.
 
 \begin{table*}[h]
 \centering
 \begin{tabular}{lllll}
 \toprule
-\textbf{Name} & \textbf{Scale} & \textbf{Vertices} & \textbf{Edges} & \textbf{Properties} \\ \midrule
-\kron & 18 & 262,144 & 4,194,304 & Synthetic, scale-free\\
-\kron & 20 & 1,048,576 & 16,777,216 & Synthetic, scale-free\\
-\kron & 22 & 4,194,304 & 67,108,864 & \\
-Pokec & 20.5 & 1,632,803 & 30,622,564 & \\
-LiveJournal (lj) & 22 & 3,997,962 & 34,681,189 & \\
-Hollywood (hw) & & & & \\
-RoadCA & & & & \\
-RoadCentral & & & & \\
-RoadUSA & & & & \\
+\textbf{Name} & \textbf{Description} & \textbf{Vertices} & \textbf{Edges} & \textbf{Degree} \\ \midrule
+Kron18 & \kron generated~\cite{leskovec2005realistic,leskovec2010kronecker} & 262,144 & 4,194,304 & 16 \\
+Kron20 & \kron generated~\cite{leskovec2005realistic,leskovec2010kronecker} & 1,048,576 & 16,777,216 & 16 \\
+Kron22 & \kron generated~\cite{leskovec2005realistic,leskovec2010kronecker} & 4,194,304 & 67,108,864 & 16 \\
+Pokec & social network~\cite{snapnets} & 1,632,803 & 30,622,564 & 18.8 \\
+LiveJournal & social network~\cite{mislove2007measurement,davis2011university} & 4,847,571 & 85,702,474 & 17.6 \\
+Hollywood & movie collaborations~\cite{boldi2011layered,boldi2004webgraph,davis2011university} & 1,139,905 & 112,751,422 & 98.9\\
+RoadCA & CA road network~\cite{davis2011university} & 1,971,281 & 5,533,214 & 2.8\\
+RoadCentral & Central road network~\cite{davis2011university} & 14,081,816 & 33,866,826 & 2.4\\
+RoadUSA & USA road network~\cite{road-graph} & 23,947,347 & 57,708,624 & 2.4\\
 \bottomrule
 \end{tabular}
-\caption{List of graphs used in this thesis and their properties.\todo{more on caption, cite each graph, fill in}}
+\caption{List of graphs used in this thesis and their properties.All of the graphs come from real-world data except
+the three \kron graphs. Throughout our evaluation, we list the subsets of these graphs that are being evaluated.}
+\label{tab:graphprop}
 \end{table*}
 
 \section{Algorithms used in this Thesis}\label{thesis:background:algorithms}
