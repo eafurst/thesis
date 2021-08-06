@@ -118,7 +118,7 @@ In this code, we can see the use of the \lstinline[language=C++, basicstyle=\sma
 Lines~4-14 iterate through all of the vertices in the graph, traverse edges that have not yet been visited, and build the next frontier.
 The parallelism is achieved by each core executing their own contiguous range of vertices obtained from \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range} at the same time. Once a core is finished with its computation, it waits at the barrier for all other cores to finish before returning the results of the iteration. 
 
-\paragraph{Atomics:}
+\paragraph{Atomics}\mbox{}\\
 While atomics can mostly be avoided when traversing in the \pull direction, they are still necessary in some cases and are always necessary during \push traversal.
 We leverage lock data structures to implement the necessary atomic operations used in our device code.
 We initialize one lock per cache line in the LLCs.

@@ -12,9 +12,15 @@ As the size of sparse graph data continues to grow, the importance of scalable, 
 My thesis demonstrates ways that we can leverage the parallelism offered by emerging manycore architectures in order to maintain scalable performance on graph applications while also maintaining the flexibility and ease of programming offered through the use of the \graphit DSL. 
 As graph processing demands grow and users turn more and more to emerging architectures, I expect that future work will continue to build on these efforts to reduce programming complexity through code generation and increase performance through optimizations that target architectural features. 
 
-% \section{Future Work}
+\section{Future Work}
+%\todo{areas of research that could be interesting in this space}
+There are several areas of exciting future work to be done in the space of graph processing on the \hb manycore architecture. 
+Much of the future work in this space focuses on better understanding application performance and on improving performance through continued memory system and data layout optimizations.
+I believe that the code generation framework that this thesis presents will provide the flexibility and extensibility necessary to explore these areas of future work.
 
-% \todo{areas of research that could be interesting in this space}
-% \paragraph*{Multi-Source Traversal}
+ \paragraph{Multi-Source Traversal}\mbox{}\\
 
-% \paragraph*{Parameter Tuning}
+\paragraph{Parameter Tuning}\mbox{}\\
+We began a study of parameter tuning in this thesis with the exploration of hybrid traversal methods. 
+Another area to evaluate would be tuning the $\Delta$ parameter in the delta-stepping SSSP algorithm.
+In addition, there is room to improve the implementation of the bucketed priority queue for a manycore architecture.
