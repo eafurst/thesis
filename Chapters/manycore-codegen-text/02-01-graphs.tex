@@ -55,8 +55,25 @@ Like Bellman-Ford, this does result in some vertices being processed multiple ti
 If $\Delta=1$, the algorithm effectively becomes Dijkstra's, and if $\Delta=\inf$, the algorithm behaves like Bellman-Ford. 
 
 \paragraph{PageRank (PR)}\mbox{}\\
-PR calculates the importance of each vertex in a graph. 
+PR calculates the importance or "popularity" of each vertex in a graph and was originally developed to sort web search results~\cite{page1999pagerank}.
+It calculates the popularity of a vertex $v$ by considering both the number of vertices that point to $v$ and the importance of those vertices that point to $v$.
+PR iteratively updates the PageRank score for each vertex in the graph until the scores converge within some specified tolerance.
+There has been considerable work on optimizing PageRank and finding ways to improve the convergence rate~\cite{low2010graphlab,shun2013ligra,kohlschutter2006efficient}
 
-\paragraph{Connected Components (CC)}
+\paragraph{Connected Components (CC)}\mbox{}\\
+The Connected Components algorithm labels all of the components in a graph. 
+A connected component is a subgraph in which all vertices are connected to each other.
+If an edge exists between two vertices, they are connected. 
+In a directed graph, connections between vertices can be asymmetric.
+This means that components of a directed graph can be strongly or weakly connected. 
+In this thesis, we only consider undirected graphs and do not need to consider asymmetry of connections.
+The CC algorithm labels vertices so that all vertices in the same component have the same label.
 
-\paragraph{Betweenness Centrality (BC)} 
+\paragraph{Betweenness Centrality (BC)}\mbox{}\\
+BC is another algorithm that attempts to measure the importance of the vertices in a graph. 
+It calculates a score for each vertex that measures the fraction of shortest paths that pass through the vertex.
+This can be computationally expensive as the algorithm needs to compute the shortest paths for all pairs of vertices in the graph.
+This is often done by computing the All Pairs Shortest Path algorithm which executes SSSP for every vertex in the graph as a source vertex. 
+Calculating all of the shortest paths can be both compute and memory intensive. 
+The Brandes algorithm reduces the memory requirements by compacting the critical information from a SSSP execution into a single variable~\cite{brandes2001faster}.
+We also compute BC on an unweighted graph in this work, which allows us to use BFS traversals to compute the shortest paths. 
