@@ -2,9 +2,26 @@
 \todo{talk about graph processing at a high level, talk about related data, maybe storage format?}
 \section{Graph Topology}\label{thesis:background:topology}
 \todo{planar vs. scale-free, properties of each}
+A scale-free or social network graph has a degree distribution that follows a power-law, at least asymptotically~\cite{barabasi1999emergence}.
+
 \section{Graphs used in this Thesis}\label{thesis:background:graphs}
 In this work, we use a diverse set of graphs for evaluation.
 These graphs and their properties are listed in Table~\ref{tab:graphprop}.
+A graph's topology greatly impacts a workload's characteristics and performance, so it is important to perform evaluation on a diverse set of graphs~\cite{beamer2015locality}.
+We use a mix of real-world and synthetic graphs in our evaluation and primarily focus on social network topologies. 
+
+The real-world graphs we use come from a variety of sources. 
+We examine two real-world social network graphs: Pokec and LiveJournal which represent the links between users in their online communities. 
+We also consider the Hollywood graph which considers professional relationships.
+It links together actors that have performed together.
+These are all representative of a scale free or social network topology as they all have a low effective diameter and power-law degree distribution.
+In contrast, we also use three road network graphs in our evaluations. 
+These are mesh topologies with low average degree and high diameter. 
+
+In addition to these real-world graphs, we fill out our set of graphs with three synthetic graphs.
+Like in the Graph500 benchmark, we generate several kron graphs of varying size using the \kron generator~\cite{murphy2010graph500}.
+These graphs model a social network and follow a power-law degree distribution. 
+
 
 \begin{table*}[h]
 \centering
