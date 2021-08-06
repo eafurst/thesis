@@ -25,14 +25,37 @@ RoadUSA & & & & \\
 \end{table*}
 
 \section{Algorithms used in this Thesis}\label{thesis:background:algorithms}
-\todo{explain bfs, sssp (delta + bellmanford), pr, cc, bc, etc. in detail}
-In this thesis we explore a variety of graph processing algorithms.
+%\todo{explain bfs, sssp (delta + bellmanford), pr, cc, bc, etc. in detail}
+In this thesis we explore a variety of graph processing algorithms. 
+We select them based on their popularity in graph-processing evaluations~\cite{beamer2016thesis} and for the different behaviors that they exhibit.
+The algorithms we examine can be classified as traversal-centric or compute-centric algorithms. 
+Traversal-centric or frontier-based algorithms start from a given source vertex and perform computation on vertices by traversing outwards from the source vertex.
+Compute-centric algorithms operate on the entire graph in parallel and tend to iteratively apply updates until the algorithm converges.
 
-\paragraph{Breadth First Search (BFS)} is a building block of many graph algorithms.
+\paragraph{Breadth First Search (BFS)}\mbox{}\\
+BFS is a building block of many graph algorithms. 
+It is not an algorithm but really a graph traversal order. 
+BFS visits every vertex at a given depth of the graph before moving on to the next depth level.
+We turn it into an algorithm by discovering and tracking the parent vertex ID of each vertex reachable from a given source vertex.
 
-\paragraph{PageRank (PR)} calculates the importance of each vertex in a graph. 
+\paragraph{Single Source Shortest Path (SSSP)}\mbox{}\\
+SSSP is an algorithm that builds off of BFS to compute the distances of the shortest paths from a given source vertex to every other reachable vertex in the graph.
+This is usually performed on a weighted graph, so the weights of edges are used in calculating the distance of a path.
+We only consider graphs with non-negative edge weights in this work.
+We examine two different SSSP algorithms, frontier-based Bellman-Ford and Delta-stepping.
 
-\paragraph*{Single Source Shortest Path (SSSP)} We examine two variants of the SSSP algorithms, Bellman-Ford and Delta-stepping.
+Frontier-based Bellman-Ford trades off repeated accesses to edges for increased parallelism. 
+It uses relaxation where approximations of the distances to each vertex are replaced by shorter distances until the algorithm converges on the correct solution.
+Unlike Dijkstra's, the classical SSSP algorithm, there is no notion of priority in Bellman-Ford and all edges active in the frontier are relaxed in every iteration.
+
+The delta-stepping algorithm~\cite{meyer2003delta} increases parallelism by using a notion of relaxed priority. 
+Delta-stepping coarsely sorts the vertices of the graph by distance into buckets of width $\Delta$.
+This allows for all vertices in a bucket to be processed in parallel. 
+Like Bellman-Ford, this does result in some vertices being processed multiple times, but the frequency with which this occurs can be reduced by reducing the value of $\Delta$.
+If $\Delta=1$, the algorithm effectively becomes Dijkstra's, and if $\Delta=\inf$, the algorithm behaves like Bellman-Ford. 
+
+\paragraph{PageRank (PR)}\mbox{}\\
+PR calculates the importance of each vertex in a graph. 
 
 \paragraph{Connected Components (CC)}
 
