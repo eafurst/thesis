@@ -56,16 +56,17 @@ This improves effective cache bandwidth by eliminating false sharing between wor
 
 We implement and explore the two load balancing methods: vertex-based and edge-aware vertex-based partitioning. We also propose our own manycore specific work partitioning method: alignment-based partitioning. 
 
-\paragraph{Vertex-Based} In vertex-based partitioning, all cores receive an equal number of vertices to traverse. 
+\paragraph{Vertex-Based}\mbox{}\\
+In vertex-based partitioning, all cores receive an equal number of vertices to traverse. 
 In real world graphs, the number of edges per vertex can vary drastically, and due to this, the vertex-based approach can lead to workload imbalance. 
 
-\paragraph{Alignment-Based} 
+\paragraph{Alignment-Based} \mbox{}\\
 In alignment-based partitioning, cores work instead on smaller work blocks of vertices that better align with cache lines in the LLC and make better use of the entire memory system by increasing effective bandwidth.
 In this method, the vertices in the graph are split into $V/b$ work blocks where $b$ is the number of vertices contained in each work block and $V$ is the total number of vertices in the graph. We select $b$ to be a multiple of the cache line size. By doing this and by reducing the size of the active set of vertices that each core is working on, we are able to increase the cache hit rate and reduce cache line contention.
 
 %This partitioning scheme reduces the size of the active set of vertices that each core is working on at any time.
 
-\paragraph{Edge-Aware Vertex-Based}
+\paragraph{Edge-Aware Vertex-Based}\mbox{}\\
 \edgeAwareMethodFigure
 Edge-aware vertex partitioning scheme considers the number of edges being assigned to each core when partitioning the vertices.
 Figure~\ref{fig:edgeaware} demonstrates how edge-aware partitioning differs from vertex-based.
@@ -138,11 +139,19 @@ The \hybrid~approach examines the size of the frontier for each iteration in ord
 Our code generator supports generating code in the \pull, \push, and \hybrid~directions.
 %In the \push~direction, the graph is traversed first by the vertices in the current frontier.
 
-The original hybrid traversal method proposed by Beamer et al. involves two different thresholds. One for initially switching from \push to \pull and one to switch back to \push again towards the end of execution.
-Each of these thresholds have a parameter that can be tuned to best fit the target architecture. 
+The original hybrid traversal method proposed by Beamer et al. involves two different heuristic conditions. 
+One for initially switching from \push to \pull and one to switch back to \push again towards the end of execution. 
+These heuristics are based on: the number of vertices in the graph $n$, the number of edges in the graph $m$, the number of vertices in the frontier ($n_f$), the number of edges to check from the frontier ($m_f$), and the number of edges connected to unvisited vertices ($m_u$).
+Each of these conditions also have parameters that can be tuned to best fit the target architecture. 
+The first condition is defined as:
+\[ m_f > \frac{m_u}{\alpha}\]
+The second condition is to switch back to the \push direction is:
+\[ n_f < \frac{n}{\beta}\]
 
 The ligra system~\cite{shun2013ligra} introduced a simplified heuristic to switch between the \push and \pull directions. 
 Ligra also added functionality to switch between dense and sparse frontier representations given the traversal direction.
+The condition for switching directions in ligra is defined as:
+\[ n_f + m_f > \frac{m}{\alpha}\]
 
 %\subsection{Traversal Parameter Tuning}
 

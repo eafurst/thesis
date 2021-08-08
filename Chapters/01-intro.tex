@@ -5,7 +5,7 @@
 %\todo{at least one more paragraph here describing graph processing and its importance}
 
 Sparse graph data structures that capture relationships between elements are ubiquitous.
-In recent years, the size of graph datasets have exploded~\cite{sahu2017ubiquity} with data coming from fields like networking~\cite{lehmberg2014structure}, social networks~\cite{sharma2016graphjet, eksombatchai2018pixie}, public health~\cite{keeling2005networks, Ulyantsev2016Metafast}, chemistry \cite{tsubaki2019compound}, and finance~\cite{boginski2005finance}. 
+In recent years, the size of graph datasets have exploded~\cite{sahu2017ubiquity} with data coming from fields like networking~\cite{lehmberg2014structure}, social networks~\cite{sharma2016graphjet, eksombatchai2018pixie,kwak2010twitter}, public health~\cite{keeling2005networks, Ulyantsev2016Metafast}, science \cite{tsubaki2019compound,pereira2004detection}, and finance~\cite{boginski2005finance}. 
 As graph sizes have grown, so too have the processing requirements. Recommender systems must respond in sub-second latencies \cite{sharma2016graphjet, eksombatchai2018pixie}, and financial algorithms trade on the order of microseconds \cite{menkveld2018hft}.
 These challenges have increased the demand for high-performance graph processing systems.
 
@@ -21,7 +21,7 @@ Performance depends on optimizing locality within sparse data structures, random
 Worse, the structure of graphs varies widely, both between graphs and between iterations within graph algorithms~\citep{lumsdaine2007challenges, beamer-bfs-direction}. Heuristic optimizations do not benefit all inputs datasets. 
 Therefore, graph frameworks must be descriptive enough, and processing hardware must be flexible enough to support them.
 
-These challenges have led to the development of many parallel graph processing frameworks: GraphIt~\cite{zhang2018graphit}, GraphLab~\cite{low2010graphlab, low2012distributed}, Grappa~\cite{nelson2015grappa}, GraphChi~\cite{aapo2012graphchi}, and Pregel~\cite{malewicz2010pregel}. 
+These challenges have led to the development of many parallel graph processing frameworks: GraphIt~\cite{zhang2018graphit,brahmakshatriya2021compiling,zhang2019optimizing}, GraphLab~\cite{low2010graphlab, low2012distributed}, Grappa~\cite{nelson2015grappa}, GraphChi~\cite{aapo2012graphchi}, and Pregel~\cite{malewicz2010pregel}. 
 These frameworks take a user application description and emit parallel code for general-purpose hardware.
 Traditionally graph frameworks have targeted CPU and GPU architectures, but newer frameworks also target cloud-resident FPGAs \cite{engelhardt2016gravf, dai2016fpgp}.
 These frameworks allow users to focus on exploring optimizations by abstracting the hardware and parallel infrastructure.

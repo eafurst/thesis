@@ -3,6 +3,9 @@
 \section{Graph Topology}\label{thesis:background:topology}
 \todo{planar vs. scale-free, properties of each}
 A scale-free or social network graph has a degree distribution that follows a power-law, at least asymptotically~\cite{barabasi1999emergence}.
+Most social network graphs have a small diameter and exhibit the small-world property. 
+In a small-world graph, most vertices are not connected to one another, but the majority of vertices can be reached from every other vertex in a small number of hops~\cite{watts1998collective}.
+\todo{discuss what this means in practice and tie in to real world friendships then use this citation}~\cite{milgram1967small}
 
 \section{Graphs used in this Thesis}\label{thesis:background:graphs}
 In this work, we use a diverse set of graphs for evaluation.
@@ -56,6 +59,7 @@ Compute-centric algorithms operate on the entire graph in parallel and tend to i
 BFS is a building block of many graph algorithms. 
 It is not an algorithm but really a graph traversal order. 
 BFS visits every vertex at a given depth of the graph before moving on to the next depth level.
+There has been considerable work done to accelerate BFS and increase the computational work through algorithmic and data structure modification~\cite{agarwal2010scalable,beamer-bfs-direction,bulucc2011parallel,hong2011efficient,yoo2005scalable}
 We turn it into an algorithm by discovering and tracking the parent vertex ID of each vertex reachable from a given source vertex.
 
 \paragraph{Single Source Shortest Path (SSSP)}\mbox{}\\
@@ -78,7 +82,7 @@ If $\Delta=1$, the algorithm effectively becomes Dijkstra's, and if $\Delta=\inf
 PR calculates the importance or "popularity" of each vertex in a graph and was originally developed to sort web search results~\cite{page1999pagerank}.
 It calculates the popularity of a vertex $v$ by considering both the number of vertices that point to $v$ and the importance of those vertices that point to $v$.
 PR iteratively updates the PageRank score for each vertex in the graph until the scores converge within some specified tolerance.
-There has been considerable work on optimizing PageRank and finding ways to improve the convergence rate~\cite{low2010graphlab,shun2013ligra,kohlschutter2006efficient}
+There has been considerable work on optimizing PageRank and finding ways to improve the convergence rate~\cite{low2010graphlab,shun2013ligra,kohlschutter2006efficient,berkhin2005survey}
 
 \paragraph{Connected Components (CC)}\mbox{}\\
 The Connected Components algorithm labels all of the components in a graph. 
