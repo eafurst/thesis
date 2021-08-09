@@ -1,30 +1,30 @@
-\newcommand{\baselineEvalFigure}{
-\begin{figure}[t]
-    \centering
-    \includegraphics[scale = 0.5]{graphit-figures/baseline.pdf}
-    \caption{Baseline code generation results for each benchmark in the dense pull direction with no manycore specific optimizations.}
-    \label{pap:generals:sec:eval:fig:baseline}
-\end{figure}
-}
+% \newcommand{\baselineEvalFigure}{
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[scale = 0.5]{graphit-figures/baseline.pdf}
+%     \caption{Baseline code generation results for each benchmark in the dense pull direction with no manycore specific optimizations.}
+%     \label{pap:generals:sec:eval:fig:baseline}
+% \end{figure}
+% }
 
-\newcommand{\pushEvalFigure}{
-\begin{figure}[t]
-    \centering
-    \includegraphics[scale = 0.5]{graphit-figures/push.pdf}
-    \caption{Baseline code generation results for each benchmark in the push direction with no manycore specific optimizations.}
-    \label{pap:generals:sec:eval:fig:push}
-\end{figure}
-}
+% \newcommand{\pushEvalFigure}{
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[scale = 0.5]{graphit-figures/push.pdf}
+%     \caption{Baseline code generation results for each benchmark in the push direction with no manycore specific optimizations.}
+%     \label{pap:generals:sec:eval:fig:push}
+% \end{figure}
+% }
 
-\newcommand{\edgeSpeedupFigure}{
-\begin{figure}[t]
-    \centering
-    \includegraphics[scale = 0.5]{graphit-figures/edge.pdf}
-    \caption{Speedup results for edge based optimization over the baseline dense pull implementation for each benchmark.}
-    \label{pap:generals:sec:eval:fig:edge}
-    \vspace{-2mm} 
-\end{figure}
-}
+% \newcommand{\edgeSpeedupFigure}{
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[scale = 0.5]{graphit-figures/edge.pdf}
+%     \caption{Speedup results for edge based optimization over the baseline dense pull implementation for each benchmark.}
+%     \label{pap:generals:sec:eval:fig:edge}
+%     \vspace{-2mm} 
+% \end{figure}
+% }
 
 \newcommand{\blockBFSFigure}{
 \begin{figure}[t]
@@ -62,30 +62,31 @@
 \end{figure}
 }
 
-\newcommand{\allBlockedFigure}{
-\begin{figure}[t]
-    \centering
-    \includegraphics[scale = 0.5]{graphit-figures/all-blocked.pdf}
-    \caption{Blocked access method speedup results for each benchmark. Speedup is calculated over the baseline pull direction implementation.} %For each graph and benchmark, block sizes of 16, 32, 64, and 128 elements were tested and the best performing block size is reported here.
-    \label{pap:generals:sec:eval:fig:blocked}
-\end{figure}
-}
+% \newcommand{\allBlockedFigure}{
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[scale = 0.5]{graphit-figures/all-blocked.pdf}
+%     \caption{Blocked access method speedup results for each benchmark. Speedup is calculated over the baseline pull direction implementation.} %For each graph and benchmark, block sizes of 16, 32, 64, and 128 elements were tested and the best performing block size is reported here.
+%     \label{pap:generals:sec:eval:fig:blocked}
+% \end{figure}
+% }
 
-\newcommand{\allAlignedFigure}{
-\begin{figure}[t]
-    \centering
-    \includegraphics[scale = 0.5]{graphit-figures/align.pdf}
-    \caption{Alignment-based partitioning speedup results for each benchmark. Speedup is calculated over the baseline pull direction implementation.} %For each graph and benchmark, work group sizes of 16, 32, 64, 128, and 256 vertices were tested and the best performing work group size is reported here.
-    \label{pap:generals:sec:eval:fig:aligned}
-    \vspace{-2mm} 
-\end{figure}
-}
+% \newcommand{\allAlignedFigure}{
+% \begin{figure}[t]
+%     \centering
+%     \includegraphics[scale = 0.5]{graphit-figures/align.pdf}
+%     \caption{Alignment-based partitioning speedup results for each benchmark. Speedup is calculated over the baseline pull direction implementation.} %For each graph and benchmark, work group sizes of 16, 32, 64, 128, and 256 vertices were tested and the best performing work group size is reported here.
+%     \label{pap:generals:sec:eval:fig:aligned}
+%     \vspace{-2mm} 
+% \end{figure}
+% }
 
 %I am not sure if this is the best way to present an overview of results or if we need it. 
 
 \newcommand{\overviewResultsTable}{
     \begin{sidewaystable}
     \centering
+    \begin{footnotesize}
     \begin{tabular}{llccccl}
     %\hline
         \toprule
@@ -110,6 +111,7 @@
         & road\_central  & 33,866,826 &  91.57  & 369.84 & 1.19 & \pull, blocked access method \\ %\hline
         \bottomrule
     \end{tabular}
+    \end{footnotesize}
     \caption{Table containing best execution time results across all benchmarks and input graphs. The total number of traversed edges, achieved MTEPS, speedup over the baseline implementations, and the optimizations used to achieve these results are also listed above. Note that algorithmic changes can affect the total number of traversed edges. As a result, a benchmark may report speedup over the baseline but report lower overall MTEPS. This is especially noticeable on the road\_central graph as discussed in Section~\ref{sec:discussion}}
     \label{sec:eval:tab:summary}
     \end{sidewaystable}
@@ -118,6 +120,7 @@
 \newcommand{\relatedMTEPSTable}{
 \begin{table}
 \centering
+\begin{footnotesize}
 \begin{tabular}{cllll}
 %\hline
 \toprule
@@ -132,6 +135,7 @@
  \bottomrule
 
 \end{tabular}
+\end{footnotesize}
 \caption{Performance results in MTEPS from other graph processing frameworks. The benchmark CC is strongly connected components.}
 \label{sec:related:tab:mteps}
 \end{table}
@@ -139,23 +143,23 @@
 }
 
 
-\newcommand{\graphInfoTable}{
-\begin{table}[]
-\centering
-\begin{tabular}{cccc}
-%\hline
-\toprule
- \textbf{Name} & \textbf{Scale} & \textbf{\# Vertices} & \textbf{\# Edges} \\ \midrule %\hline
- kron18 & 18 & 262,144 & 4,194,304 \\ %\hline
- kron20 & 20 & 1,048,576 & 16,777,216 \\ %\hline
- kron22 & 22 & 4,194,304 & 67,108,864 \\ %\hline
- pokec & 20.5 & 1,632,803 & 30,622,564 \\ %\hline
- livejournal (lj) & 22 & 3,997,962 & 34,681,189 \\ %\hline
- \bottomruleå
-\end{tabular}
+% \newcommand{\graphInfoTable}{
+% \begin{table}[]
+% \centering
+% \begin{tabular}{cccc}
+% %\hline
+% \toprule
+%  \textbf{Name} & \textbf{Scale} & \textbf{\# Vertices} & \textbf{\# Edges} \\ \midrule %\hline
+%  kron18 & 18 & 262,144 & 4,194,304 \\ %\hline
+%  kron20 & 20 & 1,048,576 & 16,777,216 \\ %\hline
+%  kron22 & 22 & 4,194,304 & 67,108,864 \\ %\hline
+%  pokec & 20.5 & 1,632,803 & 30,622,564 \\ %\hline
+%  livejournal (lj) & 22 & 3,997,962 & 34,681,189 \\ %\hline
+%  \bottomruleå
+% \end{tabular}
 
 
-\caption{The vertex and edge information for each of the graphs used in our evaluation. We use synthetic \kron graphs used in the Graph500 benchmark and two real world graphs.}
-\label{sec:eval:tab:graphs}
-\end{table}
-}
+% \caption{The vertex and edge information for each of the graphs used in our evaluation. We use synthetic \kron graphs used in the Graph500 benchmark and two real world graphs.}
+% \label{sec:eval:tab:graphs}
+% \end{table}
+% }
