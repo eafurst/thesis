@@ -59,12 +59,12 @@ For PR, we run one iteration from the beginning of execution.
 
 
 
-\paragraph{Graphs} We use two types of graphs in our evaluation: synthetic \kron graphs used in the Graph500 benchmark~\cite{murphy2010graph500} and real-world, social network graphs.
+\paragraph{Graphs} We use three types of graphs in our evaluation: synthetic \kron graphs used in the Graph500 benchmark~\cite{murphy2010graph500}, real-world road networks, and real-world, social network graphs.
 \kron graphs follow a power law distribution in order to simulate the small world property often seen in real world graphs~\cite{leskovec2010kronecker}.
 We generate three \kron graphs of varying size. 
 %We generate weighted and unweighted versions of each of these graphs for use with our three benchmarks.
-We use two real-world graphs: pokec~\cite{pokec} and livejournal~\cite{lj}.
-All of the graphs we use and their properties are shown in Table~\ref{sec:eval:tab:graphs}.
+We use three real-world graphs: pokec~\cite{pokec}, RoadCentral~\cite{davis2011university} and livejournal~\cite{lj}.
+All of the graphs we use and their properties are shown in Table~\ref{sec:eval:tab:graphs} and discussed in more detail in Chapter~\ref{thesis:background:graphs}.
 
 
 \section{Results}
@@ -264,17 +264,30 @@ This is expected as it has the smallest frontiers and vertices in the graph have
 We observed a large slow down in almost every other case.
 This was due to an increase in cache line contention that decreased the LLC hit rate. 
 Cores ended up issuing more read requests concurrently with this scheme than they did using a dense frontier which degraded performance.
+
+\subsection{Hybrid Traversal}
+
+To evaluate hybrid traversal on \hb, we first tune the $\alpha$ and $\beta$ variables used in the heuristics proposed by Beamer et al.
+\alphatune
+Figure~\ref{fig:alpha_tuning} shows the results for tuning $\alpha$ to the \hb manycore on 5 different input graphs. 
+We run BFS for 10 iterations on each graph.
+We don't evaluate on any road networks as these graphs rarely benefit from hybrid traversal.
+\betatune
+The results for tuning $\beta$ are shown in Figure~\ref{fig:beta_tuning}.
+
+\hybridresults
+Finally, we present results for \push, \pull, Beamer's hybrid traversal, and ligra's hybrid traversal in Figure~\ref{fig:hybrid_dir}.
  
-% \subsection{Performance Analysis}
+\subsection{Performance Analysis}
 
-% \todo{talk about the scaling plot and the small table from isca paper}
+\todo{talk about the scaling plot and the small table from isca paper}
 
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics[scale = 0.6]{graphit-figures/hb-scaling-speedup.pdf}
-%     \caption{Scaling results \todo{finish up this caption}} %For each graph and benchmark, work group sizes of 16, 32, 64, 128, and 256 vertices were tested and the best performing work group size is reported here.
-%     \label{pap:generals:sec:eval:fig:scaling}
-% \end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale = 0.6]{graphit-figures/hb-scaling-speedup.pdf}
+    \caption{Scaling results \todo{finish up this caption}} %For each graph and benchmark, work group sizes of 16, 32, 64, 128, and 256 vertices were tested and the best performing work group size is reported here.
+    \label{pap:generals:sec:eval:fig:scaling}
+\end{figure}
 
-% \hbBlockingEvalTab
+\hbBlockingEvalTab
 
