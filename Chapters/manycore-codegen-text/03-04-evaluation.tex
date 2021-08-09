@@ -72,7 +72,7 @@ All of the graphs we use and their properties are shown in Table~\ref{sec:eval:t
 
 \section{Results}
 %\baselineEvalFigure
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[scale = 0.6]{graphit-figures/baseline.pdf}
     \caption{Baseline code generation results for each benchmark in the dense pull direction with no manycore specific optimizations.}
@@ -86,7 +86,7 @@ We then explore the performance trade-offs and benefits for each of the optimiza
 \subsection{Baseline}
  
 %\pushEvalFigure
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[scale = 0.6]{graphit-figures/push.pdf}
     \caption{Baseline code generation results for each benchmark in the push direction with no manycore specific optimizations. Speedup over the baseline pull direction is shown.}
@@ -143,7 +143,7 @@ When we examined our simulation results, we saw that the \pull~direction issued 
 %     \label{pap:generals:sec:eval:fig:bfsblock}
 % \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \subfloat[SSSP]{\includegraphics[scale=0.6]{graphit-figures/sssp-block.pdf}} \\
     \subfloat[BFS]{\includegraphics[scale=0.6]{graphit-figures/bfs-block.pdf}}
@@ -152,7 +152,7 @@ When we examined our simulation results, we saw that the \pull~direction issued 
 \end{figure}
  
 %\allBlockedFigure
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[scale = 0.6]{graphit-figures/all-blocked.pdf}
     \caption{Blocked access method speedup results for each benchmark. Speedup is calculated over the baseline pull direction implementation.} %For each graph and benchmark, block sizes of 16, 32, 64, and 128 elements were tested and the best performing block size is reported here.
@@ -202,7 +202,7 @@ Making use of the low-latency scratchpad memory and coalescing accesses most imp
 % \end{figure}
 
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \subfloat[SSSP]{\includegraphics[scale=0.6]{graphit-figures/sssp-cache.pdf}} \\
     \subfloat[BFS]{\includegraphics[scale=0.6]{graphit-figures/bfs-cache.pdf}}
@@ -211,7 +211,7 @@ Making use of the low-latency scratchpad memory and coalescing accesses most imp
 \end{figure}
 
 %\allAlignedFigure
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[scale = 0.6]{graphit-figures/align.pdf}
     \caption{Alignment-based partitioning speedup results for each benchmark. Speedup is calculated over the baseline pull direction implementation.} %For each graph and benchmark, work group sizes of 16, 32, 64, 128, and 256 vertices were tested and the best performing work group size is reported here.
@@ -232,7 +232,7 @@ Improving the LLC hit rate decreases the total amount of memory that needs to be
  
  
 %\edgeSpeedupFigure
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[scale = 0.6]{graphit-figures/edge.pdf}
     \caption{Speedup results for edge based optimization over the baseline dense pull implementation for each benchmark.}
@@ -252,7 +252,7 @@ Because the memory is the main bottleneck of graph algorithms, the alignment-bas
 
 \subsection{Bucketed Sparse Frontier}
 
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \includegraphics[scale=0.6]{graphit-figures/sparse.pdf}
     \caption{Bucketed sparse frontier speedup results for each benchmark. Speedup is calculated over the baseline \push direction implementation.} %For each graph and benchmark, work group sizes of 16, 32, 64, 128, and 256 vertices were tested and the best performing work group size is reported here.
