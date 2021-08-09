@@ -77,22 +77,22 @@ This could lead to a large workload imbalance.
 In the edge-aware partition, the first core is assigned 14 edges and the second core is assigned 15.
 By considering the number of edges being assigned to each core, edge-aware partitioning is able to create a more balanced workload across cores.
 
+\edgeAwareMethodAlgorithm
 
-In order to accomplish edge-aware vertex-based partitioning, a maximum number of edges that can be assigned to a core is set before execution. 
+In order to accomplish edge-aware vertex-based partitioning, a maximum number of edges that can be assigned to a core is set before execution, we refer to this maximum value as the grain size.
 Edge-aware partitioning effectively does a binary search for partitions of vertices that do not exceed this maximum number of edges. 
 Initially, all vertices are considered in one large partition.
 %In the first iteration, the core attempts to assign all of the vertices in the graph to itself. 
 If this partition of vertices exceeds the number of edges that can be assigned to a core, it is split in half, and each of those partitions are examined as possible candidates.
 This process continues recursively until all vertices have been assigned to a core.
+The pseudocode for this recursive call is shown in Figure~\ref{alg:edge-aware}.
 
 In our implementation, a single core is tasked with performing the recursive assignment of work while the remaining cores wait to receive their work assignment. 
+Further, the grain size in our implementation is set to $(E / N) * 1.5$ where $E$ is the total number of edges in the graph and $N$ is the number of cores in the manycore. 
+We found that a buffer value of $1.5$ was necessary to ensure that all of the vertices were assigned across the cores for all sizes of $E$ and $N$ that we examined.
 While there is overhead introduced by this partitioning scheme, we expect that a more balanced split of work will improve load balance and memory system performance on graph programs with unbalanced input graphs.
-%We refer to this value as the grain size.
-%In our implementation, the grain size is set to $(E / N) * 1.5$ where $E$ is the total number of edges in the graph and $N$ is the number of cores in the manycore. 
-%We found that a buffer value of $1.5$ was necessary to ensure that all of the vertices were assigned across the cores for all sizes of $E$ and $N$ that we examined.
 
 %\edgeAwareMethodAlgorithm
-
 
 %Figure \ref{alg:edge-aware} shows the pseudocode for this assignment routine.
 %In the first iteration, the core attempts to assign all of the vertices in the graph to itself.

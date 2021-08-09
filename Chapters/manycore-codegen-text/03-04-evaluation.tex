@@ -34,6 +34,7 @@ We compile all generated C++ code using the GNU Compiler Collection (GCC) with `
 \paragraph{Manycore Architecture}
 % We evaluate our compiler using detailed RTL simulation of our manycore architecture.
 We model a manycore system running at 1GHz with 16 columns and 8 rows for a total of 128 cores.
+The simulation configuration details are shown in Table~\ref{tab:hbParams}.
 The machine has a 512KB 8-way set associative LLC with 128-byte lines.
 The memory system uses two HBM2 memory channels.
 We model the HBM2 memory system with DRAMSim3\cite{li2019dramsim3},  a timing accurate simulator for modeling DRAM.
