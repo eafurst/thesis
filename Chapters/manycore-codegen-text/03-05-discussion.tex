@@ -1,8 +1,6 @@
 \section{Discussion}\label{sec:discussion}
 \input{Chapters/manycore-codegen-fragments/eval-figures}
 
-\overviewResultsTable
-
 % \begin{figure}[h]
 %     \centering
 %     \includegraphics[scale=0.8]{graphit-figures/heatmap.pdf}
@@ -17,6 +15,8 @@ By adding blocking and alignment-based partitioning, we are able to coalesce rea
 In addition, with blocking, we are able to make use of explicitly managed, low-latency scratchpad memory in our blocked access method. 
 The blocked access method and alignment-based partitioning improve the memory system performance of our benchmarks by targeting a key performance limiter of graph algorithms.
 
+\relatedMTEPSTable
+
 We do not include a direct comparison of our results against other systems; however, Table~\ref{sec:related:tab:mteps} shows performance for some of the frameworks mentioned in Section~\ref{gen:sec:background}. This table is included to help contextualize the results reported above.
 % We only include results from the papers that report performance in MTEPS. We include this table to help contextualize our results.
 It is also important to note that we only simulate a small portion of the total manycore architecture. 
@@ -24,4 +24,4 @@ The full manycore architecture would have eight HBM channels instead of the two 
 As a result, the full architecture would have much higher memory bandwidth and more compute resources. 
 Because all of our benchmarks are limited by DRAM, we anticipate that we would achieve better performance on the full system due to an increase in memory bandwidth and decrease in memory contention.
 
-\relatedMTEPSTable
+\overviewResultsTable
