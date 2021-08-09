@@ -22,7 +22,7 @@ This code generator alleviates the need for the programmer to have extensive kno
 
 We add support for our backend and the manycore specific optimizations discussed in Chapter~\ref{gen:sec:optimizations} by implementing a \hb scheduling language using the abstract language provided by \GG.
 %First, we added the option \lstinline[language=graphit]{generateManycoreCode()} which signals to the GraphIt compiler it should generate code for the manycore architecture described in Section~\ref{pap:generals:sec:architecture}.
-This scheduling language signals to the \graphit compiler that it should generate code for the \hb manycore architecture.
+This scheduling language signals to the \graphit compiler that it should generate code for the \hb~manycore architecture.
 We also add support for each of the optimizations described in Chapter~\ref{gen:sec:optimizations} including our blocked access method and alignment-based partitioning scheme.
 
 In order to generate code that runs on the manycore, we must generate code for both the host CPU and the manycore device.

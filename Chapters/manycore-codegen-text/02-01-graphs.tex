@@ -34,7 +34,7 @@ These are all representative of a scale free or social network topology as they 
 In contrast, we also use three road network graphs in our evaluations. 
 These are mesh topologies with low average degree and high diameter. 
 
-In addition to these real-world graphs, we fill out our set of graphs with three synthetic graphs.
+In addition to these real-world graphs, we fill out our set of graphs with four synthetic graphs.
 Like in the Graph500 benchmark, we generate several kron graphs of varying size using the \kron generator~\cite{murphy2010graph500}.
 These graphs model a social network and follow a power-law degree distribution. 
 
@@ -45,6 +45,7 @@ These graphs model a social network and follow a power-law degree distribution.
 \toprule
 \textbf{Name} & \textbf{Description} & \textbf{Vertices} & \textbf{Edges} & \textbf{Degree} \\ \midrule
 Kron18 & \kron generated~\cite{leskovec2005realistic,leskovec2010kronecker} & 262,144 & 4,194,304 & 16 \\
+Kron19 & \kron generated~\cite{leskovec2005realistic,leskovec2010kronecker} & 524,288 & 8,388,608 & 16 \\
 Kron20 & \kron generated~\cite{leskovec2005realistic,leskovec2010kronecker} & 1,048,576 & 16,777,216 & 16 \\
 Kron22 & \kron generated~\cite{leskovec2005realistic,leskovec2010kronecker} & 4,194,304 & 67,108,864 & 16 \\
 Pokec & social network~\cite{snapnets} & 1,632,803 & 30,622,564 & 18.8 \\

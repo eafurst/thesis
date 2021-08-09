@@ -40,9 +40,9 @@
 \begin{tabular}{lccc}
 \toprule
 \textbf{Graph} & \textbf{DRAM Stalls} & \textbf{Bandwidth} &  \textbf{Speedup} \\ \midrule
-LJ & 0.78 & 3.03 & 1.19    \\
-HW &  0.79 & 2.17 & 1.53   \\
-PC & 0.83 & 3.02 & 1.49     \\
+Livejournal & 0.78 & 3.03 & 1.19    \\
+Hollywood &  0.79 & 2.17 & 1.53   \\
+Pokec & 0.83 & 3.02 & 1.49     \\
 \bottomrule
 \end{tabular}
 \end{footnotesize}
@@ -72,7 +72,7 @@ PC & 0.83 & 3.02 & 1.49     \\
   \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.6]{graphit-figures/alpha.pdf}
-    \caption{Results for tuning $\alpha$ on \hb. \todo{finish caption}}
+    \caption{Performance results for hybrid traversal on BFS for each graph relative to its best performance for a range of $\alpha$ values. We find $\alpha = 5$ to be optimal on \hb.}% \todo{finish caption}}
     \label{fig:alpha_tuning}
   \end{figure}
 }
@@ -81,7 +81,7 @@ PC & 0.83 & 3.02 & 1.49     \\
   \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.6]{graphit-figures/beta.pdf}
-    \caption{Results for tuning $\beta$ on \hb. \todo{finish caption}}
+    \caption{Performance results for hybrid traversal on BFS for each graph relative to its best performance for a range of $\beta$ values. We find $\beta = 4$ to be optimal for these graphs on \hb}% \todo{finish caption}}
     \label{fig:beta_tuning}
   \end{figure}
 }
@@ -90,7 +90,7 @@ PC & 0.83 & 3.02 & 1.49     \\
   \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.6]{graphit-figures/hybrid-dir.pdf}
-    \caption{Results for different traversal methods on \hb. \todo{finish caption}}
+    \caption{Traversal direction speedups for BFS relative to the \push implementation. Hybrid-beamer is the hybrid method proposed by Beamer et al. and hybrid-ligra is the method introduced in Ligra.}
     \label{fig:hybrid_dir}
   \end{figure}
 }

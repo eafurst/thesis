@@ -1,12 +1,22 @@
 \section{Discussion}\label{sec:discussion}
 \input{Chapters/manycore-codegen-fragments/eval-figures}
 
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics[scale=0.8]{graphit-figures/heatmap.pdf}
-%     \caption{Speedups for all benchmarks and input graphs attained from applying the blocked-access method or alignment-based partitioning optimization. Here we examine BFS, PR, CC, BC, and the delta-stepping variant of SSSP.}
-%     \label{pap:generals:sec:eval:fig:heatmap}
-% \end{figure}
+\begin{figure}[t!]
+    \centering
+    \includegraphics[scale=0.6]{graphit-figures/heatmap.pdf}
+    \caption{Speedups for all benchmarks and real-world input graphs attained from applying the blocked-access method or alignment-based partitioning optimization. Here we examine BFS, PR, CC, BC, and the delta-stepping variant of SSSP.}
+    \label{pap:generals:sec:eval:fig:heatmap}
+\end{figure}
+
+Figure~\ref{pap:generals:sec:eval:fig:heatmap} shows speedups obtained from applying the blocked-access method or alignment-based partitioning to a wider range of benchmarks and input graphs.
+Here we evaluate performance on three real-world social network graphs (Livejournal, pokec, and Hollywood) and three road networks (RoadCA, RoadCentral, and RoadUSA).
+In addition to BFS and PR we also evaluate on SSSP with delta-stepping, CC, and BC.
+%Due to the costs of RTL simulation, we evaluate the \hbvm on 6 of the 10 input graphs and a subset of the total iterations for each application.
+For PR we simulate one iteration, and for the remaining applications, we simulate five representative iterations that cover a range of frontier densities and execution behavior.
+We use hybrid traversal in the baseline code of BFS, BC, and SSSP to decrease simulation times.
+%The speedups reported in Figure~\ref{base_v_opt} come from applying the \hbmc-specific optimizations described in Section~\ref{sec:compilerimpl:hbvm}.
+BC, CC, and BFS benefit from alignment-based partitioning, while PR and SSSP use the blocking optimization due to their more compute-intensive nature.
+As shown throughout our evaluation, these optimizations better utilize the memory hierarchy and provide up to $4.96\times$ speedup over unoptimized code.
 
 Table~\ref{sec:eval:tab:summary} shows the highest achieved MTEPS for each input graph and benchmark along with the optimization that was used in the generated code.
 Alignment-based partitioning provides optimal performance across the most input graphs and benchmarks, and the next best performing optimization is blocking.
