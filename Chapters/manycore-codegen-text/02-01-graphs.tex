@@ -1,11 +1,24 @@
-\section{The Graph Abstraction}\label{thesis:background:graphproc}
-\todo{talk about graph processing at a high level, talk about related data, maybe storage format?}
+\section{Graph Definitions and Preliminaries}\label{thesis:background:graphproc}
+The graph abstraction stores data in a way that maintains connections and relationships between data objects.
+A graph $g(V,E)$ is defined as a set of vertices $V$ and a set of edges between vertices $E$. 
+An edge connecting vertices $u$ and $v$ would be referred to as $(u,v)$.
+An edge can also have a weight associated with it; in this case, an edge would be defined $(u,v,w)$ where $w$ is the weight associated with the edge connecting vertices $u$ and $v$. 
+Edges can be directed or undirected; an undirected edge can also be thought of as being bidirectional.
+The number of edges connected to a vertex is a vertex's degree.
+Graphs are often stored in compressed sparse row (CSR) format. 
+We discuss this storage format in more detail in Chapter~\ref{pap:generals2020:sec:graphit}.
+
 \section{Graph Topology}\label{thesis:background:topology}
-\todo{planar vs. scale-free, properties of each}
+Graph application performance is dependent on both the algorithm and the structure of the input graph.
+In this thesis we consider two broad classes of graph topologies; scale-free or social network graphs and planar or road graphs.
 A scale-free or social network graph has a degree distribution that follows a power-law, at least asymptotically~\cite{barabasi1999emergence}.
 Most social network graphs have a small diameter and exhibit the small-world property. 
 In a small-world graph, most vertices are not connected to one another, but the majority of vertices can be reached from every other vertex in a small number of hops~\cite{watts1998collective}.
-\todo{discuss what this means in practice and tie in to real world friendships then use this citation}~\cite{milgram1967small}
+Planar or road graphs have a large diameter and low average degree.
+The sparsity of a graph is determined by the average degree of the graph.
+All of the graphs we examine in this thesis are relatively sparse, but the planar graphs we study are the most sparse.
+Both scale-free and planar graphs present their own unique challenges for optimization.
+%\todo{discuss what this means in practice and tie in to real world friendships then use this citation}~\cite{milgram1967small}
 
 \section{Graphs used in this Thesis}\label{thesis:background:graphs}
 In this work, we use a diverse set of graphs for evaluation.
@@ -54,6 +67,8 @@ We select them based on their popularity in graph-processing evaluations~\cite{b
 The algorithms we examine can be classified as traversal-centric or compute-centric algorithms. 
 Traversal-centric or frontier-based algorithms start from a given source vertex and perform computation on vertices by traversing outwards from the source vertex.
 Compute-centric algorithms operate on the entire graph in parallel and tend to iteratively apply updates until the algorithm converges.
+Of the algorithms studied in this thesis BFS, SSSP, and BC are traversal-centric algorithms.
+PageRank and CC are compute centric.
 
 \paragraph{Breadth First Search (BFS)}\mbox{}\\
 BFS is a building block of many graph algorithms. 
@@ -82,6 +97,8 @@ If $\Delta=1$, the algorithm effectively becomes Dijkstra's, and if $\Delta=\inf
 PR calculates the importance or "popularity" of each vertex in a graph and was originally developed to sort web search results~\cite{page1999pagerank}.
 It calculates the popularity of a vertex $v$ by considering both the number of vertices that point to $v$ and the importance of those vertices that point to $v$.
 PR iteratively updates the PageRank score for each vertex in the graph until the scores converge within some specified tolerance.
+It is a topology-driven algorithm where all the edges are traversed in each iteration.
+PR also exhibits massive parallelism in each round.
 There has been considerable work on optimizing PageRank and finding ways to improve the convergence rate~\cite{low2010graphlab,shun2013ligra,kohlschutter2006efficient,berkhin2005survey}
 
 \paragraph{Connected Components (CC)}\mbox{}\\
@@ -92,6 +109,7 @@ In a directed graph, connections between vertices can be asymmetric.
 This means that components of a directed graph can be strongly or weakly connected. 
 In this thesis, we only consider undirected graphs and do not need to consider asymmetry of connections.
 The CC algorithm labels vertices so that all vertices in the same component have the same label.
+Like PR, CC is also topology-driven and traverses every edge in each iteration.
 
 \paragraph{Betweenness Centrality (BC)}\mbox{}\\
 BC is another algorithm that attempts to measure the importance of the vertices in a graph. 
