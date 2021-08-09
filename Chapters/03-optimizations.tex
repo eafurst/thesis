@@ -139,19 +139,26 @@ The \hybrid~approach examines the size of the frontier for each iteration in ord
 Our code generator supports generating code in the \pull, \push, and \hybrid~directions.
 %In the \push~direction, the graph is traversed first by the vertices in the current frontier.
 
-The original hybrid traversal method proposed by Beamer et al. involves two different heuristic conditions. 
+The original hybrid traversal method proposed by Beamer et al. involves two different heuristic conditions~\cite{beamer-bfs-direction}. 
 One for initially switching from \push to \pull and one to switch back to \push again towards the end of execution. 
 These heuristics are based on: the number of vertices in the graph $n$, the number of edges in the graph $m$, the number of vertices in the frontier ($n_f$), the number of edges to check from the frontier ($m_f$), and the number of edges connected to unvisited vertices ($m_u$).
 Each of these conditions also have parameters that can be tuned to best fit the target architecture. 
 The first condition is defined as:
 \[ m_f > \frac{m_u}{\alpha}\]
-The second condition is to switch back to the \push direction is:
+In their initial tuning study on a dual-socket Intel Ivy Bridge server, Beamer et al. select $\alpha = 15$ for optimal performance.
+The second condition to switch back to the \push direction at the end of execution is:
 \[ n_f < \frac{n}{\beta}\]
+Here, the original tuning study found $\beta = 18$ to be optimal in most cases. 
+With these $\alpha$ and $\beta$ values, Beamer et al. found that their hybrid heuristics provided an average speedup of $3.4\times$ over a \push implementation~\cite{beamer2016thesis}. 
 
-The ligra system~\cite{shun2013ligra} introduced a simplified heuristic to switch between the \push and \pull directions. 
+The Ligra system~\cite{shun2013ligra} introduced a simplified heuristic to switch between the \push and \pull directions. 
 Ligra also added functionality to switch between dense and sparse frontier representations given the traversal direction.
-The condition for switching directions in ligra is defined as:
+The condition for switching directions in Ligra is defined as:
 \[ n_f + m_f > \frac{m}{\alpha}\]
+Where again $n_f$ is the number of vertices in the frontier, $m_f$ is the number of edges to check from the frontier, and $m$ is the number of edges in the graph. 
+In the Ligra implementation $\alpha = 20$. 
+This heuristic doesn't require the application to maintain extra state to track whether the application has switched from \push to \pull, and removes the calculation of $m_u$.
+With this much simpler code, Ligra is able to achieve close to the same performance as the hybrid traversal method introduced by Beamer et al~\cite{shun2013ligra}.
 
 %\subsection{Traversal Parameter Tuning}
 
