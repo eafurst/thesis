@@ -20,10 +20,11 @@
      kron22 & 22 & 4,194,304 & 67,108,864 \\ %\hline
      pokec & 20.5 & 1,632,803 & 30,622,564 \\ %\hline
      livejournal (lj) & 22 & 3,997,962 & 34,681,189 \\ %\hline
+     roadcent & 23.8 & 14,081,816 & 33,866,826 \\
      \bottomrule
     \end{tabular}
     
-    \caption{The vertex and edge information for each of the graphs used in our evaluation. We use synthetic \kron graphs used in the Graph500 benchmark and two real world graphs.}
+    \caption{The vertex and edge information for each of the graphs used in our evaluation. We use synthetic \kron graphs used in the Graph500 benchmark and three real world graphs.}
     \label{sec:eval:tab:graphs}
 \end{table}
 
@@ -32,7 +33,8 @@ The host libraries interface directly with the simulator environment using the S
 We compile all generated C++ code using the GNU Compiler Collection (GCC) with ``-O2''.
 
 \paragraph{Manycore Architecture}
-% We evaluate our compiler using detailed RTL simulation of our manycore architecture.
+\tabHBParams
+We evaluate our compiler using detailed RTL simulation of our manycore architecture.
 We model a manycore system running at 1GHz with 16 columns and 8 rows for a total of 128 cores.
 The simulation configuration details are shown in Table~\ref{tab:hbParams}.
 The machine has a 512KB 8-way set associative LLC with 128-byte lines.
@@ -43,7 +45,6 @@ Our simulation environment includes SystemVerilog bind modules for collecting pe
 The RTL for this manycore has been validated in silicon, and this configuration occupies approximately 3.5 mm$^2$ of die area. 
 %We also collect other profiling statistics such as processor stalls and opcode histograms.
 
-\tabHBParams
 
 \paragraph{Benchmarks} We evaluate our compiler on three common graph benchmarks: Breadth-First Search (BFS), Single Source Shortest Path (SSSP), and PageRank (PR). 
 BFS has a high memory access to computation ratio and is a component of many graph algorithms.
@@ -55,7 +56,7 @@ We implement the Bellman-Ford variant of SSSP for our evaluation.
 
 We implement all of these benchmarks in GraphIt and generate manycore code using our GraphIt code generation backend.
 Due to the time costs of simulation, we do not run all iterations of our benchmarks. 
-For BFS and SSSP, we run one iteration from the middle of execution with a maximal root node selected as the initial frontier.
+For BFS and SSSP, we run three iterations from the middle of execution with a random root node selected as the initial frontier.
 For PR, we run one iteration from the beginning of execution.
 
 
