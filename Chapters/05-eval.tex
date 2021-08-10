@@ -6,4 +6,10 @@ In this chapter, we evaluate the performance of our GraphIt code generation back
 \input{Chapters/manycore-codegen-text/03-04-evaluation}
 \input{Chapters/manycore-codegen-text/03-05-discussion}
 
-%\section{Chapter Summary}
+\section{Chapter Summary}
+
+In this chapter we presented performance results for our code generation framework introduced in Chapter~\ref{gen:sec:graphitbackend}.
+We showed baseline code performance and explored the performance benefits of the optimizations we presented in Chapter~\ref{gen:sec:optimizations}.
+We demonstrated speedups of up to $4.96\times$ when our manycore-specific optimizations are applied.
+Our evaluation demonstrated that our \graphit backend and optimizations can improve high performance on a wide variety of input graphs and algorithms.
+This is because our code generation framework enables flexible exploration of optimizations in order to find the optimal schedule for each benchmark and input graph.

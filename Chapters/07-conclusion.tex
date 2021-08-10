@@ -19,8 +19,42 @@ Much of the future work in this space focuses on better understanding applicatio
 I believe that the code generation framework that this thesis presents will provide the flexibility and extensibility necessary to explore these areas of future work.
 
  \paragraph{Multi-Source Traversal}\mbox{}\\
+Breadth-first search (BFS) is a common building block of many graph algorithms, and there has been substantial effort in optimizing BFS on parallel architectures. 
+While quite a few algorithms such as SSSP execute BFS from a single source vertex, there also exist many algorithms which execute many different BFS traversals from different source vertices including all pairs shortest paths and betweenness centrality.
+There has been limited work optimizing this multi-souce BFS (MS-BFS) for parallel architectures~\cite{then2014more, liu2016ibfs}.
 
-\paragraph{Parameter Tuning}\mbox{}\\
+The approach outlined by Then et al.~\cite{then2014more} leverages the properties of small-world networks that are present in many real-world graphs.
+They aim to optimize concurrent processing of a large number of BFS traversals in a single core.
+The authors observe that in graphs that exhibit small-world properties, the majority of vertices are discovered in just a few iterations.
+Further, they note that multiple BFS traversals over the same graph have a high likelihood of having overlapping sets of discovered vertices within the same iteration.
+Based on these observations, they create data structures that allow for combined accesses to the same vertices across multiple BFS instances.
+They use sets and set operations to concurrently execute many BFS traversals at the same time. 
+In practice, these are implemented as bit operations over fixed width bit fields where the width of the bit field is the maximum number of concurrent BFS traversals that are supported.
+This approach reduces cache-contention and redundant work.
+
+We believe that the manycore will be well suited to this style of MS-BFS processing, and that the use of bitfields will work well with the small caches and scratchpad memories present on the manycore.
+In addition, \graphit has support for multi-source traversal through its \lstinline{parallel_for} operator. 
+However, this is a feature that we do not currently support in our \hb~code generation backend. 
+An optimal implementation of this operator could open up our code generation framework to a larger class of graph applications.
+
+\paragraph{Parameter Tuning and Custom Data Structures}\mbox{}\\
+In graph processing, proposed optimizations are often tuned for one specific architecture.
+This means that when an optimization is ported to a new architecture, a performance study must be conducted to tune the optimization parameters to the specific features of the new architecture.
 We began a study of parameter tuning in this thesis with the exploration of hybrid traversal methods. 
+From this we found that for optimal performance \hb required smaller $\alpha$ and $\beta$ values for the hybrid traversal heuristics introduced by Beamer et al.
+
 Another area to evaluate would be tuning the $\Delta$ parameter in the delta-stepping SSSP algorithm.
+As discussed in Chapter~\ref{gen:sec:background}, delta-stepping is a variant that was proposed to increase parallelism without dramatically increasing algorithmic work by introducing a bucketed priority queue~\cite{meyer2003delta}. 
+The bucketed priority queue increases parallelism by relaxing the strict processing order imposed in Dijkstra's algorithm.
+Vertices are sorted into buckets within the priority queue of size $\Delta$.
+Setting $\Delta = 1$ effectively turns delta-stepping into Dijkstra's and setting $\Delta = \infty$ turns it into Bellman-Ford. 
+
+It has been noted that the $\Delta$ parameter is sensitive to both input graph and architecture~\cite{beamer2016thesis}.
+Beamer et al. found that the range of optimal $\Delta$ values for a given input graph is actually quite large~\cite{beamer2016thesis}. 
+However, there has been less study on how sensitive $\Delta$ values are to different architectures. 
+A study of $\Delta$ values on road network and social network graphs to determine optimal values for the \hb~manycore could provide interesting insights into the class of ordered graph algorithms.
+
 In addition, there is room to improve the implementation of the bucketed priority queue for a manycore architecture.
+Currently the priority queue is implemented on the host and all bucket updates must happen on the host in between each iteration.
+At the beginning of each iteration, the priority queue constructs a frontier to be dispatched to the manycore for processing.
+We believe that the manycore could be well suited to a device side implementation of the priority queue, and that moving the logic of the priority queue to the device could greatly increase performance.
