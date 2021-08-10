@@ -286,7 +286,16 @@ Repeating this study with alignment-based partitioning in the \pull direction or
 However, the differences in the memory hierarchies between an Intel IvyBridge server and the \hb~manycore likely account for the lower values.
 
 \hybridresults
-Finally, we present results for \push, \pull, Beamer's hybrid traversal, and Ligra's hybrid traversal in Figure~\ref{fig:hybrid_dir}.
+Finally, we present results for \push, \pull, Beamer's hybrid traversal (with $\alpha=5$ and $\beta=4$), and Ligra's hybrid traversal in Figure~\ref{fig:hybrid_dir}.
+We evaluate 10 iterations of BFS with the same input graphs. 
+We report speedup relative to the \push implementation results.
+Similarly to Figure~\ref{pap:generals:sec:eval:fig:push}, we find that traversing in the \pull direction results in a slowdown over \push on the \kron graphs. 
+Because we sample a larger number of iterations here, we also observe a slowdown for \pull on Livejournal and pokec. 
+With the values of $\alpha$ and $\beta$ that we use, we find that Beamer's hybrid traversal never switches to \pull on kron18 and kron20. 
+For these graphs we see a performance decrease with the Ligra hybrid traversal method.
+On the two real-world graphs, we see larger performance improvements up to $3.24\times$.
+We also find that Ligra's hybrid traversal is able to achieve performance within $4.5\%$ of the performance of Beamer's hybrid traversal implementation on the two real-world graphs and is within $12\%$ on average across all graphs studied.
+Because of this and because of the simplicity of its implementation, we use the Ligra hybrid traversal heuristic in our runtime libraries.
  
 \subsection{Performance Analysis}
 
