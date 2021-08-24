@@ -3,7 +3,7 @@
 
 \input{Chapters/manycore-codegen-fragments/method-figures}
 
-In this chapter, we explore optimizations to improve graph application performance on the manycore system described in Section \ref{pap:generals:sec:architecture}.
+In this chapter, we explore optimizations to improve graph application performance on the manycore system described in Chapter~\ref{pap:generals:sec:architecture}.
 First, we discuss a blocked access method for graph data to better exploit memory-level parallelism (MLP) in software.
 Next, we present three different work partitioning schemes.
 We then introduce a new frontier storage format that targets very sparse frontiers. 
@@ -26,7 +26,7 @@ Many of these loads occur in iterations of the outer loop between which there ar
 Software can reschedule these long-latency requests to execute in parallel by formatting work items into blocks.
 Cores iterate over their assigned blocks, prefetching the entire block at once.
 The block data is stored in the core's scratchpad memory, re-purposing it as a software managed L1 cache.
-Figure \ref{pap:generals:sec:method:sub:blocked:fig:blocked} illustrates the blocked memory access technique. 
+Figure~\ref{pap:generals:sec:method:sub:blocked:fig:blocked} illustrates the blocked memory access technique. 
 Work items are stored in HBM in contiguous cache-aligned blocks.
 The LLC fetches a block from DRAM after receiving an initial load request from software.
 Cores issue these memory requests with an explicit call to \lstinline[language=C++, basicstyle=\small\ttfamily]{memcpy} to exploit pipelined non-blocking loads and hide memory latency.

@@ -9,7 +9,7 @@ Cores within the architecture communicate explicitly through memory~\cite{davids
 Communication allows cores to cooperate and solve large parallel tasks.
 The quantity of cores and diverse communication patterns means that manycore architectures provide a flexible parallel computation fabric that can be tailored to fit application requirements or the structure of graph input data \cite{lumsdaine2007challenges}.
 
-In this section, I describe a representative manycore architecture that we use to evaluate our code generator.
+In this section, I describe the \hbmc, a representative manycore architecture that we use to evaluate our code generator.
 The cores are tiny, performance-optimized scalar cores that implement a RISC-V instruction set.
 Each core has a software-managed scratchpad memory for low-latency storage and inter-thread communication.
 Data cache lines do not move between cores, eliminating coherence overhead and false sharing.

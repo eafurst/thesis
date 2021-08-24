@@ -89,7 +89,7 @@ All \lstinline[language=graphit]{vertexset} and  \lstinline[language=graphit]{ed
 By default, all of these operators are generated as parallel kernels meant to be executed across the entire manycore. 
 To distribute work among cores, we implement a \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range(V, start, end)} library function that takes as input the total number of vertices, a pointer to a start value, and a pointer to an end value.
 The function evenly splits the vertices across the cores and sets the start and end values as a contiguous subset of vertices for each core to work on. 
-Our backend replaces the call to \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range} with \lstinline[language=C++, basicstyle=\small\ttfamily]{edge_aware_local_range} to do the recursive edge-aware work assignment described in Section \ref{sec:method:sub:edge-aware-partitioning}.
+Our backend replaces the call to \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range} with \lstinline[language=C++, basicstyle=\small\ttfamily]{edge_aware_local_range} to do the recursive edge-aware work assignment described in Chapter~\ref{sec:method:sub:edge-aware-partitioning}.
 \newline
 \begin{lstlisting}[language=C++, breaklines=true, 
                    caption=Generated manycore device code for the Breadth-First Search (BFS) program shown in Listing~\ref{pap:generals2020:sec:background:lst:graphit}.,

@@ -3,7 +3,7 @@
 
 \section{Performance Optimizations} \label{sec:method}
 
-In this section, we explore optimizations to improve graph application performance on the manycore system described in Section \ref{pap:generals:sec:architecture}.
+In this section, we explore optimizations to improve graph application performance on the manycore system described in Chapter~\ref{pap:generals:sec:architecture}.
 First, we propose a blocked access method for graph data to better exploit memory-level parallelism (MLP) in software.
 Next, we discuss three different work partitioning schemes.
 %Next, we discuss an implementation of edge-aware vertex partitioning. 
@@ -134,8 +134,8 @@ To address this, we developed a code generation backend targeting a manycore arc
 This code generator alleviates the need for the programmer to have extensive knowledge of the underlying architecture.
 %To alleviate the need for the programmer to have knowledge of the underlying manycore architecture, we develop a code generation backend to GraphIt targeting a manycore architecture.
 
-We add support for our backend and the manycore specific optimizations discussed in Section~\ref{sec:method} with minimal changes to the GraphIt frontend scheduling language.
-First, we added the option \lstinline[language=graphit]{generateManycoreCode()} which signals to the GraphIt compiler it should generate code for the manycore architecture described in Section~\ref{pap:generals:sec:architecture}.
+We add support for our backend and the manycore specific optimizations discussed in Chapter~\ref{sec:method} with minimal changes to the GraphIt frontend scheduling language.
+First, we added the option \lstinline[language=graphit]{generateManycoreCode()} which signals to the GraphIt compiler it should generate code for the manycore architecture described in Chapter~\ref{pap:generals:sec:architecture}.
 We also added support for our blocked access method and alignment-based partitioning scheme in the scheduling language. 
 
 In order to generate code that runs on the manycore, we must generate code for both the host CPU and the manycore device.
@@ -202,7 +202,7 @@ All \lstinline[language=graphit]{vertexset} and  \lstinline[language=graphit]{ed
 By default, all of these operators are generated as parallel kernels meant to be executed across the entire manycore. 
 To distribute work among cores, we implement a \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range(V, start, end)} library function that takes as input the total number of vertices, a pointer to a start value, and a pointer to an end value.
 The function evenly splits the vertices across the cores and sets the start and end values as a contiguous subset of vertices for each core to work on. 
-Our backend replaces the call to \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range} with \lstinline[language=C++, basicstyle=\small\ttfamily]{edge_aware_local_range} to do the recursive edge-aware work assignment described in Section \ref{sec:method:sub:edge-aware-partitioning}.
+Our backend replaces the call to \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range} with \lstinline[language=C++, basicstyle=\small\ttfamily]{edge_aware_local_range} to do the recursive edge-aware work assignment described in Chapter~\ref{sec:method:sub:edge-aware-partitioning}.
 \newline
 \begin{lstlisting}[language=C++, breaklines=true, 
                    caption=Generated manycore device code for the Breadth-First Search (BFS) program shown in Listing~\ref{pap:generals2020:sec:background:lst:graphit}.,
