@@ -28,6 +28,9 @@ Graph applications are dominated by random memory accesses with minimal computat
 
 Many frameworks have been proposed for multicore CPU systems including Ligra~\cite{shun2013ligra}, GraphLab~\cite{low2010graphlab}, GraphChi~\cite{aapo2012graphchi}, and Galois~\cite{nguyen2013lightweight}.
 These frameworks use different approaches to address the limitations of graph processing on CPUs including priority scheduling of work and various load balancing techniques.
+There are also a wide range of DSLs for shared-memory graph processing including Ligra, Galois, GraphGrind~\cite{sun2017graphgrind}, Polymer~\cite{zhang2015numa}, Gemini~\cite{zhu2016gemini}, and Grazelle~\cite{grossman2018making}. 
+These frameworks adopt a frontier-based model for execution.
+Green-Marl~\cite{hong2012green}, Socialite~\cite{seo2013socialite}, Abelian~\cite{gill2018abelian}, and EmptyHeaded~\cite{aberger2017emptyheaded} are also shared-memory graph processing DSLs, but they do not allow for creation of active vertex sets and perform worse than frontier-based frameworks~\cite{aberger2017emptyheaded,satish2014navigating}.
 However, I do not spend very much time on these optimizations because I focus on a manycore with much simpler cores and a smaller memory hierarchy.
 
 \section{Graph Processing on GPUs} GPUs have shown great promise in exploiting the inherent parallelism in graph applications \cite{liu2016ibfs, mclaughlin2014bcongpus}.
@@ -54,7 +57,7 @@ Meanwhile, Zhou et al~\cite{zhou2016high} use large external memory and an edge-
 There has also been work on FPGA implementations of individual graph benchmarks~\cite{zhou2015optimizing, zhou2015accelerating}.
 Because my work is focused on general purpose manycore architectures, I do not address these FPGA specific optimizations.
 
-\section{Graph Processing Architectures} There has been significant work designing custom hardware for graph processing.
+\section{Graph Processing Architectures} There has been significant work designing custom hardware for sparse compute and graph processing~\cite{ham2016graphicionado, jeffrey2015scalable, li2018graphia, dai2018graphh, addisie2018heterogeneous, yao2018efficient, ahn2016scalable}.
 Ozdal et al.~\cite{ozdal2016energy} propose an asynchronous, vertex-centric hardware for graph processing. 
 Their asynchronous model does not execute graph algorithms using iterations with strict boundaries like traditional graph processing. 
 The goal of their work was to maintain a larger active set of vertices and edges in order to increase memory level parallelism. 
