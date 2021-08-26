@@ -20,11 +20,11 @@
      kron19 & 19 & 524,288 & 8,388,608 \\
      kron20 & 20 & 1,048,576 & 16,777,216 \\ %\hline
      kron22 & 22 & 4,194,304 & 67,108,864 \\ %\hline
-     pokec (pk) & 20.5 & 1,632,803 & 30,622,564 \\ %\hline
+     Pokec (pk) & 20.5 & 1,632,803 & 30,622,564 \\ %\hline
      LiveJournal (lj) & 22 & 3,997,962 & 34,681,189 \\ %\hline
      Hollywood (hw)& 20.1 & 1,139,905 & 112,751,422 \\
      RoadCA (rc)& 20.9 & 1,971,281 & 5,533,214 \\
-     RoadCent (rn)& 23.8 & 14,081,816 & 33,866,826 \\
+     RoadCentral (rn)& 23.8 & 14,081,816 & 33,866,826 \\
      RoadUSA (ru)& 24.5 & 23,947,347 & 57,708,624\\
      \bottomrule
     \end{tabular}
@@ -71,7 +71,7 @@ For PR, we run one iteration from the beginning of execution.
 We generate four \kron graphs of varying size. 
 We primarily evaluate our results using three of these graphs: kron18, kron20, and kron22.
 %We generate weighted and unweighted versions of each of these graphs for use with our three benchmarks.
-We use three real-world graphs: pokec~\cite{pokec}, RoadCentral~\cite{davis2011university} and livejournal~\cite{lj}.
+We use three real-world graphs: Pokec~\cite{pokec}, RoadCentral~\cite{davis2011university} and LiveJournal~\cite{lj}.
 All of the graphs we use and their properties are shown in Table~\ref{sec:eval:tab:graphs} and discussed in more detail in Chapter~\ref{thesis:background:graphs}.
 
 
@@ -109,7 +109,7 @@ Figure~\ref{pap:generals:sec:eval:fig:baseline} show our initial performance res
 Across all results, we see a geometric mean of 520.04 MTEPS in the \pull~direction.% and 104 MTEPS in the \push~direction. 
 For SSSP and PR, we note that the highest performance on the \kron scale 18 graph.
 This is due to the relatively small size of the graph and the large amount of parallelism and memory bandwidth of the manycore architecture.
-For BFS we see the highest performance on the pokec graph.
+For BFS we see the highest performance on the Pokec graph.
 %This decrease in performance in the \push~direction is expected as the iterations we examine for BFS and SSSP have very dense frontiers that benefit from traversing in the \pull~direction.
 %In all three benchmarks, we see the highest performance on the \kron scale 18 graph.
 %This is most likely due to the relative small size of the graph and the large amount of parallelism and memory bandwidth present on the manycore architecture.
@@ -162,7 +162,7 @@ Speedup is normalized to the baseline performance of SSSP in the \pull~direction
 Similarly, Figure~\ref{pap:generals:sec:eval:fig:block}b shows the performance benefit of the blocked access method with varying block sizes on BFS in the \pull~direction.
  
 Interestingly, we do not see much variation in speedup across different block sizes. 
-Livejournal and \kron 18 see the most speedup with a block size of 64, pokec and \kron 20 see optimal performance with block size 32, and a block size of 128 is optimal for \kron 22. 
+LiveJournal and \kron 18 see the most speedup with a block size of 64, Pokec and \kron 20 see optimal performance with block size 32, and a block size of 128 is optimal for \kron 22. 
 We observe that the optimal block size appears to be input graph dependent for the other benchmarks we studied as well. 
  
 Figure~\ref{pap:generals:sec:eval:fig:blocked} shows the speedup for each benchmark when using the blocked access method. 
@@ -174,7 +174,7 @@ Blocking is primarily motivated by the microarchitecture's ability to hide memor
 The prefetching effect from blocking can yield significant performance improvement, but it also provides the effect of data caching.
 Even if the data is used once, the prefetching effect can yield significant performance improvement. 
 We observe the most speedup with SSSP because it traverses more edges than BFS and benefits most from prefetching.
-We see the least speedup from blocking with BFS and see performance degredation on the pokec and livejournal graphs.
+We see the least speedup from blocking with BFS and see performance degredation on the Pokec and LiveJournal graphs.
 The \pull~direction for BFS traverses the fewest edges of the three workloads thanks to a filter condition on destination vertices.
 This means that much of the prefetched data is never used, and the additional memory reads become overhead.
 
@@ -205,7 +205,7 @@ Figure~\ref{pap:generals:sec:eval:fig:cache} shows the performance benefit of al
 Speedup is calculated over the baseline SSSP \pull~implementation and baseline BFS \pull~implementation. 
 Similarly to the blocked access method results, we find that the optimal work block size for alignment-based partitioning is input graph and benchmark dependent. 
 %A work block size of 16 is optimal for \kron 18 and 20, livejournal and \kron22 see the best performance with a block size of 32, and pokec sees the most speedup with a block size of 64.
-A work block size of 16 was optimal for \kron 18 and 20; livejournal and \kron22 saw optimal performance with a block size of 32 and pokec with a block size of 64.
+A work block size of 16 was optimal for \kron 18 and 20; liveJournal and \kron22 saw optimal performance with a block size of 32 and Pokec with a block size of 64.
 
 Figure~\ref{pap:generals:sec:eval:fig:aligned} shows the speedup for each benchmark when using alignment-based partitioning over the baseline vertex partitioning scheme. 
 The optimal work block size for each input graph and benchmark is used to calculate speedup. 
@@ -290,7 +290,7 @@ Finally, we present results for \push, \pull, Beamer's hybrid traversal (with $\
 We evaluate 10 iterations of BFS with the same input graphs. 
 We report speedup relative to the \push implementation results.
 Similarly to Figure~\ref{pap:generals:sec:eval:fig:push}, we find that traversing in the \pull direction results in a slowdown over \push on the \kron graphs. 
-Because we sample a larger number of iterations here, we also observe a slowdown for \pull on Livejournal and pokec. 
+Because we sample a larger number of iterations here, we also observe a slowdown for \pull on LiveJournal and Pokec. 
 With the values of $\alpha$ and $\beta$ that we use, we find that Beamer's hybrid traversal never switches to \pull on kron18 and kron20. 
 For these graphs we see a performance decrease with the Ligra hybrid traversal method.
 On the two real-world graphs, we see larger performance improvements up to $3.24\times$.

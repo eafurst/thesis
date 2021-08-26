@@ -2,16 +2,16 @@
 \markboth{Generating Code for Manycore Graph Programs}{Generating Code for Manycore Graph Programs}
 %\input{Chapters/manycore-codegen-fragments/method-figures}
 
-\introOverviewFigure
-
 %\todo{intro paragraph to discuss the problem with graph processing again?/contextualize after background and related work?}
 To harness the benefits of manycore architectures and reduce programming complexity, we propose a code generation backend for \graphit, a flexible domain-specific language (DSL) for graph computations~\cite{zhang2018graphit}. 
 We implement our backend as a \graphvm using \ugc.
-This backend generates code targetting the representative manycore architecture described in \ref{gen:sec:background}.
+This backend generates code targeting the representative manycore architecture described in Chapter~\ref{pap:generals:sec:architecture}.
 We use this new backend to implement and explore the performance of the optimizations discussed in Chapter~\ref{gen:sec:optimizations}.
 %Our evaluation shows that our GraphIt backend achieves a maximum of 467.1 million traversed edges per second (MTEPS) and on average achieves 252.7 MTEPS across all input graphs and benchmarks studied. 
 %We find that our optimizations achieve a maximum speedup of 2.1$\times$ and an average speedup of 1.16$\times$ over naive manycore implementations.
 An overview of our approach is shown in Figure~\ref{pap:generals:sec:intro:fig:overview}.
+
+\introOverviewFigure
 
 \section{Manycore Code Generation}\label{sec:method:sub:baseline}
 
