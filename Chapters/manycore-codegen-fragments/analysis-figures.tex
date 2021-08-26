@@ -3,7 +3,7 @@
 %\newcolumntype{E}{>{\raggedright\arraybackslash}m{2.75in}}
 \newcolumntype{D}{>{\raggedleft\arraybackslash}m{0.6175in}}
 \newcolumntype{E}{>{\raggedright\arraybackslash}m{2.7175in}}
-\begin{table}[h]
+\begin{table}[ht]
   \centering
   %\vspace{-0.1in}
   \resizebox{0.7\linewidth}{!}{
@@ -33,8 +33,35 @@
 \end{table}
 }
 
+\newcommand{\evalGraphsTab}{
+\begin{table}[ht]
+  %\arraystretch{1.3}
+  \centering
+  \begin{footnotesize}
+  \begin{tabular}{lccc}
+  %\hline
+  \toprule
+    \textbf{Name} & \textbf{Scale} & \textbf{\# Vertices} & \textbf{\# Edges} \\ \midrule %\hline
+    kron18 & 18 & 262,144 & 4,194,304 \\ %\hline
+    kron19 & 19 & 524,288 & 8,388,608 \\
+    kron20 & 20 & 1,048,576 & 16,777,216 \\ %\hline
+    kron22 & 22 & 4,194,304 & 67,108,864 \\ %\hline
+    Pokec (pk) & 20.5 & 1,632,803 & 30,622,564 \\ %\hline
+    LiveJournal (lj) & 22 & 3,997,962 & 34,681,189 \\ %\hline
+    Hollywood (hw)& 20.1 & 1,139,905 & 112,751,422 \\
+    RoadCA (rc)& 20.9 & 1,971,281 & 5,533,214 \\
+    RoadCentral (rn)& 23.8 & 14,081,816 & 33,866,826 \\
+    RoadUSA (ru)& 24.5 & 23,947,347 & 57,708,624\\
+    \bottomrule
+  \end{tabular}
+  \end{footnotesize}
+  \caption{The vertex and edge information for each of the graphs used in our evaluation. We use synthetic \kron graphs used in the Graph500 benchmark and three real world graphs.}
+  \label{sec:eval:tab:graphs}
+\end{table}
+}
+
 \newcommand{\hbBlockingEvalTab}{
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \begin{footnotesize}
 \begin{tabular}{lccc}
@@ -69,7 +96,7 @@ Pokec & 0.83 & 3.02 & 1.49     \\
 }
 
 \newcommand{\alphatune}{
-  \begin{figure}[h!]
+  \begin{figure}[!ht]
     \centering
     \includegraphics[scale=0.6]{graphit-figures/alpha.pdf}
     \caption{Performance results for hybrid traversal on BFS for each graph relative to its best performance for a range of $\alpha$ values. We find $\alpha = 5$ to be optimal on \hb.}% \todo{finish caption}}
@@ -78,7 +105,7 @@ Pokec & 0.83 & 3.02 & 1.49     \\
 }
 
 \newcommand{\betatune}{
-  \begin{figure}[h!]
+  \begin{figure}[!ht]
     \centering
     \includegraphics[scale=0.6]{graphit-figures/beta.pdf}
     \caption{Performance results for hybrid traversal on BFS for each graph relative to its best performance for a range of $\beta$ values. We find $\beta = 4$ to be optimal for these graphs on \hb}% \todo{finish caption}}
@@ -87,7 +114,7 @@ Pokec & 0.83 & 3.02 & 1.49     \\
 }
 
 \newcommand{\hybridresults}{
-  \begin{figure}[h!]
+  \begin{figure}[!ht]
     \centering
     \includegraphics[scale=0.6]{graphit-figures/hybrid-dir.pdf}
     \caption{Traversal direction speedups for BFS relative to the \push implementation. Hybrid-beamer is the hybrid method proposed by Beamer et al. and hybrid-ligra is the method introduced in Ligra.}
