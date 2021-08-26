@@ -12,7 +12,7 @@ Then, I talk about graph processing on CPUs, GPUs, FPGAs, and custom architectur
 Finally, I introduce previous manycore architectures and discuss prior work on graph processing on manycore architectures.
 
 \section{Understanding Graph Performance} Several pieces of work have focused on understanding the bottlenecks of graph processing~\citep{beamer2015locality, basak2019analysis}. It is clear that memory is the main bottleneck for graph algorithms. Most graph programs struggle to achieve high memory bandwidth due to insufficient instruction window sizes and memory load dependencies inherent in graph accesses. Further, many graph applications actually experience both low memory bandwidth and low compute due to memory latency~\cite{beamer2015locality}.
-We find that memory accesses are the main bottleneck in our system and propose a blocking method and an alignment-based partitiong method to coalesce accesses.
+We find that memory accesses are the main bottleneck in our system and propose a blocking method and an alignment-based partitioning method to coalesce accesses.
 
 Graph processing work is often split between making algorithmic improvements and making systems improvements. 
 Beamer et al. propose a new way to evaluate improvements in graph processing that allows for evaluation of both algorithmic and system improvements in one metric~\citep{beamer2015gail}.
@@ -69,7 +69,7 @@ Zhuo et al.~\cite{zhuo2019graphq} and Ahn et al.~\cite{ahn2016scalable} present 
 Both of these works focus on reducing irregular movement of data by reordering vertex computations and through movement of computation.
 These works tend to focus on graph optimizations that are not solvable in software, while my work focuses on optimizations that can be implemented on general purpose manycore architectures.
 
-\subsection{Hardware Modifications} There is also work being done on modifying small parts of exisiting hardware systems to improve graph processing performance. 
+\subsection{Hardware Modifications} There is also work being done on modifying small parts of existing hardware systems to improve graph processing performance. 
 Segura et al.~\cite{segura2019scu} propose adding a stream compaction unit to existing GPUs to handle memory compaction and coalescing.
 Their stream compaction unit uses bitmasks in order to construct a subset of the edgelist for processing on the GPU in order to reduce duplication of work. 
 This, along with coalescing and organizing the data to improve cache efficiency, helps to improve performance on the GPU.

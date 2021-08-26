@@ -174,7 +174,7 @@ Blocking is primarily motivated by the microarchitecture's ability to hide memor
 The prefetching effect from blocking can yield significant performance improvement, but it also provides the effect of data caching.
 Even if the data is used once, the prefetching effect can yield significant performance improvement. 
 We observe the most speedup with SSSP because it traverses more edges than BFS and benefits most from prefetching.
-We see the least speedup from blocking with BFS and see performance degredation on the Pokec and LiveJournal graphs.
+We see the least speedup from blocking with BFS and see performance degradation on the Pokec and LiveJournal graphs.
 The \pull~direction for BFS traverses the fewest edges of the three workloads thanks to a filter condition on destination vertices.
 This means that much of the prefetched data is never used, and the additional memory reads become overhead.
 
