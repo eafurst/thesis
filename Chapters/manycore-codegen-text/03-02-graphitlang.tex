@@ -2,21 +2,21 @@
 \section{\graphit: A Graph Processing Domain-Specific Language}\label{pap:generals2020:sec:graphit}
 \ugfoverview
 \graphit is a domain-specific language for graph processing applications~\citep{zhang2018graphit,brahmakshatriya2021compiling,zhang2019optimizing}.
-Like Halide~\citep{ragan2013halide}, GraphIt separates the description of the algorithm from the scheduling of the computation. 
-A separate algorithm language and scheduling language are used to specify graph programs in GraphIt. 
+Like Halide~\citep{ragan2013halide}, \graphit separates the description of the algorithm from the scheduling of the computation. 
+A separate algorithm language and scheduling language are used to specify graph programs in \graphit. 
 This separation of description and schedule allows users to express computation more flexibly.
 
 The \ugc provides functionality for adding new backends by further decoupling the hardware-independent transformations from the hardware-dependent compiler passes~\cite{brahmakshatriya2021taming}.
 The design of \ugc makes it easy to write and compose optimizations that make use of each backend architecture's unique features.
-Figure~\ref{fig:ugf} demonstrates the overall compilation flow with various analyses and lowering passes to generate GraphIR, GraphIt's graph specific intermediate representation.
+Figure~\ref{fig:ugf} demonstrates the overall compilation flow with various analyses and lowering passes to generate \graphisa, \graphit's graph specific intermediate representation.
 \graphisa is an in\hyp{}memory representation of a program that allows optimizations through IR-to-IR transformations before final code generation.
 \graphisa is lowered into code for different architectures using an architecture-specific Graph Virtual Machine (\graphvm), which performs the hardware-specific transformations and code generation.
 
-Listing~\ref{pap:generals2020:sec:background:lst:graphit} shows an example GraphIt program implementing Breadth-First Search (BFS) along with a \hb-specific schedule.
+Listing~\ref{pap:generals2020:sec:background:lst:graphit} shows an example \graphit program implementing Breadth-First Search (BFS) along with a \hb-specific schedule.
 \hfill
 \break 
 \begin{lstlisting}[language=graphit, 
-                   caption=GraphIt code for Breadth-First Search (BFS) with a \hbmc schedule.,
+                   caption=\graphit code for Breadth-First Search (BFS) with a \hbmc schedule.,
                    label=pap:generals2020:sec:background:lst:graphit]
 const edges : edgeset{Edge}(Vertex,Vertex);
 var frontier : vertexset{Vertex} = new vertexset{Vertex}(0);
@@ -50,7 +50,7 @@ Line~1 and Line~2 of Listing~\ref{pap:generals2020:sec:background:lst:graphit} d
 Any data associated with elements in an \lstinline[language=graphit]{edgeset} or \lstinline[language=graphit]{vertexset} is stored as a \lstinline[language=graphit]{vector}.
 Line~3 of Listing~\ref{pap:generals2020:sec:background:lst:graphit} shows the declaration of a \lstinline[language=graphit]{vector} variable, \lstinline[language=graphit]{parent}, that contains data associated with the vertices in the graph.
 
-GraphIt uses Compressed Sparse Row (CSR) graph format for these data structures, illustrated in Figure~\ref{pap:generals2020:sec:background:fig:graphformat}.
+\graphit uses Compressed Sparse Row (CSR) graph format for these data structures, illustrated in Figure~\ref{pap:generals2020:sec:background:fig:graphformat}.
 CSR format represents a graph with two arrays: a vertex list and an edge list.
 The edge list contains the destination vertex for each edge in the graph and contains $|E|$ elements where $E$ is the set of edges in the graph.
 In the case of a weighted graph, the edge list is stored as an array of tuples, with each element in the array containing the destination vertex id and the weight of the edge.
@@ -64,11 +64,11 @@ The generated code operates on these arrays to perform computation.
 
 
 \subsection{Algorithm Representation}
-An algorithm in GraphIt is written as operations on \lstinline[language=graphit]{edgeset} and \lstinline[language=graphit]{vertexset} datatypes. 
-Graphit provides several operators that perform computation on these types, but the most common are the \lstinline[language=graphit]{filter} operator and \lstinline[language=graphit]{apply} operator.
+An algorithm in \graphit is written as operations on \lstinline[language=graphit]{edgeset} and \lstinline[language=graphit]{vertexset} datatypes. 
+\graphit provides several operators that perform computation on these types, but the most common are the \lstinline[language=graphit]{filter} operator and \lstinline[language=graphit]{apply} operator.
 The \lstinline[language=graphit]{filter} operator takes a function and a set, applies the function to each element in the set, and returns a set of elements where the function returned true.
 The \lstinline[language=graphit]{apply} operator takes a function and set as input and applies the function to each element in the set. %, and returns the resulting set of modified elements.
-GraphIt also provides other built-in operators like \lstinline[language=graphit]{applyModified}, that takes a function and a set, applies the function to each element in the set, and returns a vertexset that contains vertices that were updated by the input function. 
+\graphit also provides other built-in operators like \lstinline[language=graphit]{applyModified}, that takes a function and a set, applies the function to each element in the set, and returns a vertexset that contains vertices that were updated by the input function. 
 This operator is used to construct frontiers in iterative graph algorithms. 
 Listing~\ref{pap:generals2020:sec:background:lst:graphit} demonstrates how these operators can be used to write BFS.
 
@@ -91,7 +91,7 @@ These classes implement the virtual functions from the abstract interface to pro
 A wide range of scheduling options can be implemented in each \graphvm, i.e., by specifying traversal direction, by specifying the level of parallelism, or by using load balancing techniques for parallel operators.
 Labels are used to indicate which operators in the algorithm description the scheduling optimizations should be applied to.
 Further, the architecture-specific schedule tells the compiler to generate code for the target device.
-The schedule description always follows the algorithm description in GraphIt.
+The schedule description always follows the algorithm description in \graphit.
 
 The schedule for BFS starts with the \lstinline[language=graphit]{schedule} declaration on Line~20 of Listing~\ref{pap:generals2020:sec:background:lst:graphit}. 
 Line~21 instantiates a \hb scheduling object indicating that the code generator should generate code for the target manycore. 

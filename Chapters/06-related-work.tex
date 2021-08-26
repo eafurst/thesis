@@ -98,7 +98,7 @@ The framework uses both vertex-centric and edge-centric processing to compute gr
 Unlike our approach, this approach requires modifications to the entire graph processing system stack to achieve performance on the chosen manycore.
 Chen et al.~\cite{chen2015efficient} propose a graph processing framework that splits execution between a CPU and Intel MIC. 
 Their work focuses on exploiting SIMD performance on the MIC. 
-Unlike our GraphIt backend, their API requires the programmer to simultaneously reason with the algorithm, the schedule, and the passing of messages between the CPU and MIC.
+Unlike our \graphit backend, their API requires the programmer to simultaneously reason with the algorithm, the schedule, and the passing of messages between the CPU and MIC.
 Li et al.~\cite{li2014grapid} also propose a manycore code generation framework for graph programs. 
 They target the Intel Xeon Phi and leverage OpenMP for parallelism on the Xeon Phi. 
 Their manycore specific optimizations are also limited to vectorization of compute and some data reuse analysis.
