@@ -16,13 +16,13 @@ An overview of our approach is shown in Figure~\ref{pap:generals:sec:intro:fig:o
 \section{Manycore Code Generation}\label{sec:method:sub:baseline}
 
 Reasoning about these performance optimizations and manycore-specific considerations is a challenging task.
-To address this, we developed a code generation backend targeting a manycore architecture.
+To address this, we developed a code generation backend targeting the \hbmc architecture.
 This code generator alleviates the need for the programmer to have extensive knowledge of the underlying architecture.
 %To alleviate the need for the programmer to have knowledge of the underlying manycore architecture, we develop a code generation backend to GraphIt targeting a manycore architecture.
 
 We add support for our backend and the manycore specific optimizations discussed in Chapter~\ref{gen:sec:optimizations} by implementing a \hb scheduling language using the abstract language provided by \GG.
 %First, we added the option \lstinline[language=graphit]{generateManycoreCode()} which signals to the GraphIt compiler it should generate code for the manycore architecture described in Section~\ref{pap:generals:sec:architecture}.
-This scheduling language signals to the \graphit compiler that it should generate code for the \hb~manycore architecture.
+This scheduling language signals to the \graphit compiler that it should generate code for the \hbmc architecture.
 We also add support for each of the optimizations described in Chapter~\ref{gen:sec:optimizations} including our blocked access method and alignment-based partitioning scheme.
 
 In order to generate code that runs on the manycore, we must generate code for both the host CPU and the manycore device.
@@ -57,7 +57,7 @@ commentstyle=\color{darkgray},
 stringstyle=\color{darkgreen}
 }
 \begin{lstlisting}[language=C++, breaklines=true, 
-                   caption=Generated manycore host code for the Breadth-First Search (BFS) program shown in Listing~\ref{pap:generals2020:sec:background:lst:graphit}.,
+                   caption=Generated \hb host code for the Breadth-First Search (BFS) program shown in Listing~\ref{pap:generals2020:sec:background:lst:graphit}.,
                    label=pap:generals:sec:method:lst:host]
 Graph edges = loadEdgesFromFile(file_path) ;
 Vector<int> frontier = new Vector<int>(
@@ -92,7 +92,7 @@ The function evenly splits the vertices across the cores and sets the start and 
 Our backend replaces the call to \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range} with \lstinline[language=C++, basicstyle=\small\ttfamily]{edge_aware_local_range} to do the recursive edge-aware work assignment described in Chapter~\ref{sec:method:sub:edge-aware-partitioning}.
 \newline
 \begin{lstlisting}[language=C++, breaklines=true, 
-                   caption=Generated manycore device code for the Breadth-First Search (BFS) program shown in Listing~\ref{pap:generals2020:sec:background:lst:graphit}.,
+                   caption=Generated \hb device code for the Breadth-First Search (BFS) program shown in Listing~\ref{pap:generals2020:sec:background:lst:graphit}.,
                    label=pap:generals:sec:method:lst:device]
 template <typename TO_FUNC, typename APPLY_FUNC> int bfs_pull(int *in_indices , int *in_neighbors, int *from_vertexset, TO_FUNC to_func, APPLY_FUNC apply_func) { 
     int start, end;
