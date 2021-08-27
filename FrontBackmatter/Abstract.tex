@@ -31,7 +31,8 @@
 \endgroup
 
 %\vfill
-Graph processing is an area of increasing importance in domains such as networking, super computing, public health, and more.
+\begin{doublespacing}
+\noindent Graph processing is an area of increasing importance in domains such as networking, super computing, public health, and more.
 However, large scale graph processing presents many challenges.
 Graph applications are difficult to optimize because they are memory intensive and suffer from poor data locality.
 Uniform work distribution on parallel implementations is also challenging.
@@ -44,6 +45,8 @@ This thesis explores the ability of manycore architectures to efficiently comput
 In order to study the performance of graph algorithms on a manycore, we design a code generation backend for the \graphit domain-specific language targeting a representative manycore architecture.
 We explore the performance of several existing optimizations and present new manycore specific optimizations.
 We further show how these optimizations improve manycore performance through increased locality, improved load balancing, and leveraging of graph structure.
+
+\end{doublespacing}
 %Several graph processing optimizations involve threshold values or other tunable parameters.
 %As future work, I propose a study of these optimizations to examine whether these parameters are dependent on architecture and graph structure in order to find optimal values for the manycore.
 %I also propose an implementation of multi-source breadth first search that is optimized for a manycore architecture.
