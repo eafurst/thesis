@@ -3,9 +3,9 @@
 %\input{Chapters/manycore-codegen-fragments/method-figures}
 
 %\todo{intro paragraph to discuss the problem with graph processing again?/contextualize after background and related work?}
-To harness the benefits of manycore architectures and reduce programming complexity, we propose a code generation backend for \graphit, a flexible domain-specific language (DSL) for graph computations~\cite{zhang2018graphit}. 
-We implement our backend as a \graphvm using \ugc.
-This backend generates code targeting the representative manycore architecture described in Chapter~\ref{pap:generals:sec:architecture}.
+To harness the benefits of manycore architectures and reduce programming complexity, we develop a code generation backend for \graphit, a flexible domain-specific language (DSL) for graph computations~\cite{zhang2018graphit}. 
+We implement our backend as a \graphvm using the \ugc.
+This \graphvm generates code targeting the representative manycore architecture described in Chapter~\ref{pap:generals:sec:architecture}.
 We use this new backend to implement and explore the performance of the optimizations discussed in Chapter~\ref{gen:sec:optimizations}.
 %Our evaluation shows that our GraphIt backend achieves a maximum of 467.1 million traversed edges per second (MTEPS) and on average achieves 252.7 MTEPS across all input graphs and benchmarks studied. 
 %We find that our optimizations achieve a maximum speedup of 2.1$\times$ and an average speedup of 1.16$\times$ over naive manycore implementations.
@@ -16,7 +16,7 @@ An overview of our approach is shown in Figure~\ref{pap:generals:sec:intro:fig:o
 \section{Manycore Code Generation}\label{sec:method:sub:baseline}
 
 Reasoning about these performance optimizations and manycore-specific considerations is a challenging task.
-To address this, we developed a code generation backend targeting the \hbmc architecture.
+To address this, we developed a code generation framework targeting the \hbmc architecture.
 This code generator alleviates the need for the programmer to have extensive knowledge of the underlying architecture.
 %To alleviate the need for the programmer to have knowledge of the underlying manycore architecture, we develop a code generation backend to GraphIt targeting a manycore architecture.
 
@@ -35,7 +35,7 @@ This is a natural split as it allows the manycore to handle the parallel portion
 The host code that we generate handles most of the setup and coordination of the graph program. 
 We leverage a set of runtime libraries that we wrote to simplify and generalize the code generation. 
 These runtime libraries provide wrappers over our host driver API and handle loading of program data into manycore memory, initializing the manycore and initiating kernel execution on the manycore. 
-These runtime libraries provide a level of abstraction which allows for seamless portability of our backend. 
+These runtime libraries provide a level of abstraction which allows for seamless portability of our framework. 
 In order to target a different manycore architecture, we would only need to modify these wrapper functions and would not need to modify our code generator.
 \newline
 \lstset{language=C++,
@@ -89,7 +89,7 @@ All \lstinline[language=graphit]{vertexset} and  \lstinline[language=graphit]{ed
 By default, all of these operators are generated as parallel kernels meant to be executed across the entire manycore. 
 To distribute work among cores, we implement a \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range(V, start, end)} library function that takes as input the total number of vertices, a pointer to a start value, and a pointer to an end value.
 The function evenly splits the vertices across the cores and sets the start and end values as a contiguous subset of vertices for each core to work on. 
-Our backend replaces the call to \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range} with \lstinline[language=C++, basicstyle=\small\ttfamily]{edge_aware_local_range} to do the recursive edge-aware work assignment described in Chapter~\ref{sec:method:sub:edge-aware-partitioning}.
+Our code generator replaces the call to \lstinline[language=C++, basicstyle=\small\ttfamily]{local_range} with \lstinline[language=C++, basicstyle=\small\ttfamily]{edge_aware_local_range} to do the recursive edge-aware work assignment described in Chapter~\ref{sec:method:sub:edge-aware-partitioning}.
 \newline
 \begin{lstlisting}[language=C++, breaklines=true, 
                    caption=Generated \hb device code for the Breadth-First Search (BFS) program shown in Listing~\ref{pap:generals2020:sec:background:lst:graphit}.,
@@ -126,7 +126,7 @@ Our profiling showed that this number of locks was sufficient to reduce contenti
 Locks are assigned using a simple hash function on the address of the element for which an atomic operation has been called.
 
 \section{Chapter Summary}
-In this chapter we introduced our \hb code generation backend.
+In this chapter we introduced our \hb code generation framework.
 Our code generator allows a user to easily reason about a variety of graph processing and manycore-specific optimizations.
 We described how we generate code for both the host processor and manycore device. 
 We choose to have the host processor handle coordination and initialization while the device computes the graph traversals and updates.
