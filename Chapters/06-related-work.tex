@@ -3,13 +3,13 @@
 
 % !TEX root = paper.tex
 
-In this thesis, I talk about generating optimal code for graph algorithms on a manycore architecture with HBM. 
-I explore both general graph processing and manycore specific performance optimizations and show how to generate performant code for a manycore architecture leveraging these optimizations. 
+In this dissertation, we talk about generating optimal code for graph algorithms on a manycore architecture with HBM. 
+We explore both general graph processing and manycore specific performance optimizations and show how to generate performant code for a manycore architecture leveraging these optimizations. 
 There has been a large amount of work done in the space of optimizing parallel graph algorithms on various architectures.
 Graph processing has traditionally been done on CPU and GPU machines, and increasingly on FPGAs and custom architectures. 
-First, I discuss work that focuses on understanding graph performance.
-Then, I talk about graph processing on CPUs, GPUs, FPGAs, and custom architectures.
-Finally, I introduce previous manycore architectures and discuss prior work on graph processing on manycore architectures.
+First, we discuss work that focuses on understanding graph performance.
+Then, we talk about graph processing on CPUs, GPUs, FPGAs, and custom architectures.
+Finally, we introduce previous manycore architectures and discuss prior work on graph processing on manycore architectures.
 
 \section{Understanding Graph Performance} Several pieces of work have focused on understanding the bottlenecks of graph processing~\citep{beamer2015locality, basak2019analysis}. It is clear that memory is the main bottleneck for graph algorithms. Most graph programs struggle to achieve high memory bandwidth due to insufficient instruction window sizes and memory load dependencies inherent in graph accesses. Further, many graph applications actually experience both low memory bandwidth and low compute due to memory latency~\cite{beamer2015locality}.
 We find that memory accesses are the main bottleneck in our system and propose a blocking method and an alignment-based partitioning method to coalesce accesses.

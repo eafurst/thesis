@@ -10,13 +10,13 @@ We discuss this storage format in more detail in Chapter~\ref{pap:generals2020:s
 
 \section{Graph Topology}\label{thesis:background:topology}
 Graph application performance is dependent on both the algorithm and the structure of the input graph.
-In this thesis we consider two broad classes of graph topologies; scale-free or social network graphs and planar or road graphs.
+In this work we consider two broad classes of graph topologies; scale-free or social network graphs and planar or road graphs.
 A scale-free or social network graph has a degree distribution that follows a power-law, at least asymptotically~\cite{barabasi1999emergence}.
 Most social network graphs have a small diameter and exhibit the small-world property. 
 In a small-world graph, most vertices are not connected to one another, but the majority of vertices can be reached from every other vertex in a small number of hops~\cite{watts1998collective}.
 Planar or road graphs have a large diameter and low average degree.
 The sparsity of a graph is determined by the average degree of the graph.
-All of the graphs we examine in this thesis are relatively sparse, but the planar graphs we study are the most sparse.
+All of the graphs we examine in this dissertation are relatively sparse, but the planar graphs we study are the most sparse.
 Both scale-free and planar graphs present their own unique challenges for optimization.
 %\todo{discuss what this means in practice and tie in to real world friendships then use this citation}~\cite{milgram1967small}
 
@@ -58,19 +58,19 @@ RoadUSA & USA road network~\cite{road-graph} & 23,947,347 & 57,708,624 & 2.4\\
 \bottomrule
 \end{tabular}
 \end{footnotesize}
-\caption{List of graphs used in this thesis and their properties.All of the graphs come from real-world data except
+\caption{List of graphs used in this dissertation and their properties.All of the graphs come from real-world data except
 the three \kron graphs. Throughout our evaluation, we list the subsets of these graphs that are being evaluated.}
 \label{tab:graphprop}
 \end{table*}
 
 \section{Algorithms used in this Thesis}\label{thesis:background:algorithms}
 %\todo{explain bfs, sssp (delta + bellmanford), pr, cc, bc, etc. in detail}
-In this thesis we explore a variety of graph processing algorithms. 
+In this dissertation we explore a variety of graph processing algorithms. 
 We select them based on their popularity in graph-processing evaluations~\cite{beamer2016thesis} and for the different behaviors that they exhibit.
 The algorithms we examine can be classified as traversal-centric or compute-centric algorithms. 
 Traversal-centric or frontier-based algorithms start from a given source vertex and perform computation on vertices by traversing outwards from the source vertex.
 Compute-centric algorithms operate on the entire graph in parallel and tend to iteratively apply updates until the algorithm converges.
-Of the algorithms studied in this thesis BFS, SSSP, and BC are traversal-centric algorithms.
+Of the algorithms studied in this work, BFS, SSSP, and BC are traversal-centric algorithms.
 PageRank and CC are compute centric.
 
 \paragraph{Breadth First Search (BFS)}\mbox{}\\
@@ -110,7 +110,7 @@ A connected component is a subgraph in which all vertices are connected to each 
 If an edge exists between two vertices, they are connected. 
 In a directed graph, connections between vertices can be asymmetric.
 This means that components of a directed graph can be strongly or weakly connected. 
-In this thesis, we only consider undirected graphs and do not need to consider asymmetry of connections.
+In this work, we only consider undirected graphs and do not need to consider asymmetry of connections.
 The CC algorithm labels vertices so that all vertices in the same component have the same label.
 Like PR, CC is also topology-driven and traverses every edge in each iteration.
 

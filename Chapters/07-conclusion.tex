@@ -1,22 +1,22 @@
 \chapter{Conclusion}\label{gen:sec:conclusion}
 \markboth{Conclusion}{Conclusion}
 
-This thesis presents solutions to the challenge of writing peformant code for graph applications on a manycore architecture. 
+This dissertation presents solutions to the challenge of writing peformant code for graph applications on a manycore architecture. 
 The optimizations presented in this work aim to better leverage the memory hierarchy and architectural features of a manycore in order to achieve high performance on graph applications. 
-In this thesis, I present a code generation backend to the \graphit DSL that allows for flexibility in application development and optimization. 
+In this dissertation, I present a code generation backend to the \graphit DSL that allows for flexibility in application development and optimization. 
 I show how existing optimizations can be implemented on the \hbmc in order to improve work efficiency and decrease workload imbalance across cores. 
 I present several manycore specific optimizations that target the memory hierarchy in order to more efficiently use memory bandwidth.
 %I further propose two areas of future work to increase the efficiency and performance of the code produced by my \graphit code generation backend. 
 
 As the size of sparse graph data continues to grow, the importance of scalable, performant graph processing systems will only continue to increase. 
-My thesis demonstrates ways that we can leverage the parallelism offered by emerging manycore architectures in order to maintain scalable performance on graph applications while also maintaining the flexibility and ease of programming offered through the use of the \graphit DSL. 
+This work demonstrates ways that we can leverage the parallelism offered by emerging manycore architectures in order to maintain scalable performance on graph applications while also maintaining the flexibility and ease of programming offered through the use of the \graphit DSL. 
 As graph processing demands grow and users turn more and more to emerging architectures, I expect that future work will continue to build on these efforts to reduce programming complexity through code generation and increase performance through optimizations that target architectural features. 
 
 \section{Future Work}
 %\todo{areas of research that could be interesting in this space}
 There are several areas of exciting future work to be done in the space of graph processing on the \hbmc architecture. 
 Much of the future work in this space focuses on better understanding application performance and on improving performance through continued memory system and data layout optimizations.
-I believe that the code generation framework that this thesis presents will provide the flexibility and extensibility necessary to explore these areas of future work.
+I believe that the code generation framework that this dissertation presents will provide the flexibility and extensibility necessary to explore these areas of future work.
 
  \paragraph{Multi-Source Traversal}\mbox{}\\
 Breadth-first search (BFS) is a common building block of many graph algorithms, and there has been substantial effort in optimizing BFS on parallel architectures. 
@@ -40,7 +40,7 @@ An optimal implementation of this operator could open up our code generation fra
 \paragraph{Parameter Tuning and Custom Data Structures}\mbox{}\\
 In graph processing, proposed optimizations are often tuned for one specific architecture.
 This means that when an optimization is ported to a new architecture, a performance study must be conducted to tune the optimization parameters to the specific features of the new architecture.
-We began a study of parameter tuning in this thesis with the exploration of hybrid traversal methods. 
+We began a study of parameter tuning in this work with the exploration of hybrid traversal methods. 
 From this we found that for optimal performance \hb required smaller $\alpha$ and $\beta$ values for the hybrid traversal heuristics introduced by Beamer et al.
 
 Another area to evaluate would be tuning the $\Delta$ parameter in the delta-stepping SSSP algorithm.
