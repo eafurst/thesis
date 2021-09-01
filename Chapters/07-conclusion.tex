@@ -18,7 +18,7 @@ There are several areas of exciting future work to be done in the space of graph
 Much of the future work in this space focuses on better understanding application performance and on improving performance through continued memory system and data layout optimizations.
 I believe that the code generation framework that this dissertation presents will provide the flexibility and extensibility necessary to explore these areas of future work.
 
- \paragraph{Multi-Source Traversal}\mbox{}\\
+\paragraph{Multi-Source Traversal}\mbox{}\\
 Breadth-first search (BFS) is a common building block of many graph algorithms, and there has been substantial effort in optimizing BFS on parallel architectures. 
 While quite a few algorithms such as SSSP execute BFS from a single source vertex, there also exist many algorithms which execute many different BFS traversals from different source vertices including all pairs shortest paths and betweenness centrality.
 There has been limited work optimizing this multi-souce BFS (MS-BFS) for parallel architectures~\cite{then2014more, liu2016ibfs}.
@@ -58,3 +58,50 @@ In addition, there is room to improve the implementation of the bucketed priorit
 Currently the priority queue is implemented on the host and all bucket updates must happen on the host in between each iteration.
 At the beginning of each iteration, the priority queue constructs a frontier to be dispatched to the manycore for processing.
 We believe that the manycore could be well suited to a device side implementation of the priority queue, and that moving the logic of the priority queue to the device could greatly increase performance.
+
+\section{Technical Acknowledgements}
+
+Portions of this dissertation work were partially supported by Air
+Force Research Laboratory (AFRL) and Defense Advanced
+Research Projects Agency (DARPA) under agreement numbers
+FA8650-18-2-7863 and FA8650-18-2-7856; NSF grants SaTC-1563767, SaTC-1565446, and the
+DARPA/SRC JUMP ADA Center.  This work leverages research and infrastructure created by the members of the Bespoke Silicon Group, spanning across accelerators (\cite{brahmakshatriya2021taming,
+Exploring_Energy_TECS_2014,
+Taylor_RUSH_2011,
+Goulding_GreenDroid_Micro_2011,
+Taylor_GreenDroid_Comms_2011,
+Goulding_GreenDroid_HOTCHIPS_2010}),
+open source hardware (\cite{AGILE_Taylor,
+Taylor_BaseJump_DAC_2018,
+Taylor_Open_Source_SIGARCH_2018}),
+%
+RISC-V (\cite{BlackParrot_IEEE_Micro_2020,
+Celerity_ISSCL_2019,
+Celerity_VLSI_2019,
+davidson2018celerity,
+Zhao_Celerity_RISCV_Workshop_2017,
+Ajayi_Celerity_HOTCHIPS_2017,
+Vega_CARRV_2017}),
+%
+Network-on-Chips (\cite{ruche_jung, NOC_Symbiosis_NOCS_2020,
+Kim_ISLPED_2003})
+and multicore (\cite{
+BlackParrot_IEEE_Micro_2020,
+Gupta_QualityTime_ISPASS_2014,
+Gupta_DRSNUCA_ICCD_2013,
+Gupta_Timecube_SAMOS_2013,
+Taylor_Thesis_2007,
+taylor2004raw,
+Taylor_Micro_2002,
+Taylor_Hotchips_2001,
+Kim_ISLPED_2003,
+Taylor_ISSCC_2003,
+Taylor_HPCA_2003,
+Waingold_Computer_1997}).
+
+
+
+
+
+
+
