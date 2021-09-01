@@ -1,6 +1,7 @@
 # thesis
 
 all the contents of my phd thesis
+
 A copy of my dissertation lives [here](https://emilyfurst.com/papers/thesis.pdf).
 
 #### Misc Notes:
