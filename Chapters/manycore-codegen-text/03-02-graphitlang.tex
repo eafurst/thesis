@@ -50,14 +50,14 @@ Line~1 and Line~2 of Listing~\ref{pap:generals2020:sec:background:lst:graphit} d
 Any data associated with elements in an \lstinline[language=graphit]{edgeset} or \lstinline[language=graphit]{vertexset} is stored as a \lstinline[language=graphit]{vector}.
 Line~3 of Listing~\ref{pap:generals2020:sec:background:lst:graphit} shows the declaration of a \lstinline[language=graphit]{vector} variable, \lstinline[language=graphit]{parent}, that contains data associated with the vertices in the graph.
 
-\graphit uses Compressed Sparse Row (CSR) graph format for these data structures, illustrated in Figure~\ref{pap:generals2020:sec:background:fig:graphformat}.
-CSR format represents a graph with two arrays: a vertex list and an edge list.
+\graphit uses the Compressed Sparse Row (CSR) graph format for these data structures, illustrated in Figure~\ref{pap:generals2020:sec:background:fig:graphformat}.
+The CSR format stores a graph using two arrays: a vertex list and an edge list.
 The edge list contains the destination vertex for each edge in the graph and contains $|E|$ elements where $E$ is the set of edges in the graph.
 In the case of a weighted graph, the edge list is stored as an array of tuples, with each element in the array containing the destination vertex id and the weight of the edge.
 The vertex list contains $|V|$ elements where $V$ is the set of vertices in the graph. 
 Each element in the vertex list is an index into the edge list array.
 This index corresponds to the start of the edges for which that vertex is the source vertex.
-The number of edges for a vertex $v$, or its degree, is $vertex\_list[v+1] - vertex\_list[v]$.
+The number of edges for a vertex $v$, or its degree, is \texttt{vertex\_list[v+1] - vertex\_list[v]}.
 The generated code operates on these arrays to perform computation.
 
 \graphformatfig
@@ -67,7 +67,7 @@ The generated code operates on these arrays to perform computation.
 An algorithm in \graphit is written as operations on \lstinline[language=graphit]{edgeset} and \lstinline[language=graphit]{vertexset} datatypes. 
 \graphit provides several operators that perform computation on these types, but the most common are the \lstinline[language=graphit]{filter} operator and \lstinline[language=graphit]{apply} operator.
 The \lstinline[language=graphit]{filter} operator takes a function and a set, applies the function to each element in the set, and returns a set of elements where the function returned true.
-The \lstinline[language=graphit]{apply} operator takes a function and set as input and applies the function to each element in the set. %, and returns the resulting set of modified elements.
+The \lstinline[language=graphit]{apply} operator takes a function and a set as input and applies the function to each element in the set. %, and returns the resulting set of modified elements.
 \graphit also provides other built-in operators like \lstinline[language=graphit]{applyModified}, that takes a function and a set, applies the function to each element in the set, and returns a vertexset that contains vertices that were updated by the input function. 
 This operator is used to construct frontiers in iterative graph algorithms. 
 Listing~\ref{pap:generals2020:sec:background:lst:graphit} demonstrates how these operators can be used to write BFS.
@@ -82,7 +82,7 @@ This \lstinline[language=graphit]{vertexset} becomes the new frontier for the ne
 
 \subsection{Schedule Representation}
 One of the key benefits of \graphit is that it decouples the algorithm description from the schedule which allows developers to iterate through different scheduling optimizations. 
-To support a diverse set of \graphvms each with their own set of optimizations, a new scheduling language is written for each hardware target. 
+To support a diverse set of \graphvms, each with their own set of optimizations, a new scheduling language is written for each hardware target. 
 \GG provides an abstract interface that provides virtual functions for all of the information that the hardware-independent compiler needs.
 New scheduling object classes are implemented for each \graphvm by inheriting from this abstract interface. 
 These new classes have members and functions to configure various scheduling options specific to optimizations supported for their \graphvms. 
@@ -96,13 +96,14 @@ The schedule description always follows the algorithm description in \graphit.
 The schedule for BFS starts with the \lstinline[language=graphit]{schedule} declaration on Line~20 of Listing~\ref{pap:generals2020:sec:background:lst:graphit}. 
 Line~21 instantiates a \hb scheduling object indicating that the code generator should generate code for the target manycore. 
 Line~22 specifies that the traversal schedule for label \lstinline[language=graphit]{#s1#} should be "Dense Pull". 
-This optimizations that the \hb \graphvm and scheduling language support are described in Chapter~\ref{gen:sec:optimizations}. 
+The optimizations that the \hb \graphvm and scheduling language support are described in Chapter~\ref{gen:sec:optimizations}. 
 %Finally, the schedule specifies that the code generator should generate code for the target device. 
 
 \subsection{Code Generation}
-\ugc takes an algorithm and schedule and generates device-specific code.
+The \ugc takes an algorithm and schedule and generates device-specific code.
 The compiler first parses the algorithm and schedule using the frontend to produce the \graphisa. 
-\GG adapts the domain\hyp{}specific transformations from the \graphit DSL compiler, such as dependence analysis to insert atomics in the user\hyp{}defined functions (UDFs), liveness analysis to find frontier memory reuse opportunities, and other transformations to UDFs for
+\GG adapts the domain\hyp{}specific transformations from the \graphit DSL compiler.
+This includes things such as dependence analysis to insert atomics in the user\hyp{}defined functions (UDFs); liveness analysis to find frontier memory reuse opportunities; and other transformations to UDFs for
 traversal direction, parallelism, and data structure choices.
 These passes also add metadata to the \graphisa for the \graphvms to use during code generation.
 After these hardware-independent transformations are completed, the program is passed to the \graphvm for hardware-dependent analysis and code generation.

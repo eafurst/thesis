@@ -58,8 +58,8 @@ RoadUSA & USA road network~\cite{road-graph} & 23,947,347 & 57,708,624 & 2.4\\
 \bottomrule
 \end{tabular}
 \end{footnotesize}
-\caption{List of graphs used in this dissertation and their properties.All of the graphs come from real-world data except
-the three \kron graphs. Throughout our evaluation, we list the subsets of these graphs that are being evaluated.}
+\caption{List of graphs used in this dissertation and their properties. All of the graphs come from real-world data except
+the four \kron graphs. Throughout our evaluation, we list the subsets of these graphs that are being evaluated.}
 \label{tab:graphprop}
 \end{table*}
 
@@ -94,7 +94,7 @@ The delta-stepping algorithm~\cite{meyer2003delta} increases parallelism by usin
 Delta-stepping coarsely sorts the vertices of the graph by distance into buckets of width $\Delta$.
 This allows for all vertices in a bucket to be processed in parallel. 
 Like Bellman-Ford, this does result in some vertices being processed multiple times, but the frequency with which this occurs can be reduced by reducing the value of $\Delta$.
-If $\Delta=1$, the algorithm effectively becomes Dijkstra's, and if $\Delta=\inf$, the algorithm behaves like Bellman-Ford. 
+If $\Delta=1$, the algorithm effectively becomes Dijkstra's, and if $\Delta=\infty$, the algorithm behaves like Bellman-Ford. 
 
 \paragraph{PageRank (PR)}\mbox{}\\
 PR calculates the importance or "popularity" of each vertex in a graph and was originally developed to sort web search results~\cite{page1999pagerank}.
